@@ -53,6 +53,11 @@ public class GroupTitleCommand {
         try {
             Player player = toPlayer(sender);
             int titleId = toIntegrity(groupTitleIdStr);
+            if (titleId == -1) {
+                ((PlayerDOO) toPlayerDTO(player.getUniqueId())).setUsingGroupTitleID(-1);
+                TitleList.show(sender, pageStr);
+                return;
+            }
             PlayerDTO playerDto = toPlayerDTO(player.getUniqueId());
             GroupDTO group = toGroupDTO(titleId);
             DominionDTO dominion = toDominionDTO(group.getDomID());
@@ -69,7 +74,7 @@ public class GroupTitleCommand {
             }
             ((PlayerDOO) playerDto).setUsingGroupTitleID(group.getId());
 
-            Notification.info(sender, Language.groupTitleCommandText.usingTitleSuccess, groupTitleIdStr);
+            Notification.info(sender, Language.groupTitleCommandText.usingTitleSuccess, group.getNamePlain());
             TitleList.show(sender, pageStr);
         } catch (Exception e) {
             Notification.error(sender, Language.groupTitleCommandText.usingTitleFail, e.getMessage());

@@ -2,6 +2,7 @@ package cn.lunadeer.dominion.uis.tuis;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.GroupDTO;
+import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.GroupTitleCommand;
 import cn.lunadeer.dominion.configuration.Language;
@@ -70,7 +71,15 @@ public class TitleList {
                     .append(Language.titleListTuiText.button));
 
             List<GroupDTO> groups = CacheManager.instance.getPlayerCache().getPlayerGroupTitleList(player.getUniqueId());
-            Integer usingId = CacheManager.instance.getPlayerCache().getPlayerUsingTitleId(player.getUniqueId());
+            List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getPlayerOwnDominionDTOs(player.getUniqueId());
+            for (DominionDTO dominion : dominions) {
+                groups.addAll(dominion.getGroups());
+            }
+            PlayerDTO playerDTO = CacheManager.instance.getPlayerCache().getPlayer(player.getUniqueId());
+            if (playerDTO == null) {
+                return;
+            }
+            Integer usingId = playerDTO.getUsingGroupTitleID();
             GroupDTO using = CacheManager.instance.getGroup(usingId);
 
             for (GroupDTO group : groups) {
@@ -81,14 +90,14 @@ public class TitleList {
                 Line line = Line.create();
                 line.append(Component.text(group.getId() + ". "));
                 if (using != null && using.getId().equals(group.getId())) {
-                    line.append(new FunctionalButton(Language.titleListTuiText.useButton) {
+                    line.append(new FunctionalButton(Language.titleListTuiText.disuseButton) {
                         @Override
                         public void function() {
                             GroupTitleCommand.useTitle(sender, "-1", pageStr);
                         }
                     }.needPermission(defaultPermission).red().build());
                 } else {
-                    line.append(new FunctionalButton(Language.titleListTuiText.disuseButton) {
+                    line.append(new FunctionalButton(Language.titleListTuiText.useButton) {
                         @Override
                         public void function() {
                             GroupTitleCommand.useTitle(sender, group.getId().toString(), pageStr);

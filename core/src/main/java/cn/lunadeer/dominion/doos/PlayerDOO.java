@@ -157,5 +157,6 @@ public class PlayerDOO implements PlayerDTO {
                 .set(this.using_group_title_id)
                 .where("id = ?", this.getId())
                 .execute();
+        CacheManager.instance.getPlayerCache().load(this.getId());
     }
 }
