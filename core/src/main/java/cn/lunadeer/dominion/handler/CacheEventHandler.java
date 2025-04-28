@@ -33,7 +33,7 @@ public class CacheEventHandler implements Listener {
                 )
         );
         // show border
-        if (event.getDominion().getEnvironmentFlagValue().get(Flags.SHOW_BORDER)) {
+        if (event.getDominion().getEnvironmentFlagValue().getOrDefault(Flags.SHOW_BORDER, false)) {
             ParticleUtil.showBorder(event.getPlayer(), event.getDominion());
         }
     }
@@ -52,7 +52,7 @@ public class CacheEventHandler implements Listener {
                 )
         );
         // show border
-        if (event.getDominion().getEnvironmentFlagValue().get(Flags.SHOW_BORDER)) {
+        if (event.getDominion().getEnvironmentFlagValue().getOrDefault(Flags.SHOW_BORDER, false)) {
             ParticleUtil.showBorder(event.getPlayer(), event.getDominion());
         }
     }
