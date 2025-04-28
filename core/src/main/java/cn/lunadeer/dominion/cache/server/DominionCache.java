@@ -46,7 +46,7 @@ public class DominionCache extends Cache {
      * @return the DominionDTO associated with the given ID
      * @throws DominionException if the dominion ID is not found
      */
-    public @Nullable DominionDTO getDominion(Integer id) {
+    public @Nullable DominionDTO getDominion(@NotNull Integer id) {
         return idDominions.get(id);
     }
 
@@ -58,7 +58,13 @@ public class DominionCache extends Cache {
      * @throws DominionException if the dominion name is not found
      */
     public @Nullable DominionDTO getDominion(String name) {
-        return getDominion(dominionNameToId.get(name));
+        Integer id = dominionNameToId.get(name);
+        try {
+            if (id == null) return DominionDOO.select(name);
+        } catch (Exception e) {
+            return null;
+        }
+        return getDominion(id);
     }
 
     /**

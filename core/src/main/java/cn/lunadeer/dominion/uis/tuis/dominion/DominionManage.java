@@ -16,6 +16,7 @@ import cn.lunadeer.dominion.uis.tuis.dominion.manage.Info;
 import cn.lunadeer.dominion.uis.tuis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.tuis.dominion.manage.member.MemberList;
 import cn.lunadeer.dominion.utils.Notification;
+import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.stui.ListView;
@@ -127,6 +128,7 @@ public class DominionManage {
             view.showOn(player, page);
         } catch (Exception e) {
             Notification.error(sender, e.getMessage());
+            XLogger.error(e);
         }
     }
 }
