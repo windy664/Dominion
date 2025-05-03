@@ -40,7 +40,7 @@ public class FieldInteger extends Field<Integer> {
 
     public static List<String> getTypeStrings() {
         return switch (DatabaseManager.instance.getType()) {
-            case MYSQL -> List.of("INT", "INTEGER");
+            case MYSQL -> List.of("INT", "INTEGER", "INT(11)");
             case SQLITE -> List.of("INTEGER", "INT");
             case PGSQL -> List.of("INTEGER", "INT");
             default ->
