@@ -591,3 +591,36 @@ flags:
   trample:
     display-name: 農地を踏み荒らす
     description: 農地が踏み荒らされるかどうか（falseにすると農地を保護する）。
+copy-menu-tui-text:
+  button: COPY
+  description: Copy Privilege Settings From Other Dominion.
+  title: Select Copy Type
+env-copy-tui-text:
+  title: Select Dominion to Copy From
+  button: ENV
+  copy: COPY FROM
+  description: Copy Env Settings From Other Dominion.
+  back: BACK
+guest-copy-tui-text:
+  title: Select Dominion to Copy From
+  button: GUEST
+  copy: COPY FROM
+  description: Copy Guest Settings From Other Dominion.
+  back: BACK
+member-copy-tui-text:
+  title: Select Dominion to Copy From
+  button: MEMBERS
+  copy: COPY FROM
+  description: Copy Member & Settings From Other Dominion.
+  back: BACK
+group-copy-tui-text:
+  title: Select Dominion to Copy From
+  button: GROUPS
+  copy: COPY FROM
+  description: Copy Group & Settings From Other Dominion.
+  back: BACK
+copy-command-text:
+  copy-env-success: Copied environment flag from {0} to {1} success.
+  copy-guest-success: Copied guest privilege flag from {0} to {1} success.
+  copy-member-success: Copied members from {0} to {1} success.
+  copy-group-success: Copied groups from {0} to {1} success.

@@ -89,7 +89,9 @@ public class MemberList {
                             .append(DominionManage.button(sender, dominionName).build())
                             .append(Language.memberListTuiText.button)
             );
-            view.add(Line.create().append(SelectPlayer.button(sender, dominionName).build()));
+            view.add(Line.create()
+                    .append(SelectPlayer.button(sender, dominionName).build())
+            );
 
             // get data from database directly because cache update may not be in time
             List<MemberDTO> members = new ArrayList<>(selectByDominionId(dominion.getId()));
