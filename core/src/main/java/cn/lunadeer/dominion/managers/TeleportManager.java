@@ -96,7 +96,8 @@ public class TeleportManager implements Listener {
      */
     public static void teleportToDominion(Player player, DominionDTO dominion) {
         // check privilege
-        if (!Configuration.getPlayerLimitation(player).teleportation.enable) {
+        if (!Configuration.getPlayerLimitation(player).teleportation.enable &&
+                !(player.hasPermission(adminPermission) && Configuration.adminBypass)) {
             Notification.warn(player, Language.teleportManagerText.disabled);
             return;
         }
