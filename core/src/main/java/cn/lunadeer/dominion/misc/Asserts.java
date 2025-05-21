@@ -339,6 +339,9 @@ public class Asserts {
             if (dom.getId().equals(dominion.getId())) {
                 continue;
             }
+            if (!dom.getWorldUid().equals(dominion.getWorldUid())) {
+                continue;
+            }
             if (cuboid.intersectWith(dom.getCuboid())) {
                 throw new DominionException(Language.assertsText.intersectWithDom, dominion.getName(), dom.getName());
             }
