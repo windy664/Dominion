@@ -14,7 +14,7 @@ import cn.lunadeer.dominion.managers.TeleportManager;
 import cn.lunadeer.dominion.misc.Asserts;
 import cn.lunadeer.dominion.misc.Converts;
 import cn.lunadeer.dominion.misc.Others;
-import cn.lunadeer.dominion.uis.cuis.*;
+import cn.lunadeer.dominion.uis.inputters.*;
 import cn.lunadeer.dominion.uis.tuis.AllDominion;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.uis.tuis.MigrateList;
@@ -39,7 +39,7 @@ import cn.lunadeer.dominion.utils.VaultConnect.VaultConnect;
 import cn.lunadeer.dominion.utils.command.InvalidArgumentException;
 import cn.lunadeer.dominion.utils.command.NoPermissionException;
 import cn.lunadeer.dominion.utils.configuration.*;
-import cn.lunadeer.dominion.utils.scui.CuiTextInput;
+import cn.lunadeer.dominion.utils.stui.inputter.InputterRunner;
 import cn.lunadeer.dominion.utils.webMap.BlueMapConnect;
 import cn.lunadeer.dominion.utils.webMap.DynmapConnect;
 
@@ -98,17 +98,16 @@ public class Language extends ConfigurationFile {
     public static MemberCopy.MemberCopyTuiText memberCopyTuiText = new MemberCopy.MemberCopyTuiText();
     public static GroupCopy.GroupCopyTuiText groupCopyTuiText = new GroupCopy.GroupCopyTuiText();
 
-    // CUI
-    public static ResizeDominion.ResizeDominionCuiText resizeDominionCuiText = new ResizeDominion.ResizeDominionCuiText();
-    public static EditEnterMessage.EditEnterMessageCuiText editEnterMessageCuiText = new EditEnterMessage.EditEnterMessageCuiText();
-    public static EditLeaveMessage.EditLeaveMessageCuiText editLeaveMessageCuiText = new EditLeaveMessage.EditLeaveMessageCuiText();
-    public static RenameDominion.RenameDominionCuiText renameDominionCuiText = new RenameDominion.RenameDominionCuiText();
-    public static CreateDominion.CreateDominionCuiText createDominionCuiText = new CreateDominion.CreateDominionCuiText();
-    public static SetMapColor.SetMapColorCuiText setMapColorCuiText = new SetMapColor.SetMapColorCuiText();
-    public static SearchPlayer.SearchPlayerCuiText searchPlayerCuiText = new SearchPlayer.SearchPlayerCuiText();
-    public static CreateTemplate.CreateTemplateCuiText createTemplateCuiText = new CreateTemplate.CreateTemplateCuiText();
-    public static CreateGroup.CreateGroupCuiText createGroupCuiText = new CreateGroup.CreateGroupCuiText();
-    public static RenameGroup.RenameGroupCuiText renameGroupCuiText = new RenameGroup.RenameGroupCuiText();
+    // Inputter
+    public static CreateDominionInputter.CreateDominionInputterText createDominionInputterText = new CreateDominionInputter.CreateDominionInputterText();
+    public static CreateGroupInputter.CreateGroupInputterText createGroupInputterText = new CreateGroupInputter.CreateGroupInputterText();
+    public static RenameDominionInputter.RenameDominionInputterText renameDominionInputterText = new RenameDominionInputter.RenameDominionInputterText();
+    public static EditMessageInputter.EditMessageInputterText editMessageInputterText = new EditMessageInputter.EditMessageInputterText();
+    public static CreateTemplateInputter.CreateTemplateInputterText createTemplateInputterText = new CreateTemplateInputter.CreateTemplateInputterText();
+    public static RenameGroupInputter.RenameGroupInputterText renameGroupInputterText = new RenameGroupInputter.RenameGroupInputterText();
+    public static ResizeDominionInputter.ResizeDominionInputterText resizeDominionInputterText = new ResizeDominionInputter.ResizeDominionInputterText();
+    public static SearchPlayerInputter.SearchPlayerInputterText searchPlayerInputterText = new SearchPlayerInputter.SearchPlayerInputterText();
+    public static SetMapColorInputter.SetMapColorInputterText setMapColorInputterText = new SetMapColorInputter.SetMapColorInputterText();
 
     // Commands
     public static AdministratorCommand.AdministratorCommandText administratorCommandText = new AdministratorCommand.AdministratorCommandText();
@@ -138,13 +137,12 @@ public class Language extends ConfigurationFile {
         public String invalidArguments = "Invalid arguments, usage e.g. {0}.";
     }
 
-    public static CuiInputText cuiInputText = new CuiInputText();
+    public static InputterText inputterText = new InputterText();
 
-    public static class CuiInputText extends ConfigurationPart {
-        public String cuiNotAvailable = "CUI is not available on no-paper (fork) core server.";
-        public String cuiSuggestCommand = "You can use command {0} instead.";
-        public String cuiButton = "Left Click: Confirm | Right Click: Cancel";
-        public String cuiInputInvalid = "Input can not contain space.";
+    public static class InputterText extends ConfigurationPart {
+        public String onlyPlayer = "TUI inputter can only be used by a player.";
+        public String cancel = " [Send 'C' to cancel the inputter.]";
+        public String inputterCancelled = "Inputter cancelled.";
     }
 
     @PreProcess
@@ -168,11 +166,10 @@ public class Language extends ConfigurationFile {
         // cn.lunadeer.dominion.utils.command
         InvalidArgumentException.MSG = commandExceptionText.invalidArguments;
         NoPermissionException.MSG = commandExceptionText.noPermission;
-        // cn.lunadeer.dominion.utils.scui.CuiTextInput
-        CuiTextInput.CUI_NOT_AVAILABLE = cuiInputText.cuiNotAvailable;
-        CuiTextInput.CUI_SUGGEST_COMMAND = cuiInputText.cuiSuggestCommand;
-        CuiTextInput.CUI_BUTTON = cuiInputText.cuiButton;
-        CuiTextInput.CUI_INPUT_INVALID = cuiInputText.cuiInputInvalid;
+
+        InputterRunner.ONLY_PLAYER = inputterText.onlyPlayer;
+        InputterRunner.CANCEL = inputterText.cancel;
+        InputterRunner.INPUTTER_CANCELLED = inputterText.inputterCancelled;
     }
 
 }

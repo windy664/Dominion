@@ -46,7 +46,7 @@ allprojects {
         compileOnly("us.dynmap:DynmapCoreAPI:3.4")
         compileOnly("me.clip:placeholderapi:2.11.6")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-        compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.7")
+        compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")
 
         if (!BuildFull) {
             libraries.forEach {

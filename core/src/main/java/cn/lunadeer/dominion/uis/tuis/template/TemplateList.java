@@ -2,7 +2,7 @@ package cn.lunadeer.dominion.uis.tuis.template;
 
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.doos.TemplateDOO;
-import cn.lunadeer.dominion.uis.cuis.CreateTemplate;
+import cn.lunadeer.dominion.uis.inputters.CreateTemplateInputter;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
@@ -50,7 +50,8 @@ public class TemplateList {
                     .append(MainMenu.button(sender).build())
                     .append(Language.templateListTuiText.button));
 
-            view.add(Line.create().append(CreateTemplate.button(sender).build()));
+            view.add(Line.create()
+                    .append(CreateTemplateInputter.createEnterOn(sender).needPermission(defaultPermission).build()));
 
             for (TemplateDOO template : templates) {
                 Button setting = TemplateSetting.button(sender, template.getName()).green();

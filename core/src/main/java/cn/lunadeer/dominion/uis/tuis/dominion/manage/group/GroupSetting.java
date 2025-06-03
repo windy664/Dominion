@@ -6,7 +6,7 @@ import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.GroupCommand;
 import cn.lunadeer.dominion.configuration.Language;
-import cn.lunadeer.dominion.uis.cuis.RenameGroup;
+import cn.lunadeer.dominion.uis.inputters.RenameGroupInputter;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionManage;
@@ -58,7 +58,7 @@ public class GroupSetting {
                             .append(GroupList.button(sender, dominionName).build())
                             .append(Language.groupSettingTuiText.button)
             );
-            view.add(Line.create().append(RenameGroup.button(sender, dominionName, groupName).build()));
+            view.add(Line.create().append(RenameGroupInputter.createOn(sender, dominionName, groupName).build()));
 
             if (group.getFlagValue(Flags.ADMIN)) {
                 view.add(createOption(sender, Flags.ADMIN, true, dominion.getName(), group.getNamePlain(), pageStr));

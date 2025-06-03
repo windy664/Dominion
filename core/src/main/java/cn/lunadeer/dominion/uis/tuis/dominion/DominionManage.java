@@ -5,10 +5,9 @@ import cn.lunadeer.dominion.commands.DominionOperateCommand;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.misc.CommandArguments;
-import cn.lunadeer.dominion.uis.cuis.EditEnterMessage;
-import cn.lunadeer.dominion.uis.cuis.EditLeaveMessage;
-import cn.lunadeer.dominion.uis.cuis.RenameDominion;
-import cn.lunadeer.dominion.uis.cuis.SetMapColor;
+import cn.lunadeer.dominion.uis.inputters.EditMessageInputter;
+import cn.lunadeer.dominion.uis.inputters.RenameDominionInputter;
+import cn.lunadeer.dominion.uis.inputters.SetMapColorInputter;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.uis.tuis.dominion.copy.CopyMenu;
 import cn.lunadeer.dominion.uis.tuis.dominion.manage.EnvSetting;
@@ -95,17 +94,17 @@ public class DominionManage {
                     }.build())
                     .append(Language.dominionManageTuiText.setTpDescription);
             Line rename = Line.create()
-                    .append(RenameDominion.button(sender, dominionName).build())
-                    .append(Language.renameDominionCuiText.description);
+                    .append(RenameDominionInputter.createOn(sender, dominionName).needPermission(defaultPermission).build())
+                    .append(Language.renameDominionInputterText.description);
             Line enter_msg = Line.create()
-                    .append(EditEnterMessage.button(sender, dominionName).build())
-                    .append(Language.editEnterMessageCuiText.description);
+                    .append(EditMessageInputter.createEnterOn(sender, dominionName).needPermission(defaultPermission).build())
+                    .append(Language.editMessageInputterText.enterDescription);
             Line leave_msg = Line.create()
-                    .append(EditLeaveMessage.button(sender, dominionName).build())
-                    .append(Language.editLeaveMessageCuiText.description);
+                    .append(EditMessageInputter.createLeaveOn(sender, dominionName).needPermission(defaultPermission).build())
+                    .append(Language.editMessageInputterText.leaveDescription);
             Line map_color = Line.create()
-                    .append(SetMapColor.button(sender, dominionName).build())
-                    .append(Component.text(Language.setMapColorCuiText.description)
+                    .append(SetMapColorInputter.createOn(sender, dominionName).build())
+                    .append(Component.text(Language.setMapColorInputterText.description)
                             .append(Component.text(dominion.getColor(),
                                     TextColor.color(dominion.getColorR(), dominion.getColorG(), dominion.getColorB()))));
             Line copy_menu = Line.create()

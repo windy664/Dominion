@@ -8,7 +8,7 @@ import cn.lunadeer.dominion.commands.GroupCommand;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.doos.GroupDOO;
 import cn.lunadeer.dominion.misc.CommandArguments;
-import cn.lunadeer.dominion.uis.cuis.CreateGroup;
+import cn.lunadeer.dominion.uis.inputters.CreateGroupInputter;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionManage;
@@ -80,7 +80,7 @@ public class GroupList {
                             .append(Language.groupListTuiText.button)
             );
             view.add(new Line()
-                    .append(CreateGroup.button(sender, dominionName).build())
+                    .append(CreateGroupInputter.createOn(sender, dominionName).needPermission(defaultPermission).build())
             );
 
             // get data from database directly because cache update may not be in time

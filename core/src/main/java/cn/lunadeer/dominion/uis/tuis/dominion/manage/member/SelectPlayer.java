@@ -5,7 +5,7 @@ import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.commands.MemberCommand;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.doos.PlayerDOO;
-import cn.lunadeer.dominion.uis.cuis.SearchPlayer;
+import cn.lunadeer.dominion.uis.inputters.SearchPlayerInputter;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.stui.ListView;
@@ -47,7 +47,7 @@ public class SelectPlayer {
 
             ListView view = ListView.create(10, button(sender, dominionName));
             Line sub = Line.create()
-                    .append(SearchPlayer.button(sender, dominionName).build())
+                    .append(SearchPlayerInputter.createOn(sender, dominionName).build())
                     .append(MemberList.button(sender, dominionName).setText(Language.selectPlayerTuiText.back).build());
             view.title(Language.selectPlayerTuiText.title).subtitle(sub);
             List<PlayerDTO> players = PlayerDOO.all();

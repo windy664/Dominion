@@ -19,7 +19,7 @@ import cn.lunadeer.dominion.utils.command.CommandManager;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
-import cn.lunadeer.dominion.utils.scui.CuiManager;
+import cn.lunadeer.dominion.utils.stui.inputter.Inputter;
 import cn.lunadeer.dominion.utils.webMap.DynmapConnect;
 import cn.lunadeer.dominion.utils.webMap.MapRender;
 import org.bukkit.Bukkit;
@@ -68,6 +68,7 @@ public final class Dominion extends JavaPlugin {
         new MultiServerManager(this);
         new TeleportManager(this);
         new CacheManager();
+        new Inputter(this);
         new DominionInterface();
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
@@ -86,9 +87,6 @@ public final class Dominion extends JavaPlugin {
         metrics.addCustomChart(new bStatsMetrics.SingleLineChart("dominion_count", () -> CacheManager.instance.dominionCount()));
         metrics.addCustomChart(new bStatsMetrics.SingleLineChart("group_count", () -> CacheManager.instance.groupCount()));
         metrics.addCustomChart(new bStatsMetrics.SingleLineChart("member_count", () -> CacheManager.instance.memberCount()));
-
-        // SCUI 初始化
-        Bukkit.getPluginManager().registerEvents(new CuiManager(this), this);
 
         XLogger.info(Language.dominionText.pluginEnabled);
 

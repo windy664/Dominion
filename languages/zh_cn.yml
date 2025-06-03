@@ -128,6 +128,7 @@ select-point-events-handler-text:
   volume: 体积：{0}
   no-dominion: 坐标 {0}, {1}, {2} 位置没有找到领地
   found-dominion: 坐标 {0}, {1}, {2} 所处的领地：{3}
+  owner: 领地所有人：{0}
 menu-tui-text:
   title: Dominion主菜单
   button: 菜单
@@ -370,19 +371,14 @@ teleport-manager-text:
   cancel-move: 传送取消（不要乱动）！
 blue-map-connect-text:
   register-fail: 获取 BlueMap API 失败！
-  info-label: '<div>{0}</div><div>所有人：{1}</div>'
+  info-label: <div>{0}</div><div>所有人：{1}</div>
 dynmap-connect-text:
   register-success: 成功注册到 dynmap！
   register-fail: 注册到 dynmap 失败！
-  info-label: '<div>{0}</div><div>所有人：{1}</div>'
+  info-label: <div>{0}</div><div>所有人：{1}</div>
 command-exception-text:
   no-permission: 你没有 {0} 权限使用这个指令。
   invalid-arguments: 参数错误（无效），指令用法：{0}
-cui-input-text:
-  cui-not-available: 非 Paper （或分支）核心暂不支持 CUI 输入。
-  cui-suggest-command: 你可以使用指令代替：{0}
-  cui-button: '左键：确认 | 右键：取消'
-  cui-input-invalid: 输入内容不允许包含空格。
 flags:
   tnt_explode:
     display-name: TNT爆炸
@@ -591,36 +587,80 @@ flags:
   trample:
     display-name: 作物践踏
     description: 是否可以践踏作物（关闭意味着保护耕地）
-env-copy-tui-text:
-  title: 选择要复制领地
-  button: 环境权限
-  description: 从另一个领地复制环境配置
-  back: 返回
-  copy: 复制
-guest-copy-tui-text:
-  title: 选择要复制领地
-  button: 访客权限
-  description: 从另一个领地复制访客配置
-  back: 返回
-  copy: 复制
-member-copy-tui-text:
-  title: 选择要复制领地
-  button: 成员
-  description: 从另一个领地复制成员与成员配置
-  back: 返回
-  copy: 复制
-group-copy-tui-text:
-  title: 选择要复制领地
-  button: 权限组
-  description: 从另一个领地复制权限组与权限组配置
-  back: 返回
-  copy: 复制
-copy-command-text:
-  copy-env-success: 成功将 {0} 的环境配置复制到 {1}。
-  copy-guest-success: 成功将  {0} 的访客权限配置复制到 {1}。
-  copy-member-success: 成功将 {0} 的成员复制到 {1}。
-  copy-group-success: 成功将 {0} 的权限组复制到 {1}。
+  pvp:
+    display-name: 玩家伤害
+    description: 玩家之间是否可以造成伤害
 copy-menu-tui-text:
-  button: 权限拷贝
-  description: 从其他领地复制权限配置。
-  title: 选择分类
+  button: 复制配置
+  description: 从其他领地复制配置到当前领地。
+  title: 选择要复制的配置类型
+env-copy-tui-text:
+  title: 选择从哪个领地复制环境配置
+  button: 环境配置
+  copy: 选择
+  description: 从其他领地复制环境配置。
+  back: 返回
+guest-copy-tui-text:
+  title: 选择从哪个领地复制访客权限
+  button: 访客权限
+  copy: 选择
+  description: 从其他领地复制访客权限。
+  back: 返回
+member-copy-tui-text:
+  title: 选择从哪个领地复制成员配置
+  button: 成员配置
+  copy: 选择
+  description: 从其他领地复制成员配置。
+  back: 返回
+group-copy-tui-text:
+  title: 选择从哪个领地复制权限组
+  button: 权限组
+  copy: 选择
+  description: 从其他领地复制权限组。
+  back: 返回
+create-dominion-inputter-text:
+  button: 创建领地
+  description: 在你的周围创建一个新的领地。
+  hint: 请输入要创建的新领地名称
+create-group-inputter-text:
+  button: 创建新权限组
+  hint: 请输入新权限组名称
+rename-dominion-inputter-text:
+  button: 重命名
+  hint: 请输入新的领地名称
+  description: 重命名此领地。
+edit-message-inputter-text:
+  enter-button: 进入提示
+  enter-description: 玩家进入领地时显示的消息。
+  enter-hint: 输入新的进入消息
+  leave-button: 离开提示
+  leave-description: 玩家离开领地时显示的消息。
+  leave-hint: 输入新的离开消息
+create-template-inputter-text:
+  button: 创建模板
+  hint: 请输入新模板名称
+rename-group-inputter-text:
+  button: 重命名权限组
+  hint: 请输入新的权限组名称
+  description: 重命名此权限组。
+resize-dominion-inputter-text:
+  expand: 扩大
+  contract: 缩小
+  expand-hint: 请输入要将领地 {0} 向 {1} 方向扩大多少格。
+  contract-hint: 请输入要将领地 {0} 从 {1} 方向缩小多少格。
+search-player-inputter-text:
+  button: 搜索
+  hint: 输入要搜索的玩家的游戏ID（精确匹配）。
+set-map-color-inputter-text:
+  button: 地图颜色
+  hint: '输入领地在卫星地图上的颜色（十六进制颜色代码，例如 #FF0000）。'
+  description: 设置领地在卫星地图上的颜色。
+copy-command-text:
+  copy-env-success: 成功从领地 {0} 复制环境配置到领地 {1}
+  copy-guest-success: 成功从领地 {0} 复制访客权限到领地 {1}
+  copy-member-success: 成功从领地 {0} 复制成员到领地 {1}
+  copy-group-success: 成功从领地 {0} 复制权限组到领地 {1}
+inputter-text:
+  only-player: 只有玩家可以使用输入器。
+  cancel: ' 【发送大写 C 取消输入】'
+  inputter-cancelled: 输入已取消。

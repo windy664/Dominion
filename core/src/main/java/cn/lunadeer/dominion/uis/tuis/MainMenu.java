@@ -4,7 +4,7 @@ import cn.lunadeer.dominion.commands.AdministratorCommand;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.misc.CommandArguments;
-import cn.lunadeer.dominion.uis.cuis.CreateDominion;
+import cn.lunadeer.dominion.uis.inputters.CreateDominionInputter;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.tuis.template.TemplateList;
 import cn.lunadeer.dominion.utils.Notification;
@@ -66,8 +66,8 @@ public class MainMenu {
         int page = toIntegrity(pageStr);
 
         Line create = Line.create()
-                .append(CreateDominion.button(sender).build())
-                .append(Language.createDominionCuiText.description);
+                .append(CreateDominionInputter.createOn(sender).needPermission(defaultPermission).build())
+                .append(Language.createDominionInputterText.description);
         Line list = Line.create()
                 .append(DominionList.button(sender).build())
                 .append(Language.dominionListTuiText.description);

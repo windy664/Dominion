@@ -91,8 +91,6 @@ public class EventsRegister {
             String packageName = "cn.lunadeer.dominion." + v.name() + ".";
             registerPackageEvents(packageName + "events.player");
             registerPackageEvents(packageName + "events.environment");
-
-            if (implementation == Implementation.PAPER) registerEvents(packageName + "scui.CuiEvents");
         }
     }
 

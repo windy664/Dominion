@@ -3,7 +3,7 @@ package cn.lunadeer.dominion.uis.tuis.dominion.manage;
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
-import cn.lunadeer.dominion.uis.cuis.ResizeDominion;
+import cn.lunadeer.dominion.uis.inputters.ResizeDominionInputter;
 import cn.lunadeer.dominion.uis.tuis.MainMenu;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.tuis.dominion.DominionManage;
@@ -60,38 +60,38 @@ public class SetSize {
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.north)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.NORTH.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.NORTH.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.NORTH.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.NORTH.name()).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.south)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.SOUTH.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.SOUTH.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.SOUTH.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.SOUTH.name()).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.west)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.WEST.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.WEST.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.WEST.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.WEST.name()).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.east)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.EAST.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.EAST.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.EAST.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.EAST.name()).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.up)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.UP.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.UP.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.UP.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.UP.name()).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.down)
-                            .append(ResizeDominion.buttonExpand(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.DOWN.name()).build())
-                            .append(ResizeDominion.buttonContract(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.DOWN.name()).build())
+                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.EXPAND.name(), DominionReSizeEvent.DIRECTION.DOWN.name()).build())
+                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.TYPE.CONTRACT.name(), DominionReSizeEvent.DIRECTION.DOWN.name()).build())
             );
 
             view.showOn(sender, 1);
