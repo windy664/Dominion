@@ -48,10 +48,10 @@ public class ResMigration {
             try {
                 dominions.addAll(processWorld(file));
             } catch (Exception e) {
-                XLogger.error("Failed to process file: %s, %s", file.getName(), e.getMessage());
+                XLogger.error("Failed to process file: {0}, {1}", file.getName(), e.getMessage());
             }
         }
-        XLogger.info("Extract %d residences", dominions.size());
+        XLogger.info("Extract {0} residences", dominions.size());
         return dominions;
     }
 
@@ -111,7 +111,7 @@ public class ResMigration {
 
     private static List<ResidenceNode> processWorld(File saveFile) throws Exception {
         XLogger.debug("=====================================");
-        XLogger.debug("Processing file: %s", saveFile.getName());
+        XLogger.debug("Processing file: {0}", saveFile.getName());
         String worldName = saveFile.getName().replace("res_", "").replace(".yml", "");
         World world = Dominion.instance.getServer().getWorld(worldName);
         InputStream inputStream = Files.newInputStream(saveFile.toPath());

@@ -78,15 +78,27 @@ public class PlayerDOO implements PlayerDTO {
         FieldString uuid = new FieldString("uuid", playerUid.toString());
         FieldString lastKnownName = new FieldString("last_known_name", playerName);
         FieldTimestamp lastJoinAt = new FieldTimestamp("last_join_at", Timestamp.valueOf(LocalDateTime.now()));
-        Map<String, Field<?>> res = Insert.insert().into("player_name")
-                .values(uuid, lastKnownName, lastJoinAt)
-                .returning(fields())
-                .onConflict(uuid.getName()).doUpdate()
+        Map<String, Field<?>> p;
+        List<Map<String, Field<?>>> res = Select.select(fields())
+                .from("player_name")
+                .where("uuid = ?", uuid.getValue())
                 .execute();
         if (res.isEmpty()) {
-            throw new SQLException("Create player failed");
+            p = Insert.insert().into("player_name")
+                    .values(uuid, lastKnownName, lastJoinAt)
+                    .returning(fields())
+                    .execute();
+            if (res.isEmpty()) {
+                throw new SQLException("Create player failed");
+            }
+        } else {
+            p = res.get(0);
+            Update.update("player_name")
+                    .set(lastKnownName, lastJoinAt)
+                    .where("uuid = ?", uuid.getValue())
+                    .execute();
         }
-        PlayerDOO player = parse(res);
+        PlayerDOO player = parse(p);
         CacheManager.instance.getPlayerCache().load(player.getId());
         return player;
     }
