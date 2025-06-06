@@ -14,6 +14,7 @@ import cn.lunadeer.dominion.misc.DominionException;
 import cn.lunadeer.dominion.uis.tuis.MigrateList;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.ResMigration;
+import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
@@ -27,13 +28,11 @@ import java.util.Objects;
 
 import static cn.lunadeer.dominion.Dominion.adminPermission;
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 import static cn.lunadeer.dominion.misc.Converts.toWorld;
 
 public class MigrationCommand {
 
     public static class MigrationCommandText extends ConfigurationPart {
-        public String createPlayerFailed = "Failed to create player cache for {0}.";
         public String migrateSuccess = "Migrated residence {0} to dominion successfully.";
         public String migrateFailed = "Failed to migrate residence. Reason: {0}";
         public String missingResidence = "Residence {0} not found.";
@@ -70,6 +69,33 @@ public class MigrationCommand {
     }.needPermission(defaultPermission).register();
 
     /**
+     * Secondary command to migrate all residences.
+     * This command will iterate through all residence data and migrate them.
+     */
+    public static SecondaryCommand migrateAll = new SecondaryCommand("migrate_all", List.of(
+    )) {
+        @Override
+        public void executeHandler(CommandSender sender) {
+            List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
+            if (res_data == null || res_data.isEmpty()) {
+                Notification.error(sender, Language.migrateListText.noData);
+                return;
+            }
+            int successCount = 0;
+            for (ResMigration.ResidenceNode resNode : res_data) {
+                try {
+                    doMigrateCreate(sender, resNode, null);
+                    successCount++;
+                } catch (Exception e) {
+                    Notification.error(sender, Language.migrationCommandText.migrateFailed, e.getMessage());
+                    XLogger.error(e);
+                }
+            }
+            Notification.info(sender, Language.migrationCommandText.migrateSuccess, successCount + "/" + res_data.size());
+        }
+    }.needPermission(adminPermission).register();
+
+    /**
      * Handles the migration process.
      *
      * @param sender  the command sender
@@ -90,11 +116,12 @@ public class MigrationCommand {
             if (resNode == null) {
                 throw new DominionException(Language.migrationCommandText.missingResidence, resName);
             }
-            Player player = toPlayer(resNode.ownerName);
-            if (!resNode.owner.equals(player.getUniqueId()) && !player.hasPermission(adminPermission)) {
-                throw new DominionException(Language.migrationCommandText.notYourResidence, resName);
+            if (sender instanceof Player player && !player.hasPermission(adminPermission)) {
+                if (!resNode.owner.equals(player.getUniqueId())) {
+                    throw new DominionException(Language.migrationCommandText.notYourResidence, resName);
+                }
             }
-            doMigrateCreate(player, resNode, null);
+            doMigrateCreate(sender, resNode, null);
             MigrateList.show(sender, pageStr);
         } catch (Exception e) {
             Notification.error(sender, Language.migrationCommandText.migrateFailed, e.getMessage());
@@ -104,37 +131,33 @@ public class MigrationCommand {
     /**
      * Performs the actual migration creation process.
      *
-     * @param player the player
+     * @param sender the player
      * @param node   the residence node
      * @param parent the parent dominion DTO
      * @throws Exception if an error occurs during migration
      */
-    private static void doMigrateCreate(Player player, ResMigration.ResidenceNode node, DominionDTO parent) throws Exception {
+    private static void doMigrateCreate(CommandSender sender, ResMigration.ResidenceNode node, DominionDTO parent) throws Exception {
         PlayerDTO ownerDTO = PlayerDOO.create(node.owner, node.ownerName);
-        if (ownerDTO == null) {
-            Notification.error(player, Language.migrationCommandText.createPlayerFailed, node.ownerName);
-            return;
-        }
         CuboidDTO cuboidDTO = new CuboidDTO(node.loc1, node.loc2);
         World world = toWorld(node.world.getUID());
         int renameNumber = 0;
         while (DominionDOO.select(renameNumber == 0 ? node.name : node.name + "_" + renameNumber) != null) {
             renameNumber++;
         }
-        DominionCreateEvent event = new DominionCreateEvent(player,
+        DominionCreateEvent event = new DominionCreateEvent(sender,
                 renameNumber == 0 ? node.name : node.name + "_" + renameNumber,
                 ownerDTO.getUuid(), world, cuboidDTO, parent);
         event.setSkipEconomy(true);
         event.callEvent();
         if (!event.isCancelled()) {
-            Notification.info(player, Language.migrationCommandText.migrateSuccess, node.name);
+            Notification.info(sender, Language.migrationCommandText.migrateSuccess, node.name);
             DominionDTO dominionCreated = event.getDominion();
             Objects.requireNonNull(Objects.requireNonNull(dominionCreated.setTpLocation(node.tpLoc))
                             .setJoinMessage(node.joinMessage))
                     .setLeaveMessage(node.leaveMessage);
             if (node.children != null) {
                 for (ResMigration.ResidenceNode child : node.children) {
-                    doMigrateCreate(player, child, dominionCreated);
+                    doMigrateCreate(sender, child, dominionCreated);
                 }
             }
         }
