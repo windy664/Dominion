@@ -157,7 +157,9 @@ public class CommandManager implements TabExecutor, Listener {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (strings.length == 1) {
-            return new ArrayList<>(commandsUsable.keySet());
+            return new ArrayList<>(commandsUsable.keySet().stream()
+                    .filter(cmd -> cmd.startsWith(strings[0]))
+                    .toList());
         }
         SecondaryCommand cmd = getCommand(strings[0]);
         if (cmd == null) {
