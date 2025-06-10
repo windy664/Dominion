@@ -286,6 +286,7 @@ public class DominionDOO implements DominionDTO {
                 .set(this.owner)
                 .where("id = ?", id.getValue())
                 .execute();
+        CacheManager.instance.getCache().getDominionCache().load();
         return this;
     }
 
