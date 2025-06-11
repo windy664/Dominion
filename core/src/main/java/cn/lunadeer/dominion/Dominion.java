@@ -105,7 +105,4 @@ public final class Dominion extends JavaPlugin {
 
     public static Dominion instance;
     public static Map<UUID, Map<Integer, Location>> pointsSelect = new HashMap<>();
-
-    public static String defaultPermission = "dominion.default";
-    public static String adminPermission = "dominion.admin";
 }

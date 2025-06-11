@@ -22,7 +22,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-import static cn.lunadeer.dominion.Dominion.defaultPermission;
+import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.*;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
@@ -92,7 +92,7 @@ public class MemberSetting {
                         public void function() {
                             MemberCommand.setMemberPrivilege(sender, dominion_name, player_name, flag.getFlagName(), "false", String.valueOf(page));
                         }
-                    }.needPermission(defaultPermission).green().build())
+                    }.needPermission(flag.needPermissionNode()).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))
                     );
         } else {
@@ -102,7 +102,7 @@ public class MemberSetting {
                         public void function() {
                             MemberCommand.setMemberPrivilege(sender, dominion_name, player_name, flag.getFlagName(), "true", String.valueOf(page));
                         }
-                    }.needPermission(defaultPermission).red().build())
+                    }.needPermission(flag.needPermissionNode()).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))
                     );
         }

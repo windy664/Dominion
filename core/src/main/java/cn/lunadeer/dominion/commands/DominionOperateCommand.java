@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import java.util.Arrays;
 import java.util.List;
 
-import static cn.lunadeer.dominion.Dominion.defaultPermission;
+import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.*;
 
 public class DominionOperateCommand {

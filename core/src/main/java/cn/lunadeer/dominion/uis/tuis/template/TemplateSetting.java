@@ -16,7 +16,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import static cn.lunadeer.dominion.Dominion.defaultPermission;
+import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 
@@ -70,7 +70,7 @@ public class TemplateSetting {
                         public void function() {
                             TemplateCommand.setTemplateFlag(sender, templateName, flag.getFlagName(), "false", pageStr);
                         }
-                    }.needPermission(defaultPermission).green().build())
+                    }.needPermission(flag.needPermissionNode()).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
         } else {
             return Line.create()
@@ -79,7 +79,7 @@ public class TemplateSetting {
                         public void function() {
                             TemplateCommand.setTemplateFlag(sender, templateName, flag.getFlagName(), "true", pageStr);
                         }
-                    }.needPermission(defaultPermission).red().build())
+                    }.needPermission(flag.needPermissionNode()).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
         }
     }

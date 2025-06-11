@@ -17,7 +17,7 @@ import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
-import static cn.lunadeer.dominion.Dominion.defaultPermission;
+import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
@@ -61,7 +61,7 @@ public class EnvSetting {
                                 public void function() {
                                     DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "false", pageStr);
                                 }
-                            }.needPermission(defaultPermission).green().build())
+                            }.needPermission(flag.needPermissionNode()).green().build())
                             .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
                     );
                 } else {
@@ -71,7 +71,7 @@ public class EnvSetting {
                                 public void function() {
                                     DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "true", pageStr);
                                 }
-                            }.needPermission(defaultPermission).red().build())
+                            }.needPermission(flag.needPermissionNode()).red().build())
                             .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
                     );
                 }

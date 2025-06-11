@@ -16,7 +16,6 @@ import cn.lunadeer.dominion.uis.tuis.dominion.manage.Info;
 import cn.lunadeer.dominion.uis.tuis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.tuis.dominion.manage.member.MemberList;
 import cn.lunadeer.dominion.utils.Notification;
-import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.stui.ListView;
@@ -30,7 +29,7 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
-import static cn.lunadeer.dominion.Dominion.defaultPermission;
+import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.*;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
@@ -132,7 +131,6 @@ public class DominionManage {
             view.showOn(player, page);
         } catch (Exception e) {
             Notification.error(sender, e.getMessage());
-            XLogger.error(e);
         }
     }
 }
