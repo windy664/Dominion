@@ -9,12 +9,10 @@ import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.configuration.*;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -63,14 +61,11 @@ public class Configuration extends ConfigurationFile {
                 yaml.set(flag.getConfigurationDefaultKey(), flag.getDefaultValue());
             }
             if (yaml.contains(flag.getConfigurationEnableKey())) {
-                flag.setEnable(yaml.getString(flag.getConfigurationEnableKey()));
+                flag.setEnable(yaml.getBoolean(flag.getConfigurationEnableKey()));
             } else {
                 yaml.set(flag.getConfigurationEnableKey(), flag.getEnable());
             }
             yaml.setInlineComments(flag.getConfigurationNameKey(), Collections.singletonList(flag.getDisplayName() + "-" + flag.getDescription()));
-            if (flag.isDynamic()) {
-                Bukkit.getPluginManager().addPermission(Permission.loadPermission(flag.getPermissionNodeName(), flag.getPermissionNodeConfiguration()));
-            }
         }
         yaml.save(yamlFile);
         XLogger.info(Language.configurationText.loadFlagSuccess);

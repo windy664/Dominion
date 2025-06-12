@@ -24,7 +24,7 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
-import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
+import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 
 public class CopyCommand {

@@ -19,7 +19,7 @@ import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.command.CommandSender;
 
-import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
+import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.*;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
@@ -82,7 +82,7 @@ public class GroupSetting {
                         public void function() {
                             GroupCommand.setGroupFlag(sender, DominionName, groupName, flag.getFlagName(), "false", pageStr);
                         }
-                    }.needPermission(flag.needPermissionNode()).green().build())
+                    }.needPermission(defaultPermission).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
         } else {
             return Line.create()
@@ -91,7 +91,7 @@ public class GroupSetting {
                         public void function() {
                             GroupCommand.setGroupFlag(sender, DominionName, groupName, flag.getFlagName(), "true", pageStr);
                         }
-                    }.needPermission(flag.needPermissionNode()).red().build())
+                    }.needPermission(defaultPermission).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
         }
     }

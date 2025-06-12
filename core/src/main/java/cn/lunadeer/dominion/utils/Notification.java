@@ -77,9 +77,6 @@ public class Notification {
 
     public static void error(CommandSender sender, String msg) {
         instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + msg, e_style));
-        if (isDebug()) {
-            XLogger.error(msg);
-        }
     }
 
     public static void error(CommandSender sender, String msg, Object... args) {

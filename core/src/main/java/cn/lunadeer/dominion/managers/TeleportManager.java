@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static cn.lunadeer.dominion.api.DominionAPI.adminPermission;
+import static cn.lunadeer.dominion.Dominion.adminPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.misc.Others.checkPrivilegeFlag;
 import static cn.lunadeer.dominion.utils.Misc.isPaper;

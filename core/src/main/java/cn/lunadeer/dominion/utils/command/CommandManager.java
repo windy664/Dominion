@@ -149,6 +149,7 @@ public class CommandManager implements TabExecutor, Listener {
             cmd.run(commandSender, strings);
         } catch (Exception e) {
             Notification.error(commandSender, e.getMessage());
+            XLogger.error(e);
         }
         return true;
     }

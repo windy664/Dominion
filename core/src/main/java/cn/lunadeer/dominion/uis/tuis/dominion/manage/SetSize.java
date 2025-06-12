@@ -14,7 +14,7 @@ import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import org.bukkit.command.CommandSender;
 
-import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
+import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionOwner;
 import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 import static cn.lunadeer.dominion.utils.Misc.formatString;

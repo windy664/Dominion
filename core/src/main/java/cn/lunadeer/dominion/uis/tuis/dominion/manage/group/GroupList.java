@@ -26,7 +26,7 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.lunadeer.dominion.api.DominionAPI.defaultPermission;
+import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.doos.MemberDOO.selectByDominionId;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.*;
