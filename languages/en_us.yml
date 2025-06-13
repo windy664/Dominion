@@ -412,3 +412,226 @@ inputter-text:
   only-player: TUI inputter can only be used by a player.
   cancel: ' [Send ''C'' to cancel the inputter.]'
   inputter-cancelled: Inputter cancelled.
+flags:
+  tnt_explode:
+    display-name: TNT Explode
+    description: Whether TNT can explode.
+  comparer:
+    display-name: Comparer
+    description: Whether can interact with comparer.
+  edit_sign:
+    display-name: Edit Sign
+    description: Whether can edit sign.
+  cake:
+    display-name: Cake
+    description: Whether can eat cake.
+  dragon_egg:
+    display-name: Dragon Egg
+    description: Whether can interact with dragon egg.
+  bed:
+    display-name: Bed
+    description: Weather can sleep in bed (set spawn point).
+  villager_spawn:
+    display-name: Villager Breed
+    description: Whether villager can breeding (including spawn egg).
+  trade:
+    display-name: Villager Trade
+    description: Whether can trade with villager.
+  note_block:
+    display-name: Note Block
+    description: Whether can interact with note block.
+  ignite:
+    display-name: Ignite
+    description: Whether can ignite fire.
+  wither_spawn:
+    display-name: Wither Spawn
+    description: Whether can spawn wither, and wither' explode.
+  trig_pressure_drop:
+    display-name: Pressure Plate (Dropping)
+    description: Whether dropping items can trigger pressure plate.
+  animal_spawn:
+    display-name: Animal Spawn (Breeding)
+    description: Whether animals can spawn (including spawn egg & breeding).
+  animal_move:
+    display-name: Animal Move
+    description: Whether animals can move in dominion.
+  villager_killing:
+    display-name: Villager Killing
+    description: Whether can do harm to villager.
+  animal_killing:
+    display-name: Animal Killing
+    description: Whether can do harm to animals.
+  monster_killing:
+    display-name: Monster Killing
+    description: Whether can do harm to monsters.
+  place:
+    display-name: Place Block
+    description: Whether can place blocks (normal blocks, item frame, lava, water).
+  fly:
+    display-name: Fly
+    description: NOT elytra fly, it's like creative mode fly.
+  honey:
+    display-name: Honey
+    description: Whether can interact with hive (to get honey).
+  monster_damage:
+    display-name: Monster Kill Player
+    description: Whether monster can do harm to player.
+  monster_spawn:
+    display-name: Monster Spawn
+    description: Whether monster can spawn (including spawn egg).
+  monster_move:
+    display-name: Monster Move
+    description: Whether monster can move in dominion.
+  admin:
+    display-name: Administrator
+    description: Member with this flag can manage normal members and groups.
+  crafter:
+    display-name: Crafter
+    description: Whether can interact with crafter (1.21).
+  piston_outside:
+    display-name: Piston
+    description: False to prevent piston from pushing/pulling blocks across dominion.
+  fire_spread:
+    display-name: Fire Spread
+    description: Prevent fire spread in dominion.
+  shear:
+    display-name: Shear
+    description: Whether can cut wool from sheep.
+  teleport:
+    display-name: Teleportation
+    description: False means can't teleport to this dominion.
+  hopper_outside:
+    display-name: Hopper (Outside)
+    description: False to prevent outside hopper from sucking container in dominion.
+  door:
+    display-name: Door
+    description: Whether can interact with door (including trapdoor, fence gate).
+  dragon_break_block:
+    display-name: Ender Dragon Break Block
+    description: Whether ender dragon can break blocks.
+  ender_man:
+    display-name: Ender Man
+    description: False to prevent ender-man from picking up blocks, spawning, teleporting.
+  break:
+    display-name: Break Block
+    description: Whether can break blocks (including item frame, armor stand).
+  vehicle_destroy:
+    display-name: Vehicle Destroy
+    description: Whether can destroy vehicle (boat, minecart).
+  riding:
+    display-name: Riding
+    description: Whether can ride vehicle (boat, minecart, horse etc.).
+  dye:
+    display-name: Dye
+    description: What can dye (sheep, dog collar, cat collar).
+  egg:
+    display-name: Throw Egg
+    description: Whether can throw egg.
+  vehicle_spawn:
+    display-name: Vehicle Spawn
+    description: Whether can spawn vehicle (boat, minecart).
+  trig_pressure_mob:
+    display-name: Pressure Plate (Mob)
+    description: Whether mob (player not included) can trigger pressure plate.
+  creeper_explode:
+    display-name: Entity Explode
+    description: Creeper/Wither Skull/Ender Crystal/Fireball/Bed/Respawn Anchor.
+  mob_drop_item:
+    display-name: Mob Drop Item
+    description: Whether mob drop item when killed.
+  button:
+    display-name: Button
+    description: Whether can click button.
+  hook:
+    display-name: Hook
+    description: Whether can use fishing rod.
+  enchant:
+    display-name: Enchant Table
+    description: Whether can use enchant table.
+  craft:
+    display-name: Crafting Table
+    description: Whether can use crafting table.
+  lever:
+    display-name: Lever
+    description: Whether can switch lever.
+  brew:
+    display-name: Brewing Stand
+    description: Whether can use brewing stand.
+  anvil:
+    display-name: Anvil
+    description: Whether can use anvil.
+  harvest:
+    display-name: Harvest
+    description: Whether player can harvest crops.
+  hopper:
+    display-name: Special Container
+    description: Such as hopper, furnace, dropper, dispenser, blast furnace, smoker.
+  ender_pearl:
+    display-name: End Pearl
+    description: Whether can throw ender pearl.
+  trig_pressure_proj:
+    display-name: Pressure Plate (Projectile)
+    description: When projectile (arrow/snowball) can trigger pressure plate.
+  item_frame_proj_damage:
+    display-name: Projectile Damage Item Frame
+    description: Whether projectile (arrow/snowball) can break item frame.
+  shoot:
+    display-name: Shooting
+    description: Include arrow/snowball/trident/fireball/wind-charge(1.21).
+  flow_in_protection:
+    display-name: Flow In
+    description: Prevent external water/lava flow into dominion.
+  player_damage:
+    display-name: Player Kill Player
+    description: Weather player can do (directly) harm to other player.
+  glow:
+    display-name: Glow
+    description: Like glowing arrow effect.
+  feed:
+    display-name: Feed Animal
+    description: Whether can feed animals.
+  show_border:
+    display-name: Show Border
+    description: Show dominion border to player when walking in.
+  beacon:
+    display-name: Beacon
+    description: Whether can interact with beacon.
+  pressure:
+    display-name: Pressure Plate (Player)
+    description: Whether player can trigger pressure plate.
+  container:
+    display-name: Container
+    description: Chest / Barrel/ ShulkerBox / ArmorStand / Item Frame
+  move:
+    display-name: Player Move
+    description: Whether player can move in dominion.
+  gravity_block:
+    display-name: Falling Block
+    description: Whether gravity block can fall in dominion (false will make them to item).
+  item_frame_interactive:
+    display-name: Item Frame Interactive
+    description: Whether can interact with item frame (rotate item).
+  repeater:
+    display-name: Repeater
+    description: Whether can change (interact with) repeater.
+  anchor:
+    display-name: Respawn Anchor
+    description: Weather can set/use respawn anchor.
+  trample:
+    display-name: Trample Farmland
+    description: Whether farmland can be trampled (false means protect farmland).
+  ice_melt:
+    display-name: Ice Melt
+    description: Whether to allow ice to melt
+  ice_form:
+    display-name: Ice Form
+    description: Whether to allow ice to form (prevents Frost Walker)
+  snow_accumulation:
+    display-name: Snow Accumulation
+    description: Whether to allow snow accumulation
+  snow_melt:
+    display-name: Snow Melt
+    description: Whether to allow snow to melt
+  pvp:
+    display-name: PVP
+    description: Damage between players
