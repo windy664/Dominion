@@ -15,7 +15,7 @@ libraries += "com.zaxxer:HikariCP:6.2.1"
 
 
 group = "cn.lunadeer"
-version = "4.3.0-beta"
+version = "4.3.1-beta"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -44,7 +44,7 @@ allprojects {
     dependencies {
         compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v2.6.2")
         compileOnly("us.dynmap:DynmapCoreAPI:3.4")
-        compileOnly("xyz.jpenilla:squaremap-api:1.3.6")
+        compileOnly("xyz.jpenilla:squaremap-api:1.3.4")
         compileOnly("me.clip:placeholderapi:2.11.6")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7")
         compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")
