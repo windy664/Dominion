@@ -14,24 +14,30 @@ import de.bluecolored.bluemap.api.markers.ExtrudeMarker;
 import de.bluecolored.bluemap.api.markers.MarkerSet;
 import de.bluecolored.bluemap.api.math.Color;
 import de.bluecolored.bluemap.api.math.Shape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
-public class BlueMapConnect {
+public class BlueMapConnect extends WebMapRender {
 
     public static class BlueMapConnectText extends ConfigurationPart {
         public String registerFail = "Failed to register BlueMap API.";
         public String infoLabel = "<div>{0}</div><div>Owner: {1}</div>";
     }
 
-    public static void render() {
+    public BlueMapConnect() {
+        WebMapRender.webMapInstances.add(this);
+    }
+
+    @Override
+    protected void renderDominions(@NotNull List<DominionDTO> dominions) {
         Scheduler.runTaskAsync(() -> {
             try {
                 BlueMapAPI.getInstance().ifPresent(api -> {
                     Map<String, List<DominionDTO>> world_dominions = new HashMap<>();
-                    for (DominionDTO dominion : CacheManager.instance.getCache().getDominionCache().getAllDominions()) {
+                    for (DominionDTO dominion : dominions) {
                         if (dominion.getWorld() == null) {
                             continue;
                         }
@@ -93,17 +99,18 @@ public class BlueMapConnect {
         });
     }
 
-    public static void renderMCA(Map<String, List<String>> mca_files) {
+    @Override
+    protected void renderMCA(@NotNull Map<String, List<String>> mcaFiles) {
         Scheduler.runTaskAsync(() -> {
             try {
                 BlueMapAPI.getInstance().ifPresent(api -> {
-                    for (String world : mca_files.keySet()) {
+                    for (String world : mcaFiles.keySet()) {
                         api.getWorld(world).ifPresent(bmWorld -> {
                             MarkerSet markerSet = MarkerSet.builder()
                                     .label("MCA")
                                     .defaultHidden(true)
                                     .build();
-                            for (String file : mca_files.get(world)) {
+                            for (String file : mcaFiles.get(world)) {
                                 // r.-1.-1.mca
                                 int mca_x = Integer.parseInt(file.split("\\.")[1]);
                                 int mca_z = Integer.parseInt(file.split("\\.")[2]);

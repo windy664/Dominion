@@ -44,6 +44,7 @@ allprojects {
     dependencies {
         compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v2.6.2")
         compileOnly("us.dynmap:DynmapCoreAPI:3.4")
+        compileOnly("xyz.jpenilla:squaremap-api:1.3.6")
         compileOnly("me.clip:placeholderapi:2.11.6")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7")
         compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")

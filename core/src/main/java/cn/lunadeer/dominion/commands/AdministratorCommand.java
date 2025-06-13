@@ -15,7 +15,7 @@ import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import cn.lunadeer.dominion.utils.stui.components.buttons.FunctionalButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.PermissionButton;
-import cn.lunadeer.dominion.utils.webMap.MapRender;
+import cn.lunadeer.dominion.utils.webMap.WebMapRender;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -200,7 +200,7 @@ public class AdministratorCommand {
                         Notification.error(sender, Language.administratorCommandText.exportMCAListFailed, world, e.getMessage());
                     }
                 }
-                MapRender.renderMCA(mca_cords);
+                WebMapRender.renderAllMCA(mca_cords);
                 Notification.info(sender, Language.administratorCommandText.exportedMCAList, folder.getAbsolutePath());
             });
         } catch (Exception e) {
