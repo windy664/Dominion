@@ -1,6 +1,9 @@
 package cn.lunadeer.dominion.utils.command;
 
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionDefault;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,8 +52,37 @@ public abstract class SecondaryCommand {
         this(command, new ArrayList<>(), "");
     }
 
+    /**
+     * Adds a required permission for this command.
+     *
+     * @param permission The permission string to be added.
+     * @return The current instance of SecondaryCommand.
+     */
     public SecondaryCommand needPermission(String permission) {
         permissions.add(permission);
+        return this;
+    }
+
+    /**
+     * Adds a child permission for this command based on a root permission.
+     * If the child permission does not exist, it will be created and registered.
+     * The child permission is derived from the root permission by appending the command name.
+     * <p>
+     * e.g. if the root permission is "myplugin.command" and the command is "subcommand",
+     * the child permission will be "myplugin.command.subcommand".
+     *
+     * @param rootPermission The root permission string.
+     * @param defaultValue   The default value for the child permission.
+     * @return The current instance of SecondaryCommand.
+     */
+    public SecondaryCommand needChildPermission(String rootPermission, PermissionDefault defaultValue) {
+        String childPermission = rootPermission + "." + command;
+        permissions.add(childPermission);
+        if (Bukkit.getPluginManager().getPermission(childPermission) == null) {
+            Bukkit.getPluginManager().addPermission(
+                    new Permission(childPermission, defaultValue)
+            );
+        }
         return this;
     }
 
