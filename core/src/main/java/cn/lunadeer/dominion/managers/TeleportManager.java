@@ -78,8 +78,8 @@ public class TeleportManager implements Listener {
         if (from.getBlockX() == to.getBlockX() && from.getBlockY() == to.getBlockY() && from.getBlockZ() == to.getBlockZ()) {
             return;
         }
-        teleportDelayTasks.get(event.getPlayer().getUniqueId()).cancel();
-        teleportDelayTasks.remove(event.getPlayer().getUniqueId());
+        CancellableTask task = teleportDelayTasks.remove(event.getPlayer().getUniqueId());
+        if (task != null) task.cancel();
         Notification.warn(event.getPlayer(), Language.teleportManagerText.cancelMove);
     }
 
