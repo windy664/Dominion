@@ -9,10 +9,12 @@ import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.configuration.*;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.permissions.Permission;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
@@ -305,6 +307,17 @@ public class Configuration extends ConfigurationFile {
             }
         }
         XLogger.info(Language.configurationText.loadLimitations, limitations.size(), String.join(", ", limitations.keySet()));
+        // Register permissions for limitations
+        for (Map.Entry<String, Limitation> entry : limitations.entrySet()) {
+            String permission = "dominion.limitation." + entry.getKey();
+            if (Bukkit.getPluginManager().getPermission(permission) == null) {
+                Bukkit.getPluginManager().addPermission(new Permission(permission));
+            }
+            String permissionGroup = "group." + entry.getKey();
+            if (Bukkit.getPluginManager().getPermission(permissionGroup) == null) {
+                Bukkit.getPluginManager().addPermission(new Permission(permissionGroup));
+            }
+        }
     }
 
     @PostProcess
@@ -331,7 +344,7 @@ public class Configuration extends ConfigurationFile {
             if (group.equals("default")) {
                 continue;
             }
-            if (player.hasPermission("group." + group)) {
+            if (player.hasPermission("group." + group) || player.hasPermission("dominion.limitation." + group)) {
                 playerLimitations.add(limitations.get(group));
             }
         }
