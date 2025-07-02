@@ -19,9 +19,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class ChestUserInterface implements Listener {
+public class ChestUserInterfaceManager implements Listener {
 
-    private static ChestUserInterface instance;
+    private static ChestUserInterfaceManager instance;
 
     private final Map<UUID, ChestView> views = new HashMap<>();
 
@@ -31,14 +31,14 @@ public class ChestUserInterface implements Listener {
     public static ItemStack PLACE_HOLDER_ITEM = attachTag(null, new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
 
 
-    public static ChestUserInterface getInstance() {
+    public static ChestUserInterfaceManager getInstance() {
         if (instance == null) {
             throw new IllegalStateException("ChestUserInterface has not been initialized. Please call ChestUserInterface.init(plugin) first.");
         }
         return instance;
     }
 
-    public ChestUserInterface(JavaPlugin plugin) {
+    public ChestUserInterfaceManager(JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         instance = this;
     }

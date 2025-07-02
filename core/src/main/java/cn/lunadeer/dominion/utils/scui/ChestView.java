@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static cn.lunadeer.dominion.utils.scui.ChestUserInterface.attachTag;
-import static cn.lunadeer.dominion.utils.scui.ChestUserInterface.hasTag;
+import static cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager.attachTag;
+import static cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager.hasTag;
 
 public class ChestView {
 
@@ -24,7 +24,7 @@ public class ChestView {
     public ChestView(@NotNull Player viewOwner) {
         this.viewOwner = viewOwner;
         this.title = "Default Title"; // Set a default title
-        ChestUserInterface.getInstance().registerView(this);
+        ChestUserInterfaceManager.getInstance().registerView(this);
     }
 
     public ChestView setTitle(@NotNull String title) {
@@ -79,6 +79,13 @@ public class ChestView {
         }
     }
 
+    public void close() {
+        ItemStack firstItem = viewOwner.getOpenInventory().getItem(0);
+        if (hasTag(firstItem)) {
+            viewOwner.getOpenInventory().close();
+        }
+    }
+
     private void create() {
         Inventory view = Bukkit.createInventory(viewOwner, 54, "");
         InventoryView inventoryView = viewOwner.openInventory(view);
@@ -103,7 +110,7 @@ public class ChestView {
         // Fill empty slots with placeholder items
         for (int i = 0; i < 54; i++) {
             if (view.getItem(i) != null) continue; // Skip if item is already set
-            view.setItem(i, ChestUserInterface.PLACE_HOLDER_ITEM);
+            view.setItem(i, ChestUserInterfaceManager.PLACE_HOLDER_ITEM);
         }
     }
 
