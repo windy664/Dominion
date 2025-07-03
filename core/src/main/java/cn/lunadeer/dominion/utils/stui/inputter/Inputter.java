@@ -45,8 +45,9 @@ public class Inputter implements Listener {
         if (!cachedInputters.containsKey(sender)) return;
         event.setCancelled(true);
         // run synchronously to avoid concurrency issues
+        String messageClone = event.getMessage();
         Scheduler.runTask(() -> {
-            cachedInputters.get(sender).runner(event.getMessage());
+            cachedInputters.get(sender).runner(messageClone);
         });
     }
 
