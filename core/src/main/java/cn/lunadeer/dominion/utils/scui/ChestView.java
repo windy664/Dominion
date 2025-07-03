@@ -52,6 +52,21 @@ public class ChestView {
     }
 
     /**
+     * Sets the layout of the chest view using an array of strings.
+     * <p>
+     * Each string in the array represents a row in the chest GUI.
+     * Each string must have exactly 9 characters, and the array can have up to 6 rows.
+     *
+     * @param layout an array of strings representing the layout rows
+     * @return the current ChestView instance for method chaining
+     * @throws IllegalArgumentException if the layout is empty, has more than 6 rows,
+     *                                  or any row does not have exactly 9 characters
+     */
+    public ChestView setLayout(@NotNull String... layout) {
+        return setLayout(String.join("", layout));
+    }
+
+    /**
      * Sets the layout of the chest view using a single string.
      * <p>
      * The layout string must have a length that is a multiple of 9 (each 9 characters represent a row),

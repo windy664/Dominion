@@ -16,7 +16,12 @@ public class MainMenu {
     public static void show(Player player, Integer page) {
         ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player);
 
-        view.setButton(1, 0, new ChestButton(Material.GRASS_BLOCK) {
+        view.setLayout(
+                "#########",
+                "##A#B#C##",
+                "#########"
+        );
+        view.setButton('A', new ChestButton(Material.GRASS_BLOCK) {
             @Override
             public void onClick(ClickType type) {
                 new InputterRunner(player, Language.createDominionInputterText.hint) {
