@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.ClickType;
 public class MainMenu {
 
     public static void show(Player player, Integer page) {
-        ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player).clearButtons();
+        ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player);
 
         view.setButton(1, 0, new ChestButton(Material.GRASS_BLOCK) {
             @Override
