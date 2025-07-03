@@ -27,7 +27,8 @@ public class ResizeDominionInputter {
                         dominionName, direction.name())) {
                     @Override
                     public void run(String input) {
-                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.EXPAND.name(), input, direction.name());
+                        String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
+                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.EXPAND.name(), numberInput, direction.name());
                         SetSize.show(sender, dominionName);
                     }
                 };
@@ -43,7 +44,8 @@ public class ResizeDominionInputter {
                         dominionName, direction.name())) {
                     @Override
                     public void run(String input) {
-                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.CONTRACT.name(), input, direction.name());
+                        String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
+                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.CONTRACT.name(), numberInput, direction.name());
                         SetSize.show(sender, dominionName);
                     }
                 };
