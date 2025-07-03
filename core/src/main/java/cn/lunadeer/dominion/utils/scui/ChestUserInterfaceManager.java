@@ -28,7 +28,7 @@ public class ChestUserInterfaceManager implements Listener {
     private static final NamespacedKey tag = new NamespacedKey("dominion", "chest_view");
     private static final NamespacedKey id = new NamespacedKey("dominion", "view_id");
 
-    public static ItemStack PLACE_HOLDER_ITEM = attachTag(null, new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
+    public static ItemStack PLACE_HOLDER_ITEM;
 
 
     public static ChestUserInterfaceManager getInstance() {
@@ -41,6 +41,10 @@ public class ChestUserInterfaceManager implements Listener {
     public ChestUserInterfaceManager(JavaPlugin plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
         instance = this;
+        PLACE_HOLDER_ITEM = attachTag(null, new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
+        ItemMeta meta = PLACE_HOLDER_ITEM.getItemMeta();
+        meta.setDisplayName("");
+        PLACE_HOLDER_ITEM.setItemMeta(meta);
     }
 
     public void registerView(ChestView view) {
@@ -54,7 +58,7 @@ public class ChestUserInterfaceManager implements Listener {
     public @NotNull ChestView getViewOf(Player viewOwner) {
         UUID viewId = viewOwner.getUniqueId();
         if (views.containsKey(viewId)) {
-            return views.get(viewId);
+            return views.get(viewId).clearButtons().clearLayout();
         } else {
             return new ChestView(viewOwner);
         }

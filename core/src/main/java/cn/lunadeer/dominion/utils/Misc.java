@@ -1,5 +1,8 @@
 package cn.lunadeer.dominion.utils;
 
+import cn.lunadeer.dominion.managers.PlaceHolderApi;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -61,6 +64,24 @@ public class Misc {
             return classesInPackage;
         }
         return classesInPackage;
+    }
+
+    /**
+     * Set placeholder for the message.
+     * <p>
+     * Use this method instead of PlaceholderAPI directly to avoid not installed PlaceholderAPI
+     * throwing NoClassDefFoundError.
+     *
+     * @param player  the player
+     * @param message the message
+     * @return the message with placeholder
+     */
+    public static String setPlaceholder(Player player, String message) {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            return PlaceHolderApi.setPlaceholders(player, message);
+        } else {
+            return message;
+        }
     }
 
 }

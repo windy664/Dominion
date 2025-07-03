@@ -1,13 +1,18 @@
 package cn.lunadeer.dominion.utils.scui;
 
+import cn.lunadeer.dominion.utils.ColorParser;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
+
+import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
 
 public abstract class ChestButton {
 
@@ -16,13 +21,15 @@ public abstract class ChestButton {
     private List<String> lore;
 
     // Item of Material type
-    public ChestButton(Material material) {
+    public ChestButton(String displayName, Material material) {
+        this.displayName = displayName;
         this.item = new ItemStack(material);
     }
 
     // Item of PlayerHead type
-    public ChestButton(String playerName) {
-        item = new ItemStack(Material.PLAYER_HEAD);
+    public ChestButton(String displayName, String playerName) {
+        this.displayName = displayName;
+        this.item = new ItemStack(Material.PLAYER_HEAD);
         Scheduler.runTaskAsync(() -> {
             SkullMeta headMeta = (SkullMeta) item.getItemMeta();
             headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
@@ -35,6 +42,11 @@ public abstract class ChestButton {
         return this;
     }
 
+    public ChestButton setLore(List<String> lore) {
+        this.lore = lore;
+        return this;
+    }
+
     public ChestButton setLore(String... lore) {
         this.lore = List.of(lore);
         return this;
@@ -42,13 +54,21 @@ public abstract class ChestButton {
 
     public abstract void onClick(ClickType type);
 
-    public ItemStack build() {
+    public ItemStack build(Player viewOwner) {
+        ItemMeta meta = item.getItemMeta();
         if (displayName != null) {
-            item.getItemMeta().setDisplayName(displayName);
+            displayName = setPlaceholder(viewOwner, displayName);
+            displayName = ColorParser.getBukkitType(displayName);
+            meta.setDisplayName(displayName);
         }
         if (lore != null) {
-            item.getItemMeta().setLore(lore);
+            for (int i = 0; i < lore.size(); i++) {
+                lore.set(i, setPlaceholder(viewOwner, lore.get(i)));
+                lore.set(i, ColorParser.getBukkitType(lore.get(i)));
+            }
+            meta.setLore(lore);
         }
+        item.setItemMeta(meta);
         return item;
     }
 }

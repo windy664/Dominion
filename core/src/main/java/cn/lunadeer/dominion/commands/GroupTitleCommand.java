@@ -9,7 +9,7 @@ import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.misc.DominionException;
-import cn.lunadeer.dominion.uis.tuis.TitleList;
+import cn.lunadeer.dominion.uis.TitleList;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;

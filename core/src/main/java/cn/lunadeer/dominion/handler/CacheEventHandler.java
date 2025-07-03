@@ -6,16 +6,15 @@ import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.events.PlayerCrossDominionBorderEvent;
 import cn.lunadeer.dominion.events.PlayerMoveInDominionEvent;
 import cn.lunadeer.dominion.events.PlayerMoveOutDominionEvent;
-import cn.lunadeer.dominion.managers.PlaceHolderApi;
 import cn.lunadeer.dominion.utils.MessageDisplay;
 import cn.lunadeer.dominion.utils.ParticleUtil;
 import cn.lunadeer.dominion.utils.XLogger;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+
+import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
 
 public class CacheEventHandler implements Listener {
 
@@ -60,24 +59,6 @@ public class CacheEventHandler implements Listener {
     @EventHandler
     public void onPlayerCrossDominionBorderEvent(PlayerCrossDominionBorderEvent event) {
         XLogger.debug("PlayerCrossDominionBorderEvent called.");
-    }
-
-    /**
-     * Set placeholder for the message.
-     * <p>
-     * Use this method instead of PlaceholderAPI directly to avoid not installed PlaceholderAPI
-     * throwing NoClassDefFoundError.
-     *
-     * @param player  the player
-     * @param message the message
-     * @return the message with placeholder
-     */
-    private static String setPlaceholder(Player player, String message) {
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            return PlaceHolderApi.setPlaceholders(player, message);
-        } else {
-            return message;
-        }
     }
 
     @EventHandler

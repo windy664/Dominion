@@ -432,5 +432,7 @@ public class Configuration extends ConfigurationFile {
         Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender()
                 , Language.configurationText.databaseConnected);
         DatabaseTables.migrate();
+        // CUI
+        ConfigurationManager.load(ChestUserInterface.class, new File(Dominion.instance.getDataFolder(), "cui.yml"));
     }
 }

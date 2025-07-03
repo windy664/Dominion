@@ -11,7 +11,7 @@ import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.events.dominion.DominionCreateEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.misc.DominionException;
-import cn.lunadeer.dominion.uis.tuis.MigrateList;
+import cn.lunadeer.dominion.uis.MigrateList;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.ResMigration;
 import cn.lunadeer.dominion.utils.XLogger;

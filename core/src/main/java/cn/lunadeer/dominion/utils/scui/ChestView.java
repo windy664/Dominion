@@ -1,5 +1,6 @@
 package cn.lunadeer.dominion.utils.scui;
 
+import cn.lunadeer.dominion.utils.ColorParser;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -13,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
 import static cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager.attachTag;
 import static cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager.hasTag;
 
@@ -199,7 +201,7 @@ public class ChestView {
      */
     public void open() {
         ItemStack firstItem = viewOwner.getOpenInventory().getItem(0);
-        if (hasTag(firstItem)) {
+        if (hasTag(firstItem) && viewOwner.getOpenInventory().countSlots() == (layout.isEmpty() ? 54 : layout.length())) {
             refresh(viewOwner.getOpenInventory());
         } else {
             create();
@@ -217,7 +219,7 @@ public class ChestView {
     }
 
     private void create() {
-        Inventory view = Bukkit.createInventory(viewOwner, 54, "");
+        Inventory view = Bukkit.createInventory(viewOwner, layout.isEmpty() ? 54 : layout.length(), "");
         InventoryView inventoryView = viewOwner.openInventory(view);
         if (inventoryView == null) {
             throw new IllegalStateException("Failed to open inventory for player: " + viewOwner.getName());
@@ -226,24 +228,25 @@ public class ChestView {
     }
 
     protected void refresh(@NotNull InventoryView view) {
+        title = setPlaceholder(viewOwner, title);
+        title = ColorParser.getBukkitType(title);
         view.setTitle(title);
         for (Map.Entry<Integer, ChestButton> entry : buttons.entrySet()) {
             int slot = entry.getKey();
             ChestButton button = entry.getValue();
             if (button != null) {
-                ItemStack item = attachTag(viewOwner.getUniqueId(), button.build());
+                ItemStack item = attachTag(viewOwner.getUniqueId(), button.build(viewOwner));
                 view.setItem(slot, item);
             } else {
                 view.setItem(slot, null);
             }
         }
         // Fill empty slots with placeholder items
-        for (int i = 0; i < 54; i++) {
+        int totalSlots = layout.isEmpty() ? 54 : layout.length();
+        for (int i = 0; i < totalSlots; i++) {
             if (view.getItem(i) != null) continue; // Skip if item is already set
             view.setItem(i, ChestUserInterfaceManager.PLACE_HOLDER_ITEM);
         }
-        clearButtons();
-        clearLayout();
     }
 
     public UUID getViewId() {
