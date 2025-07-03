@@ -590,6 +590,18 @@ flags:
   pvp:
     display-name: 玩家伤害
     description: 玩家之间是否可以造成伤害
+  ice_melt:
+    display-name: 冰融化
+    description: 是否允许冰融化
+  ice_form:
+    display-name: 冰生成
+    description: 是否允许冰生成（防止冰霜行者）
+  snow_accumulation:
+    display-name: 积雪
+    description: 是否允许生成积雪
+  snow_melt:
+    display-name: 积雪融化
+    description: 是否允许积雪融化
 copy-menu-tui-text:
   button: 复制配置
   description: 从其他领地复制配置到当前领地。

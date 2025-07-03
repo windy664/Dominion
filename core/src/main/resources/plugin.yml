@@ -9,15 +9,16 @@ softdepend:
   - dynmap
   - PlaceholderAPI
   - BlueMap
+  - squaremap
 commands:
   dominion:
-    description: 领地插件命令
+    description: Dominion plugin command
     usage: /dominion <cmd>
     aliases: [ dominion, dom ]
 permissions:
   dominion.admin:
-    description: 领地插件管理员权限
+    description: Administrator permissions for Dominion plugin
     default: op
   dominion.default:
-    description: 领地插件用户权限
+    description: Default user permissions for Dominion plugin
     default: true

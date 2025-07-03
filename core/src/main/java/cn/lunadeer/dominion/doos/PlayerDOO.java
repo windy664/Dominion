@@ -88,7 +88,7 @@ public class PlayerDOO implements PlayerDTO {
                     .values(uuid, lastKnownName, lastJoinAt)
                     .returning(fields())
                     .execute();
-            if (res.isEmpty()) {
+            if (p.isEmpty()) {
                 throw new SQLException("Create player failed");
             }
         } else {

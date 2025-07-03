@@ -9,10 +9,22 @@ public class Argument {
     private Suggestion suggestion = null;
     private String value = "";
 
+    /**
+     * Constructs an Argument with the specified name, required status, and default value.
+     *
+     * @param name     The name of the argument.
+     * @param required Whether the argument is required.
+     */
     public Argument(String name, boolean required) {
         this(name, required, null);
     }
 
+    /**
+     * Constructs an Option Argument with the specified name and default value.
+     *
+     * @param name         The name of the argument.
+     * @param defaultValue The default value of the argument.
+     */
     public Argument(String name, String defaultValue) {
         this(name, false, null);
         this.value = defaultValue;

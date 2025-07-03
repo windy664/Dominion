@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -39,11 +40,7 @@ public class CommandManager implements TabExecutor, Listener {
      * @param rootCommand The root command to be managed, should start with a slash.
      */
     public CommandManager(JavaPlugin plugin, String rootCommand) {
-        CommandManager.rootCommand = "/" + rootCommand;
-        Objects.requireNonNull(Bukkit.getPluginCommand(rootCommand)).setExecutor(this);
-        XLogger.debug("Registered {0} commands.", commands.size());
-        Bukkit.getPluginManager().registerEvents(this, plugin);
-        this.plugin = plugin;
+        this(plugin, rootCommand, null);
     }
 
     public CommandManager(JavaPlugin plugin, String rootCommand, Consumer<CommandSender> rootCommandConsumer) {
@@ -53,11 +50,18 @@ public class CommandManager implements TabExecutor, Listener {
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
         this.rootCommandConsumer = rootCommandConsumer;
-    }
 
-    public void printUsages() {
-        for (String cmd : commandsUsable.keySet()) {
-            XLogger.debug("{0}", commands.get(cmd).getUsage());
+        new SecondaryCommand("help", List.of(new Argument("page", "1"))) {
+            @Override
+            public void executeHandler(CommandSender sender) {
+                printHelp(sender, getArguments().get(0).getValue());
+            }
+        }.register();
+
+        if (this.rootCommandConsumer == null) {
+            this.rootCommandConsumer = (sender) -> {
+                printHelp(sender, "1");
+            };
         }
     }
 
@@ -66,7 +70,7 @@ public class CommandManager implements TabExecutor, Listener {
         if (plugin.getServer().getOnlinePlayers().isEmpty()) {
             for (String cmd : commands.keySet()) {
                 // Unregister all commands that are hidden
-                if (commands.get(cmd).isHideUsage()) {
+                if (commands.get(cmd).isDynamic()) {
                     XLogger.debug("Due to no one online, Unregistering command: {0}", cmd);
                     unregisterCommand(cmd);
                 }
@@ -93,7 +97,7 @@ public class CommandManager implements TabExecutor, Listener {
      */
     public static void registerCommand(SecondaryCommand command) {
         commands.put(command.getCommand(), command);
-        if (!command.isHideUsage()) {
+        if (!command.isDynamic()) {
             commandsUsable.put(command.getCommand(), command);
         }
     }
@@ -149,6 +153,7 @@ public class CommandManager implements TabExecutor, Listener {
             cmd.run(commandSender, strings);
         } catch (Exception e) {
             Notification.error(commandSender, e.getMessage());
+            XLogger.error(e);
         }
         return true;
     }
@@ -156,7 +161,9 @@ public class CommandManager implements TabExecutor, Listener {
     @Override
     public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         if (strings.length == 1) {
-            return new ArrayList<>(commandsUsable.keySet());
+            return new ArrayList<>(commandsUsable.keySet().stream()
+                    .filter(cmd -> cmd.startsWith(strings[0]))
+                    .toList());
         }
         SecondaryCommand cmd = getCommand(strings[0]);
         if (cmd == null) {
@@ -179,5 +186,43 @@ public class CommandManager implements TabExecutor, Listener {
             }
         }
         return args.get(strings.length - 2).getSuggestion().get(commandSender);
+    }
+
+    private void printHelp(CommandSender sender, String pageStr) {
+        if (commands.isEmpty()) {
+            return;
+        }
+        int pageSize = sender instanceof Player ? 10 : 25; // Number of commands per page
+        int page;
+        try {
+            page = Integer.parseInt(pageStr);
+        } catch (NumberFormatException e) {
+            // If pageStr is not a valid number, default to page 1
+            page = 1;
+        }
+        int totalPages = (int) Math.ceil((double) commandsUsable.size() / pageSize);
+        if (page < 1) {
+            page = 1;
+        }
+        if (page > totalPages) {
+            page = totalPages;
+        }
+
+        String header = "------------ [" + pageStr + "/" + totalPages + "] ------------";
+        Notification.info(sender, header);
+
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, commandsUsable.size());
+        int index = 0;
+        for (String cmd : commandsUsable.keySet()) {
+            if (index >= start && index < end) {
+                String line = commandsUsable.get(cmd).getUsage();
+                if (!commandsUsable.get(cmd).getDescription().isEmpty()) {
+                    line += " - " + commandsUsable.get(cmd).getDescription();
+                }
+                Notification.info(sender, line);
+            }
+            index++;
+        }
     }
 }

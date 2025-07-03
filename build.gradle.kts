@@ -6,7 +6,7 @@ plugins {
     id("io.papermc.hangar-publish-plugin") version "0.1.2"
 }
 
-var BuildFull = properties["BuildFull"].toString() == "true"
+var buildFull = properties["BuildFull"].toString() == "true"
 var libraries = listOf<String>()
 libraries += "org.postgresql:postgresql:42.7.2"
 libraries += "mysql:mysql-connector-java:8.0.33"
@@ -15,7 +15,7 @@ libraries += "com.zaxxer:HikariCP:6.2.1"
 
 
 group = "cn.lunadeer"
-version = "4.2.1-beta"
+version = "4.3.5-beta"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -44,11 +44,12 @@ allprojects {
     dependencies {
         compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v2.6.2")
         compileOnly("us.dynmap:DynmapCoreAPI:3.4")
+        compileOnly("xyz.jpenilla:squaremap-api:1.3.4")
         compileOnly("me.clip:placeholderapi:2.11.6")
         compileOnly("com.github.MilkBowl:VaultAPI:1.7")
         compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")
 
-        if (!BuildFull) {
+        if (!buildFull) {
             libraries.forEach {
                 compileOnly(it)
             }
@@ -70,7 +71,7 @@ allprojects {
             filter {
                 it.replace("@version@", rootProject.version.toString())
             }
-            if (!BuildFull) {
+            if (!buildFull) {
                 var libs = "libraries: ["
                 libraries.forEach {
                     libs += "$it,"
@@ -87,7 +88,7 @@ allprojects {
         archiveVersion.set(project.version.toString())
         dependsOn(tasks.withType<ProcessResources>())
         // add -lite to the end of the file name if BuildLite is true or -full if BuildLite is false
-        archiveFileName.set("${project.name}-${project.version}${if (BuildFull) "-full" else "-lite"}.jar")
+        archiveFileName.set("${project.name}-${project.version}${if (buildFull) "-full" else "-lite"}.jar")
     }
 }
 

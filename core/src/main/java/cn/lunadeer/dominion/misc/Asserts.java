@@ -82,7 +82,7 @@ public class Asserts {
         if (dominionName.isEmpty()) {
             throw new DominionException(Language.assertsText.domNameShouldNotEmpty);
         }
-        if (dominionName.contains(" ") || dominionName.contains(".")) {
+        if (dominionName.contains(" ") || dominionName.contains(".") || dominionName.contains("§")) {
             throw new DominionException(Language.assertsText.domNameInvalid);
         }
         if (DominionDOO.select(dominionName) != null) {

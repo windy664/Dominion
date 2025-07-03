@@ -19,8 +19,6 @@ import java.util.UUID;
 
 public class DominionInterface extends DominionAPI {
 
-    public static DominionInterface instance;
-
     public DominionInterface() {
         instance = this;
     }

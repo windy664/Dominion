@@ -38,7 +38,7 @@ public class Others {
         public String autoCleanStart = "Start auto clean players who have not logged in for {0} days.";
         public String autoCleaningPlayer = "Cleaned {0}'s data.";
         public String autoCleanEnd = "Auto clean finished.";
-        public String noPermissionForFlag = "You do not have {0}({1}) permission.";
+        public String noPermissionForFlag = "&4&lYou do not have {0}({1}) permission.";
     }
 
     public static boolean bypassLimit(Player player) {

@@ -3,6 +3,7 @@ package cn.lunadeer.dominion.utils.stui.inputter;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -38,7 +39,7 @@ public class Inputter implements Listener {
         cachedInputters.remove(inputterRunner.getSender());
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerInput(AsyncPlayerChatEvent event) {
         Player sender = event.getPlayer();
         if (!cachedInputters.containsKey(sender)) return;
@@ -49,7 +50,7 @@ public class Inputter implements Listener {
         });
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerLogout(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         cachedInputters.remove(player);

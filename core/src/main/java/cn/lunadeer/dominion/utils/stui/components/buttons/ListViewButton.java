@@ -28,7 +28,7 @@ public abstract class ListViewButton extends PermissionButton {
                 }
                 function(getArgumentValue(0));
             }
-        }.hideUsage().register();
+        }.dynamic().register();
         this.action = ClickEvent.Action.RUN_COMMAND;
         this.clickExecute = CommandManager.getRootCommand() + " tui_page_btn_future_" + uuid;
     }

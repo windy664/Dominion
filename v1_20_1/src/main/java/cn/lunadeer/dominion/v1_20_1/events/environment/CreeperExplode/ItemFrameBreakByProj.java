@@ -24,8 +24,8 @@ public class ItemFrameBreakByProj implements Listener {
         if (!(remover instanceof Projectile projectile)) {
             return;
         }
-        if (!(projectile.getShooter() instanceof Player)) {
-            // if the shooter is not a player, handle in player events
+        if (projectile.getShooter() instanceof Player) {
+            // if the shooter is a player, handle in player events
             return;
         }
         DominionDTO dom = CacheManager.instance.getDominion(event.getEntity().getLocation());

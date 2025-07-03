@@ -21,8 +21,6 @@ import cn.lunadeer.dominion.utils.databse.DatabaseManager;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
 import cn.lunadeer.dominion.utils.stui.inputter.Inputter;
-import cn.lunadeer.dominion.utils.webMap.DynmapConnect;
-import cn.lunadeer.dominion.utils.webMap.MapRender;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,6 +28,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+
+import static cn.lunadeer.dominion.utils.webMap.WebMapRender.WebMapRenderInit;
 
 public final class Dominion extends JavaPlugin {
 
@@ -82,7 +82,6 @@ public final class Dominion extends JavaPlugin {
         CommandManager commandManager = new CommandManager(this, "dominion", (sender) -> {
             MainMenu.show(sender, "1");
         });
-        if (Configuration.debug) commandManager.printUsages();
 
         bStatsMetrics metrics = new bStatsMetrics(this, 21445);
         metrics.addCustomChart(new bStatsMetrics.SimplePie("database", () -> Configuration.database.type));
@@ -92,8 +91,7 @@ public final class Dominion extends JavaPlugin {
 
         XLogger.info(Language.dominionText.pluginEnabled);
 
-        if (Configuration.webMapRenderer.dynmap) new DynmapConnect();  // 注册 Dynmap API
-        Scheduler.runTaskLaterAsync(MapRender::render, 40 * 20);
+        WebMapRenderInit();
         Others.autoClean();
     }
 
