@@ -22,7 +22,7 @@ public class ChestView {
 
     private final Player viewOwner;
     private String title;
-    private final Map<Integer, ChestButton> buttons = new HashMap<>();
+    protected final Map<Integer, ChestButton> buttons = new HashMap<>();
     private String layout = "";
 
     public ChestView(@NotNull Player viewOwner) {
@@ -144,11 +144,17 @@ public class ChestView {
         if (layout.isEmpty()) {
             throw new IllegalStateException("Layout must be set before adding buttons with symbols.");
         }
-        int slot = layout.indexOf(symbol);
-        if (slot == -1) {
+        boolean found = false;
+        for (int i = 0; i < layout.length(); i++) {
+            if (layout.charAt(i) == symbol) {
+                setButton(i, button);
+                found = true;
+            }
+        }
+        if (!found) {
             throw new IllegalArgumentException("Symbol '" + symbol + "' not found in layout: " + layout);
         }
-        return setButton(slot, button);
+        return this;
     }
 
     /**
@@ -218,7 +224,7 @@ public class ChestView {
         }
     }
 
-    private void create() {
+    protected void create() {
         Inventory view = Bukkit.createInventory(viewOwner, layout.isEmpty() ? 54 : layout.length(), "");
         InventoryView inventoryView = viewOwner.openInventory(view);
         if (inventoryView == null) {
@@ -251,6 +257,18 @@ public class ChestView {
 
     public UUID getViewId() {
         return viewOwner.getUniqueId();
+    }
+
+    public Player getViewOwner() {
+        return viewOwner;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getLayout() {
+        return layout;
     }
 
     public void handleClick(Integer slot, ClickType type) {

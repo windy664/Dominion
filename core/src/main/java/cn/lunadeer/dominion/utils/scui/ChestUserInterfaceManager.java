@@ -64,6 +64,10 @@ public class ChestUserInterfaceManager implements Listener {
         }
     }
 
+    public @NotNull ChestListView getListViewOf(Player viewOwner) {
+        return new ChestListView(viewOwner);
+    }
+
     @EventHandler
     public void unregisterView(PlayerQuitEvent view) {
         UUID viewId = view.getPlayer().getUniqueId();
