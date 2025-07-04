@@ -125,8 +125,14 @@ public class ResMigration {
         for (Map.Entry<Integer, Object> entry : Messages.entrySet()) {
             Map<String, String> message = (Map<String, String>) entry.getValue();
             Message msg = new Message();
-            msg.EnterMessage = (String) message.get("EnterMessage");
-            msg.LeaveMessage = (String) message.get("LeaveMessage");
+            msg.EnterMessage = (String) message.get("EnterMessage")
+                    .replace("%owner", "{OWNER}")
+                    .replace("%residence", "{DOM}")
+                    .replace("%player", "{PLAYER}");
+            msg.LeaveMessage = (String) message.get("LeaveMessage")
+                    .replace("%owner", "{OWNER}")
+                    .replace("%residence", "{DOM}")
+                    .replace("%player", "{PLAYER}");
             messages.put(entry.getKey(), msg);
         }
         save.setMessages(messages);
