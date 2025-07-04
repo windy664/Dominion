@@ -58,7 +58,11 @@ public class ChestUserInterfaceManager implements Listener {
     public @NotNull ChestView getViewOf(Player viewOwner) {
         UUID viewId = viewOwner.getUniqueId();
         if (views.containsKey(viewId)) {
-            return views.get(viewId).clearButtons().clearLayout();
+            if (views.get(viewId) instanceof ChestListView) {
+                return new ChestView(viewOwner);
+            } else {
+                return views.get(viewId).clearButtons().clearLayout();
+            }
         } else {
             return new ChestView(viewOwner);
         }

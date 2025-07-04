@@ -1,14 +1,11 @@
 package cn.lunadeer.dominion.utils.scui;
 
 import cn.lunadeer.dominion.utils.ColorParser;
-import cn.lunadeer.dominion.utils.scheduler.Scheduler;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.List;
 
@@ -26,16 +23,16 @@ public abstract class ChestButton {
         this.item = new ItemStack(material);
     }
 
-    // Item of PlayerHead type
-    public ChestButton(String displayName, String playerName) {
-        this.displayName = displayName;
-        this.item = new ItemStack(Material.PLAYER_HEAD);
-        Scheduler.runTaskAsync(() -> {
-            SkullMeta headMeta = (SkullMeta) item.getItemMeta();
-            headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
-            item.setItemMeta(headMeta);
-        });
-    }
+//    // Item of PlayerHead type
+//    public ChestButton(String displayName, String playerName) {
+//        this.displayName = displayName;
+//        this.item = new ItemStack(Material.PLAYER_HEAD);
+//        Scheduler.runTaskAsync(() -> {
+//            SkullMeta headMeta = (SkullMeta) item.getItemMeta();
+//            headMeta.setOwningPlayer(Bukkit.getOfflinePlayer(playerName));
+//            item.setItemMeta(headMeta);
+//        });
+//    }
 
     public ChestButton setDisplayName(String displayName) {
         this.displayName = displayName;
@@ -59,12 +56,14 @@ public abstract class ChestButton {
         if (displayName != null) {
             displayName = setPlaceholder(viewOwner, displayName);
             displayName = ColorParser.getBukkitType(displayName);
+            // todo MiniMessage support
             meta.setDisplayName(displayName);
         }
         if (lore != null) {
             for (int i = 0; i < lore.size(); i++) {
                 lore.set(i, setPlaceholder(viewOwner, lore.get(i)));
                 lore.set(i, ColorParser.getBukkitType(lore.get(i)));
+                // todo MiniMessage support
             }
             meta.setLore(lore);
         }

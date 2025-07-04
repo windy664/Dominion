@@ -1,20 +1,26 @@
 package cn.lunadeer.dominion.uis;
 
+import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.misc.CommandArguments;
+import cn.lunadeer.dominion.uis.dominion.DominionManage;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
-import cn.lunadeer.dominion.utils.configuration.Comments;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
+import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestListView;
 import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
+import cn.lunadeer.dominion.utils.scui.configuration.ButtonConfiguration;
+import cn.lunadeer.dominion.utils.scui.configuration.ListViewConfiguration;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 
@@ -75,24 +81,48 @@ public class AllDominion extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class AllDominionCui extends ConfigurationPart {
-        public String title = "All Dominions of Server";
-        @Comments({
-                "This is a list view, so 'i'(item), 'p'(previous page), 'n'(next page) are necessary.",
-                "These three symbols are unchangeable. But you can change the position of them.",
-        })
-        public List<String> layout = List.of(
-                "#########",
-                "#iiiiiii#",
-                "#iiiiiii#",
-                "#iiiiiii#",
-                "#p#####n#"
+        public ListViewConfiguration listConfiguration = new ListViewConfiguration(
+                "All Dominions",
+                'i',
+                List.of(
+                        "#########",
+                        "#iiiiiii#",
+                        "#iiiiiii#",
+                        "#iiiiiii#",
+                        "#p#####n#"
+                )
+        );
+
+        public ButtonConfiguration dominionItemButton = new ButtonConfiguration(
+                'i', Material.PAPER, "{0}",
+                List.of("Click to manage this dominion.")
         );
     }
 
     @Override
     protected void showCUI(Player player, String... args) {
-        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-        view.setTitle(ChestUserInterface.allDominionCui.title);
-        view.setLayout(ChestUserInterface.allDominionCui.layout);
+        try {
+            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+            view = view.applyListConfiguration(ChestUserInterface.allDominionCui.listConfiguration, toIntegrity(args[0]));
+
+            List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
+            for (DominionDTO dominion : dominions) {
+                ChestButton btn = new ChestButton(
+                        ChestUserInterface.allDominionCui.dominionItemButton.getName(dominion.getName()),
+                        ChestUserInterface.allDominionCui.dominionItemButton.getMaterial()
+                ) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        DominionManage.show(player, dominion.getName(), "1");
+                    }
+                };
+                btn = btn.setLore(ChestUserInterface.allDominionCui.dominionItemButton.getLore());
+                view.addItem(btn);
+            }
+
+            view.open();
+        } catch (Exception e) {
+            Notification.error(player, e.getMessage());
+        }
     }
 }
