@@ -43,7 +43,7 @@ public class ChestUserInterfaceManager implements Listener {
         instance = this;
         PLACE_HOLDER_ITEM = attachTag(null, new ItemStack(Material.GRAY_STAINED_GLASS_PANE));
         ItemMeta meta = PLACE_HOLDER_ITEM.getItemMeta();
-        meta.setDisplayName("");
+        meta.setDisplayName(" ");
         PLACE_HOLDER_ITEM.setItemMeta(meta);
     }
 

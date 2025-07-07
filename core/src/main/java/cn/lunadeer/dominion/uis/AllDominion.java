@@ -85,7 +85,7 @@ public class AllDominion extends AbstractUI {
                 "All Dominions",
                 'i',
                 List.of(
-                        "#########",
+                        "B########",
                         "#iiiiiii#",
                         "#iiiiiii#",
                         "#iiiiiii#",
@@ -94,8 +94,16 @@ public class AllDominion extends AbstractUI {
         );
 
         public ButtonConfiguration dominionItemButton = new ButtonConfiguration(
-                'i', Material.PAPER, "{0}",
-                List.of("Click to manage this dominion.")
+                'i', Material.PAPER, "Name: {0}",
+                List.of(
+                        "Owner: {0}",
+                        "Click to manage this dominion."
+                )
+        );
+
+        public ButtonConfiguration backButton = new ButtonConfiguration(
+                'B', Material.RED_STAINED_GLASS_PANE,
+                "Back", List.of("Go back to the main menu.")
         );
     }
 
@@ -114,8 +122,18 @@ public class AllDominion extends AbstractUI {
                     }
                 };
                 btn = btn.setDisplayNameArgs(dominion.getName());
+                btn = btn.setLoreArgs(List.of(dominion.getOwnerDTO().getLastKnownName()));
                 view = view.addItem(btn);
             }
+
+            view.setButton(ChestUserInterface.allDominionCui.backButton.getSymbol(),
+                    new ChestButton(ChestUserInterface.allDominionCui.backButton) {
+                        @Override
+                        public void onClick(ClickType type) {
+                            MainMenu.show(player, "1");
+                        }
+                    }
+            );
 
             view.open();
         } catch (Exception e) {

@@ -201,6 +201,11 @@ public class ChestView {
         return this;
     }
 
+    public ChestView removeButton(int slot) {
+        buttons.remove(slot);
+        return this;
+    }
+
     /**
      * Opens the chest view for the player. If the current inventory already has the custom tag,
      * it refreshes the view; otherwise, it creates a new inventory.

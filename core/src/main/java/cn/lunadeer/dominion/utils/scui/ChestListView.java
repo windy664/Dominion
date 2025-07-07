@@ -52,12 +52,20 @@ public class ChestListView extends ChestView {
         return this;
     }
 
+    public void clearCurrentItemButtons() {
+        for (int i = 0; i < this.getLayout().length(); i++) {
+            if (this.getLayout().charAt(i) == itemSymbol) {
+                this.removeButton(i);
+            }
+        }
+    }
+
     @Override
     public void open() {
         if (!layoutSet) {
             throw new IllegalStateException("List layout must be set before opening the view.");
         }
-        this.clearButtons();
+        this.clearCurrentItemButtons();
         int itemSymbolPosition = -1; // Reset itemSymbolPosition for the new page
         // setButton(int slot, @NotNull ChestButton button) from the first available itemSymbolPosition
         for (int idx = 0; idx < items.size(); idx++) {
