@@ -21,6 +21,8 @@ import cn.lunadeer.dominion.utils.configuration.Heads;
         "        2. PLAYER_HEAD;URL;{texture image URL}",
         "    The first format uses a base64-encoded texture value, while the second",
         "    uses a URL to an image. The URL must point to a Mojang server skin image.",
+        "    You can search textures on e.g. https://mcheads.ru/ to get the base64 ",
+        "    texture value or the URL you need.",
 })
 public class ChestUserInterface extends ConfigurationFile {
     public static MainMenu.MainMenuCui mainMenuCui = new MainMenu.MainMenuCui();

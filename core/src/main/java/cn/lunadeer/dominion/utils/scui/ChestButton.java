@@ -1,7 +1,6 @@
 package cn.lunadeer.dominion.utils.scui;
 
 import cn.lunadeer.dominion.utils.ColorParser;
-import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.scui.configuration.ButtonConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -16,7 +15,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.UUID;
 
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
@@ -87,14 +89,11 @@ public abstract class ChestButton {
      * @return The current instance of `ChestButton` for method chaining.
      */
     public ChestButton setLoreArgs(Object... args) {
-        XLogger.info("Setting Lore: " + Arrays.toString(args));
-        XLogger.info("Lore before: " + lore);
         for (int i = 0; i < args.length; i++) {
             for (int j = 0; j < lore.size(); j++) {
                 lore.set(j, lore.get(j).replace("{" + i + "}", args[i].toString()));
             }
         }
-        XLogger.info("Lore after: " + lore);
         return this;
     }
 
