@@ -74,6 +74,9 @@ public class ConfigurationManager {
 
     private static YamlConfiguration writeConfigurationFile(Class<? extends ConfigurationFile> clazz) throws Exception {
         YamlConfiguration yaml = new YamlConfiguration();
+        if (clazz.isAnnotationPresent(Heads.class)) {
+            yaml.options().setHeader(List.of(clazz.getAnnotation(Heads.class).value()));
+        }
         ConfigurationFile instance = clazz.getConstructor().newInstance();
         writeConfigurationPart(yaml, instance, null);
         return yaml;

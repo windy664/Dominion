@@ -186,7 +186,7 @@ public class MainMenu extends AbstractUI {
             }
 
             view.setButton(ChestUserInterface.mainMenuCui.createButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.createButton.getName(), ChestUserInterface.mainMenuCui.createButton.getMaterial()) {
+                    new ChestButton(ChestUserInterface.mainMenuCui.createButton) {
                         @Override
                         public void onClick(ClickType type) {
                             new InputterRunner(player, Language.createDominionInputterText.hint) {
@@ -198,57 +198,57 @@ public class MainMenu extends AbstractUI {
                             };
                             view.close();
                         }
-                    }.setLore(ChestUserInterface.mainMenuCui.createButton.getLore())
+                    }
             );
 
             view.setButton(ChestUserInterface.mainMenuCui.listButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.listButton.getName(), ChestUserInterface.mainMenuCui.listButton.getMaterial()) {
+                    new ChestButton(ChestUserInterface.mainMenuCui.listButton) {
                         @Override
                         public void onClick(ClickType type) {
                             DominionList.show(player, "1");
                         }
-                    }.setLore(ChestUserInterface.mainMenuCui.listButton.getLore())
+                    }
             );
 
             view.setButton(ChestUserInterface.mainMenuCui.titleButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.titleButton.getName(), ChestUserInterface.mainMenuCui.titleButton.getMaterial()) {
+                    new ChestButton(ChestUserInterface.mainMenuCui.titleButton) {
                         @Override
                         public void onClick(ClickType type) {
                             if (Configuration.groupTitle.enable) {
                                 TitleList.show(player, "1");
                             }
                         }
-                    }.setLore(ChestUserInterface.mainMenuCui.titleButton.getLore())
+                    }
             );
 
             view.setButton(ChestUserInterface.mainMenuCui.templateButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.templateButton.getName(), ChestUserInterface.mainMenuCui.templateButton.getMaterial()) {
+                    new ChestButton(ChestUserInterface.mainMenuCui.templateButton) {
                         @Override
                         public void onClick(ClickType type) {
                             TemplateList.show(player, "1");
                         }
-                    }.setLore(ChestUserInterface.mainMenuCui.templateButton.getLore())
+                    }
             );
 
             view.setButton(ChestUserInterface.mainMenuCui.migrateButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.migrateButton.getName(), ChestUserInterface.mainMenuCui.migrateButton.getMaterial()) {
+                    new ChestButton(ChestUserInterface.mainMenuCui.migrateButton) {
                         @Override
                         public void onClick(ClickType type) {
                             if (Configuration.residenceMigration) {
                                 MigrateList.show(player, "1");
                             }
                         }
-                    }.setLore(ChestUserInterface.mainMenuCui.migrateButton.getLore())
+                    }
             );
 
             if (player.hasPermission(adminPermission)) {
                 view.setButton(ChestUserInterface.mainMenuCui.allButton.getSymbol(),
-                        new ChestButton(ChestUserInterface.mainMenuCui.allButton.getName(), ChestUserInterface.mainMenuCui.allButton.getMaterial()) {
+                        new ChestButton(ChestUserInterface.mainMenuCui.allButton) {
                             @Override
                             public void onClick(ClickType type) {
                                 AllDominion.show(player, "1");
                             }
-                        }.setLore(ChestUserInterface.mainMenuCui.allButton.getLore())
+                        }
                 );
             }
 

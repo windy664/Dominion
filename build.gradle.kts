@@ -36,19 +36,9 @@ allprojects {
         maven("https://oss.sonatype.org/content/groups/public")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://jitpack.io")
-        maven("https://repo.mikeprimm.com/")
-        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-        maven("https://repo.codemc.org/repository/maven-public")
     }
 
     dependencies {
-        compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v2.6.2")
-        compileOnly("us.dynmap:DynmapCoreAPI:3.4")
-        compileOnly("xyz.jpenilla:squaremap-api:1.3.4")
-        compileOnly("me.clip:placeholderapi:2.11.6")
-        compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-        compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")
-
         if (!buildFull) {
             libraries.forEach {
                 compileOnly(it)
@@ -120,7 +110,7 @@ hangarPublish {
             register(Platforms.PAPER) {
                 jar.set(tasks.shadowJar.flatMap { it.archiveFile })
                 println("ShadowJar: ${tasks.shadowJar.flatMap { it.archiveFile }}")
-                platformVersions.set(listOf("1.20.1-1.20.6","1.21.x"))
+                platformVersions.set(listOf("1.20.1-1.20.6", "1.21.x"))
             }
         }
     }

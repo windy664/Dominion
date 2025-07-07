@@ -107,17 +107,14 @@ public class AllDominion extends AbstractUI {
 
             List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
             for (DominionDTO dominion : dominions) {
-                ChestButton btn = new ChestButton(
-                        ChestUserInterface.allDominionCui.dominionItemButton.getName(dominion.getName()),
-                        ChestUserInterface.allDominionCui.dominionItemButton.getMaterial()
-                ) {
+                ChestButton btn = new ChestButton(ChestUserInterface.allDominionCui.dominionItemButton) {
                     @Override
                     public void onClick(ClickType type) {
                         DominionManage.show(player, dominion.getName(), "1");
                     }
                 };
-                btn = btn.setLore(ChestUserInterface.allDominionCui.dominionItemButton.getLore());
-                view.addItem(btn);
+                btn = btn.setDisplayNameArgs(dominion.getName());
+                view = view.addItem(btn);
             }
 
             view.open();

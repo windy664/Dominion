@@ -4,14 +4,18 @@ import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.configuration.HandleManually;
 import org.bukkit.Material;
 
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.List;
 
-import static cn.lunadeer.dominion.utils.Misc.formatString;
-
 public class ButtonConfiguration extends ConfigurationPart {
-
-
+    /**
+     * Constructs a ButtonConfiguration with a material type.
+     *
+     * @param symbol   The character symbol representing the button.
+     * @param material The material type of the button.
+     * @param name     The display name of the button.
+     * @param lore     The lore (description) of the button.
+     */
     @HandleManually
     public ButtonConfiguration(char symbol, Material material, String name, List<String> lore) {
         this.symbol = String.valueOf(symbol);
@@ -20,38 +24,41 @@ public class ButtonConfiguration extends ConfigurationPart {
         this.material = material.name();
     }
 
-//    @HandleManually
-//    public ButtonConfiguration(char symbol, String headName, String name, List<String> lore) {
-//        this.symbol = String.valueOf(symbol);
-//        this.name = name;
-//        this.lore = lore;
-//        this.material = "HEAD(" + headName + ")";
-//    }
-
+    /**
+     * Constructs a ButtonConfiguration with player head texture in specific texture format.
+     *
+     * @param symbol     The character symbol representing the button.
+     * @param textureB64 The base64-encoded profile texture value.
+     * @param name       The display name of the button.
+     * @param lore       The lore (description) of the button.
+     */
     @HandleManually
-    public Material getMaterial() {
-        return Material.valueOf(material.toUpperCase());
+    public ButtonConfiguration(char symbol, String textureB64, String name, List<String> lore) {
+        this.symbol = String.valueOf(symbol);
+        this.name = name;
+        this.lore = lore;
+        this.material = "PLAYER_HEAD;B64;" + textureB64;
+    }
+
+    /**
+     * Constructs a ButtonConfiguration with player head texture in specific texture format.
+     *
+     * @param symbol  The character symbol representing the button.
+     * @param skinUrl The URL of the skin image.
+     * @param name    The display name of the button.
+     * @param lore    The lore (description) of the button.
+     */
+    @HandleManually
+    public ButtonConfiguration(char symbol, URL skinUrl, String name, List<String> lore) {
+        this.symbol = String.valueOf(symbol);
+        this.name = name;
+        this.lore = lore;
+        this.material = "PLAYER_HEAD;URL;" + skinUrl.toString();
     }
 
     @HandleManually
     public char getSymbol() {
         return symbol.charAt(0);
-    }
-
-    @HandleManually
-    public List<String> getLore(Object... args) {
-        List<String> formatStr = new ArrayList<>(lore);
-        for (int i = 0; i < args.length; i++) {
-            for (int j = 0; j < formatStr.size(); j++) {
-                formatStr.set(j, formatStr.get(j).replace("{" + i + "}", args[i].toString()));
-            }
-        }
-        return formatStr;
-    }
-
-    @HandleManually
-    public String getName(Object... args) {
-        return formatString(name, args);
     }
 
     public String symbol;

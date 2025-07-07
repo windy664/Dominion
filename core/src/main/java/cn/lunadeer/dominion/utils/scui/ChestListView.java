@@ -79,7 +79,7 @@ public class ChestListView extends ChestView {
         int totalPages = (int) Math.ceil((double) items.size() / pageSize);
         // Set Preview Button
         this.setButton(configCopy.previewButton.getSymbol(),
-                new ChestButton(configCopy.previewButton.name, configCopy.previewButton.getMaterial()) {
+                new ChestButton(configCopy.previewButton) {
                     @Override
                     public void onClick(ClickType type) {
                         if (currentPage == 1) {
@@ -88,10 +88,10 @@ public class ChestListView extends ChestView {
                         applyListConfiguration(configCopy, currentPage - 1);
                         open();
                     }
-                }.setLore(configCopy.previewButton.getLore(currentPage, totalPages)));
+                }.setLoreArgs(currentPage, totalPages));
         // Set Next Button
         this.setButton(configCopy.nextButton.getSymbol(),
-                new ChestButton(configCopy.nextButton.name, configCopy.nextButton.getMaterial()) {
+                new ChestButton(configCopy.nextButton) {
                     @Override
                     public void onClick(ClickType type) {
                         if (currentPage * pageSize >= items.size()) {
@@ -100,7 +100,7 @@ public class ChestListView extends ChestView {
                         applyListConfiguration(configCopy, currentPage + 1);
                         open();
                     }
-                }.setLore(configCopy.nextButton.getLore(currentPage, totalPages)));
+                }.setLoreArgs(currentPage, totalPages));
         super.open();
     }
 
