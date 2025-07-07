@@ -19,6 +19,8 @@ import cn.lunadeer.dominion.utils.configuration.Heads;
         "    If you want to use player heads with textures, we support two formats:",
         "        1. PLAYER_HEAD;B64;{base64 texture value}",
         "        2. PLAYER_HEAD;URL;{texture image URL}",
+        "    The first format uses a base64-encoded texture value, while the second",
+        "    uses a URL to an image. The URL must point to a Mojang server skin image.",
 })
 public class ChestUserInterface extends ConfigurationFile {
     public static MainMenu.MainMenuCui mainMenuCui = new MainMenu.MainMenuCui();
