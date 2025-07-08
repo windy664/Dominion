@@ -67,6 +67,11 @@ public class Configuration extends ConfigurationFile {
             } else {
                 yaml.set(flag.getConfigurationEnableKey(), flag.getEnable());
             }
+            if (yaml.contains(flag.getConfigurationMaterialKey())) {
+                flag.setMaterial(yaml.getString(flag.getConfigurationMaterialKey()));
+            } else {
+                yaml.set(flag.getConfigurationMaterialKey(), flag.getMaterial().name());
+            }
             yaml.setInlineComments(flag.getConfigurationNameKey(), Collections.singletonList(flag.getDisplayName() + "-" + flag.getDescription()));
         }
         yaml.save(yamlFile);

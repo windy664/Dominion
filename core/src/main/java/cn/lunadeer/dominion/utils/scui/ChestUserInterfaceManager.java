@@ -83,21 +83,26 @@ public class ChestUserInterfaceManager implements Listener {
 
     @EventHandler
     public void playerClickItem(InventoryClickEvent event) {
-        if (event.getClickedInventory() == null || event.getCurrentItem() == null) return;
+        try {
+            if (event.getClickedInventory() == null || event.getCurrentItem() == null) return;
 
-        ItemStack item = event.getCurrentItem();
-        if (!hasTag(item)) return;
+            ItemStack item = event.getCurrentItem();
+            if (!hasTag(item)) return;
 
-        event.setCancelled(true);
+            event.setCancelled(true);
 
-        UUID viewId = getViewId(item);
-        if (viewId == null) return;
-        ChestView view = views.get(viewId);
-        if (view == null) {
-            XLogger.error("ChestView not found for ID: " + viewId);
-            return;
+            UUID viewId = getViewId(item);
+            if (viewId == null) return;
+            ChestView view = views.get(viewId);
+            if (view == null) {
+                XLogger.error("ChestView not found for ID: " + viewId);
+                return;
+            }
+            view.handleClick(event.getSlot(), event.getClick());
+        } catch (Exception e) {
+            XLogger.error(e);
+            event.setCancelled(true);   // safeguard against any exceptions during click handling
         }
-        view.handleClick(event.getSlot(), event.getClick());
     }
 
 
