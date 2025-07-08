@@ -218,6 +218,7 @@ public class AdministratorCommand {
                 Notification.warn(sender, Language.administratorCommandText.importHint);
                 Notification.warn(sender, Language.administratorCommandText.importInfo);
                 Notification.warn(sender, Language.administratorCommandText.importConfirm);
+                return;
             }
             DatabaseTables.importTables(sender);
         }
