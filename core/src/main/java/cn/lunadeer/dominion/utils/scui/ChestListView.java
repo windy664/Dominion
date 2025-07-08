@@ -111,4 +111,12 @@ public class ChestListView extends ChestView {
         super.open();
     }
 
+    public int getCurrentPage() {
+        return currentPage;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
 }

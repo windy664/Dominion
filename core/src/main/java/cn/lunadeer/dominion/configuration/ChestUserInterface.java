@@ -4,6 +4,8 @@ import cn.lunadeer.dominion.uis.AllDominion;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationFile;
 import cn.lunadeer.dominion.utils.configuration.Heads;
 
@@ -31,4 +33,6 @@ public class ChestUserInterface extends ConfigurationFile {
     public static AllDominion.AllDominionCui allDominionCui = new AllDominion.AllDominionCui();
     public static DominionList.DominionListCui dominionListCui = new DominionList.DominionListCui();
     public static DominionManage.DominionManageCui dominionManageCui = new DominionManage.DominionManageCui();
+    public static EnvSetting.EnvSettingCui envSettingCui = new EnvSetting.EnvSettingCui();
+    public static GuestSetting.GuestSettingCui guestSettingCui = new GuestSetting.GuestSettingCui();
 }

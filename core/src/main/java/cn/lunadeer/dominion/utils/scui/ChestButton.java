@@ -20,8 +20,7 @@ import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
-import static cn.lunadeer.dominion.utils.Misc.formatString;
-import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
+import static cn.lunadeer.dominion.utils.Misc.*;
 
 public abstract class ChestButton {
 
@@ -89,11 +88,7 @@ public abstract class ChestButton {
      * @return The current instance of `ChestButton` for method chaining.
      */
     public ChestButton setLoreArgs(Object... args) {
-        for (int i = 0; i < args.length; i++) {
-            for (int j = 0; j < lore.size(); j++) {
-                lore.set(j, lore.get(j).replace("{" + i + "}", args[i].toString()));
-            }
-        }
+        this.lore = formatStringList(lore, args);
         return this;
     }
 

@@ -32,6 +32,32 @@ public class Misc {
         return formatStr;
     }
 
+    public static List<String> formatStringList(List<String> list, Object... args) {
+        List<String> formattedList = new ArrayList<>(list);
+        for (int i = 0; i < args.length; i++) {
+            for (int j = 0; j < list.size(); j++) {
+                formattedList.set(j, formattedList.get(j).replace("{" + i + "}", args[i].toString()));
+            }
+        }
+        return formattedList;
+    }
+
+    public static List<String> foldLore2Line(String str, int length) {
+        List<String> result = new ArrayList<>();
+        if (str.length() > length) {
+            result.add(str.substring(0, length));
+            if (str.length() > 2 * length) {
+                result.add(str.substring(length, 2 * length - 3) + "...");
+            } else {
+                result.add(str.substring(length));
+            }
+        } else {
+            result.add(str);
+            result.add("");
+        }
+        return result;
+    }
+
     public static List<String> listClassOfPackage(JavaPlugin plugin, String packageName) {
         List<String> classesInPackage = new ArrayList<>();
         // list all classes in the packageName package
