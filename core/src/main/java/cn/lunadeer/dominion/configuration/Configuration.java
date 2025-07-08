@@ -397,9 +397,12 @@ public class Configuration extends ConfigurationFile {
             for (Language.LanguageCode code : Language.LanguageCode.values()) {
                 if (!new File(languagesFolder, code.name() + ".yml").exists())
                     Dominion.instance.saveResource("languages/" + code.name() + ".yml", false);
+                if (!new File(languagesFolder, code.name() + "_cui.yml").exists())
+                    Dominion.instance.saveResource("languages/" + code.name() + "_cui.yml", false);
             }
             Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadingLanguage, language);
             ConfigurationManager.load(Language.class, new File(Dominion.instance.getDataFolder(), "languages/" + language + ".yml"));
+            ConfigurationManager.load(ChestUserInterface.class, new File(Dominion.instance.getDataFolder(), "languages/" + language + "_cui.yml"));
             Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageSuccess, language);
         } catch (Exception e) {
             Notification.error(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageFail, language, e.getMessage());
@@ -432,7 +435,5 @@ public class Configuration extends ConfigurationFile {
         Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender()
                 , Language.configurationText.databaseConnected);
         DatabaseTables.migrate();
-        // CUI
-        ConfigurationManager.load(ChestUserInterface.class, new File(Dominion.instance.getDataFolder(), "cui.yml"));
     }
 }
