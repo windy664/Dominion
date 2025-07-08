@@ -80,7 +80,7 @@ public class GroupList {
                             .append(Language.groupListTuiText.button)
             );
             view.add(new Line()
-                    .append(CreateGroupInputter.createOn(sender, dominionName).needPermission(defaultPermission).build())
+                    .append(CreateGroupInputter.createTuiButtonOn(sender, dominionName).needPermission(defaultPermission).build())
             );
 
             // get data from database directly because cache update may not be in time

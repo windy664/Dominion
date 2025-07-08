@@ -18,18 +18,22 @@ public class CreateGroupInputter {
         public String hint = "Enter new group name you want to create.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender, String dominionName) {
+    public static void createOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.createGroupInputterText.hint) {
+            @Override
+            public void run(String input) {
+                DominionDTO dominion = toDominionDTO(dominionName);
+                new GroupCreateEvent(sender, dominion, input).call();
+                GroupList.show(sender, dominionName, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender, String dominionName) {
         return new FunctionalButton(Language.createGroupInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.createGroupInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        DominionDTO dominion = toDominionDTO(dominionName);
-                        new GroupCreateEvent(sender, dominion, input).call();
-                        GroupList.show(sender, dominionName, "1");
-                    }
-                };
+                createOn(sender, dominionName);
             }
         };
     }

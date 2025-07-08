@@ -16,17 +16,21 @@ public class SetMapColorInputter {
         public String description = "Color of the dominion on the web map.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender, String dominionName) {
+    public static void createOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.setMapColorInputterText.hint) {
+            @Override
+            public void run(String input) {
+                DominionOperateCommand.setMapColor(sender, dominionName, input);
+                DominionManage.show(sender, dominionName, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender, String dominionName) {
         return new FunctionalButton(Language.setMapColorInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.setMapColorInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        DominionOperateCommand.setMapColor(sender, dominionName, input);
-                        DominionManage.show(sender, dominionName, "1");
-                    }
-                };
+                createOn(sender, dominionName);
             }
         };
     }

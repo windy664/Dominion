@@ -63,7 +63,7 @@ public class AllDominion extends AbstractUI {
     @Override
     protected void showTUI(CommandSender sender, String... args) {
         try {
-            int page = toIntegrity(args[0]);
+            int page = toIntegrity(args[0], 1);
             ListView view = ListView.create(10, button(sender));
 
             view.title(Language.allDominionTuiText.title);
@@ -81,15 +81,15 @@ public class AllDominion extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class AllDominionCui extends ConfigurationPart {
+        public String title = "All Dominions";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
-                "All Dominions",
                 'i',
                 List.of(
-                        "B########",
+                        "<########",
                         "#iiiiiii#",
                         "#iiiiiii#",
                         "#iiiiiii#",
-                        "#p#####n#"
+                        "p#######n"
                 )
         );
 
@@ -97,13 +97,18 @@ public class AllDominion extends AbstractUI {
                 'i', Material.PAPER, "Name: {0}",
                 List.of(
                         "Owner: {0}",
-                        "Click to manage this dominion."
+                        "Click to manage ",
+                        "this dominion."
                 )
         );
 
         public ButtonConfiguration backButton = new ButtonConfiguration(
-                'B', Material.RED_STAINED_GLASS_PANE,
-                "Back", List.of("Go back to the main menu.")
+                '<', Material.RED_STAINED_GLASS_PANE,
+                "Back",
+                List.of(
+                        "Go back to the",
+                        "dominion list."
+                )
         );
     }
 
@@ -111,7 +116,8 @@ public class AllDominion extends AbstractUI {
     protected void showCUI(Player player, String... args) {
         try {
             ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view = view.applyListConfiguration(ChestUserInterface.allDominionCui.listConfiguration, toIntegrity(args[0]));
+            view.setTitle(ChestUserInterface.allDominionCui.title);
+            view.applyListConfiguration(ChestUserInterface.allDominionCui.listConfiguration, toIntegrity(args[0]));
 
             List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
             for (DominionDTO dominion : dominions) {

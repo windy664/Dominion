@@ -19,36 +19,44 @@ public class ResizeDominionInputter {
         public String contractHint = "Enter the new size of the {0} contract to {1}.";
     }
 
-    public static FunctionalButton createExpandOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
-        return new FunctionalButton(Language.resizeDominionInputterText.expand) {
+    public static void createExpandOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
+        new InputterRunner(sender, formatString(Language.resizeDominionInputterText.expandHint,
+                dominionName, direction.name())) {
             @Override
-            public void function() {
-                new InputterRunner(sender, formatString(Language.resizeDominionInputterText.expandHint,
-                        dominionName, direction.name())) {
-                    @Override
-                    public void run(String input) {
-                        String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
-                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.EXPAND.name(), numberInput, direction.name());
-                        SetSize.show(sender, dominionName);
-                    }
-                };
+            public void run(String input) {
+                String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
+                DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.EXPAND.name(), numberInput, direction.name());
+                SetSize.show(sender, dominionName);
             }
         };
     }
 
-    public static FunctionalButton createContractOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
+    public static void createContractOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
+        new InputterRunner(sender, formatString(Language.resizeDominionInputterText.contractHint,
+                dominionName, direction.name())) {
+            @Override
+            public void run(String input) {
+                String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
+                DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.CONTRACT.name(), numberInput, direction.name());
+                SetSize.show(sender, dominionName);
+            }
+        };
+    }
+
+    public static FunctionalButton createExpandTuiButtonOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
+        return new FunctionalButton(Language.resizeDominionInputterText.expand) {
+            @Override
+            public void function() {
+                createExpandOn(sender, dominionName, direction);
+            }
+        };
+    }
+
+    public static FunctionalButton createContractTuiButtonOn(CommandSender sender, String dominionName, DominionReSizeEvent.DIRECTION direction) {
         return new FunctionalButton(Language.resizeDominionInputterText.contract) {
             @Override
             public void function() {
-                new InputterRunner(sender, formatString(Language.resizeDominionInputterText.contractHint,
-                        dominionName, direction.name())) {
-                    @Override
-                    public void run(String input) {
-                        String numberInput = input.replaceAll("[^\\d.]", ""); // prevent some stupid noob chat plugins from modifying input with special characters
-                        DominionOperateCommand.resize(sender, dominionName, DominionReSizeEvent.TYPE.CONTRACT.name(), numberInput, direction.name());
-                        SetSize.show(sender, dominionName);
-                    }
-                };
+                createContractOn(sender, dominionName, direction);
             }
         };
     }

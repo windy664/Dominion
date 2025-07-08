@@ -51,7 +51,7 @@ public class TemplateList {
                     .append(Language.templateListTuiText.button));
 
             view.add(Line.create()
-                    .append(CreateTemplateInputter.createEnterOn(sender).needPermission(defaultPermission).build()));
+                    .append(CreateTemplateInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build()));
 
             for (TemplateDOO template : templates) {
                 Button setting = TemplateSetting.button(sender, template.getName()).green();

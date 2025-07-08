@@ -47,7 +47,7 @@ public class SelectPlayer {
 
             ListView view = ListView.create(10, button(sender, dominionName));
             Line sub = Line.create()
-                    .append(SearchPlayerInputter.createOn(sender, dominionName).build())
+                    .append(SearchPlayerInputter.createTuiButtonOn(sender, dominionName).build())
                     .append(MemberList.button(sender, dominionName).setText(Language.selectPlayerTuiText.back).build());
             view.title(Language.selectPlayerTuiText.title).subtitle(sub);
             List<PlayerDTO> players = PlayerDOO.all();

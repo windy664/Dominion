@@ -20,32 +20,40 @@ public class EditMessageInputter {
         public String leaveHint = "Enter new leave message.";
     }
 
-    public static FunctionalButton createLeaveOn(CommandSender sender, String dominionName) {
-        return new FunctionalButton(Language.editMessageInputterText.leaveButton) {
+    public static void createLeaveOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.editMessageInputterText.leaveHint) {
             @Override
-            public void function() {
-                new InputterRunner(sender, Language.editMessageInputterText.leaveHint) {
-                    @Override
-                    public void run(String input) {
-                        setMessage(sender, dominionName, DominionSetMessageEvent.TYPE.LEAVE.name(), input);
-                        DominionManage.show(sender, dominionName, "1");
-                    }
-                };
+            public void run(String input) {
+                setMessage(sender, dominionName, DominionSetMessageEvent.TYPE.LEAVE.name(), input);
+                DominionManage.show(sender, dominionName, "1");
             }
         };
     }
 
-    public static FunctionalButton createEnterOn(CommandSender sender, String dominionName) {
+    public static void createEnterOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.editMessageInputterText.enterHint) {
+            @Override
+            public void run(String input) {
+                setMessage(sender, dominionName, DominionSetMessageEvent.TYPE.ENTER.name(), input);
+                DominionManage.show(sender, dominionName, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createLeaveTuiButtonOn(CommandSender sender, String dominionName) {
+        return new FunctionalButton(Language.editMessageInputterText.leaveButton) {
+            @Override
+            public void function() {
+                createLeaveOn(sender, dominionName);
+            }
+        };
+    }
+
+    public static FunctionalButton createEnterTuiButtonOn(CommandSender sender, String dominionName) {
         return new FunctionalButton(Language.editMessageInputterText.enterButton) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.editMessageInputterText.enterHint) {
-                    @Override
-                    public void run(String input) {
-                        setMessage(sender, dominionName, DominionSetMessageEvent.TYPE.ENTER.name(), input);
-                        DominionManage.show(sender, dominionName, "1");
-                    }
-                };
+                createEnterOn(sender, dominionName);
             }
         };
     }

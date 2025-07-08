@@ -1,7 +1,6 @@
 package cn.lunadeer.dominion.uis;
 
 import cn.lunadeer.dominion.commands.AdministratorCommand;
-import cn.lunadeer.dominion.commands.DominionCreateCommand;
 import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
@@ -21,7 +20,6 @@ import cn.lunadeer.dominion.utils.stui.ViewStyles;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.UrlButton;
-import cn.lunadeer.dominion.utils.stui.inputter.InputterRunner;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -80,10 +78,10 @@ public class MainMenu extends AbstractUI {
     protected void showTUI(CommandSender sender, String... args) {
         try {
             Player player = toPlayer(sender);
-            int page = toIntegrity(args[0]);
+            int page = toIntegrity(args[0], 1);
 
             Line create = Line.create()
-                    .append(CreateDominionInputter.createOn(sender).needPermission(defaultPermission).build())
+                    .append(CreateDominionInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build())
                     .append(Language.createDominionInputterText.description);
             Line list = Line.create()
                     .append(DominionList.button(sender).build())
@@ -155,22 +153,49 @@ public class MainMenu extends AbstractUI {
                 "#########"
         );
         public ButtonConfiguration createButton = new ButtonConfiguration(
-                'A', Material.NETHER_STAR, "Create Dominion", List.of("Create a new dominion around you.")
+                'A', Material.NETHER_STAR, "Create Dominion",
+                List.of(
+                        "Create a new ",
+                        "dominion around ",
+                        "you."
+                )
         );
         public ButtonConfiguration listButton = new ButtonConfiguration(
-                'B', Material.BOOKSHELF, "List Dominion", List.of("List all dominions you can manage.")
+                'B', Material.BOOKSHELF, "List Dominion",
+                List.of(
+                        "List all dominions ",
+                        "you can manage."
+                )
         );
         public ButtonConfiguration titleButton = new ButtonConfiguration(
-                'C', Material.NAME_TAG, "Title List", List.of("List all titles you can use.")
+                'C', Material.NAME_TAG, "Title List",
+                List.of(
+                        "List all titles ",
+                        "you can use."
+                )
         );
         public ButtonConfiguration templateButton = new ButtonConfiguration(
-                'D', Material.PAPER, "Template List", List.of("Manage your templates.")
+                'D', Material.PAPER, "Template List",
+                List.of(
+                        "Manage your ",
+                        "templates."
+                )
         );
         public ButtonConfiguration migrateButton = new ButtonConfiguration(
-                'E', Material.ENDER_PEARL, "Migrate Residence", List.of("Migrate your residence to dominion.")
+                'E', Material.ENDER_PEARL, "Migrate Residence",
+                List.of(
+                        "Migrate your ",
+                        "residence to ",
+                        "dominion."
+                )
         );
         public ButtonConfiguration allButton = new ButtonConfiguration(
-                'F', Material.DIAMOND, "All Dominion", List.of("List all dominions in the server.")
+                'F', Material.DIAMOND, "All Dominion",
+                List.of(
+                        "List all",
+                        "dominions ",
+                        "in the server."
+                )
         );
     }
 
@@ -189,13 +214,7 @@ public class MainMenu extends AbstractUI {
                     new ChestButton(ChestUserInterface.mainMenuCui.createButton) {
                         @Override
                         public void onClick(ClickType type) {
-                            new InputterRunner(player, Language.createDominionInputterText.hint) {
-                                @Override
-                                public void run(String input) {
-                                    DominionCreateCommand.autoCreate(player, input);
-                                    DominionList.show(player, "1");
-                                }
-                            };
+                            CreateDominionInputter.createOn(player);
                             view.close();
                         }
                     }

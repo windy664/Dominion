@@ -58,7 +58,7 @@ public class GroupSetting {
                             .append(GroupList.button(sender, dominionName).build())
                             .append(Language.groupSettingTuiText.button)
             );
-            view.add(Line.create().append(RenameGroupInputter.createOn(sender, dominionName, groupName).build()));
+            view.add(Line.create().append(RenameGroupInputter.createTuiButtonOn(sender, dominionName, groupName).build()));
 
             if (group.getFlagValue(Flags.ADMIN)) {
                 view.add(createOption(sender, Flags.ADMIN, true, dominion.getName(), group.getNamePlain(), pageStr));

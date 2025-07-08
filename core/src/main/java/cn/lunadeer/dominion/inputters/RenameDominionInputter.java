@@ -16,17 +16,21 @@ public class RenameDominionInputter {
         public String description = "Rename this dominion.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender, String dominionName) {
+    public static void createOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.renameDominionInputterText.hint) {
+            @Override
+            public void run(String input) {
+                DominionOperateCommand.rename(sender, dominionName, input);
+                DominionManage.show(sender, input, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender, String dominionName) {
         return new FunctionalButton(Language.renameDominionInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.renameDominionInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        DominionOperateCommand.rename(sender, dominionName, input);
-                        DominionManage.show(sender, input, "1");
-                    }
-                };
+                createOn(sender, dominionName);
             }
         };
     }

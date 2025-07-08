@@ -14,17 +14,21 @@ public class SearchPlayerInputter {
         public String hint = "Enter the exact name of the player you want to search.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender, String dominionName) {
+    public static void createOn(CommandSender sender, String dominionName) {
+        new InputterRunner(sender, Language.searchPlayerInputterText.hint) {
+            @Override
+            public void run(String input) {
+                MemberCommand.addMember(sender, dominionName, input);
+                MemberList.show(sender, dominionName, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender, String dominionName) {
         return new FunctionalButton(Language.searchPlayerInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.searchPlayerInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        MemberCommand.addMember(sender, dominionName, input);
-                        MemberList.show(sender, dominionName, "1");
-                    }
-                };
+                createOn(sender, dominionName);
             }
         };
     }

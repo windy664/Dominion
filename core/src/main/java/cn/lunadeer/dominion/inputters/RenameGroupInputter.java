@@ -22,19 +22,23 @@ public class RenameGroupInputter {
         public String description = "Rename this group.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender, String dominionName, String oldGroupName) {
+    public static void createOn(CommandSender sender, String dominionName, String oldGroupName) {
+        new InputterRunner(sender, Language.renameGroupInputterText.hint) {
+            @Override
+            public void run(String input) {
+                DominionDTO dominion = toDominionDTO(dominionName);
+                GroupDTO group = toGroupDTO(dominion, oldGroupName);
+                new GroupRenamedEvent(sender, dominion, group, input).call();
+                GroupSetting.show(sender, dominionName, ColorParser.getPlainText(input), "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender, String dominionName, String oldGroupName) {
         return new FunctionalButton(Language.renameGroupInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.renameGroupInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        DominionDTO dominion = toDominionDTO(dominionName);
-                        GroupDTO group = toGroupDTO(dominion, oldGroupName);
-                        new GroupRenamedEvent(sender, dominion, group, input).call();
-                        GroupSetting.show(sender, dominionName, ColorParser.getPlainText(input), "1");
-                    }
-                };
+                createOn(sender, dominionName, oldGroupName);
             }
         };
     }

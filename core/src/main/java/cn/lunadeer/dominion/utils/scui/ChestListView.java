@@ -31,7 +31,6 @@ public class ChestListView extends ChestView {
         this.currentPage = currentPage;
         // Validate the layout and symbols
         super.setLayout(config.layout);
-        this.setTitle(config.title);
         this.itemSymbol = config.itemSymbol.charAt(0);
         if (!this.getLayout().contains(String.valueOf(itemSymbol))) {
             throw new IllegalArgumentException("Layout must contain the item symbol: " + itemSymbol);

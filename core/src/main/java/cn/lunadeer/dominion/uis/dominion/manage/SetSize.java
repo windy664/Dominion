@@ -30,8 +30,6 @@ public class SetSize {
         public String east = "East(x+)";
         public String up = "Up(y+)";
         public String down = "Down(y-)";
-        public String expand = "EXPAND";
-        public String contract = "CONTRACT";
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
@@ -60,38 +58,38 @@ public class SetSize {
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.north)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.south)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.west)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.east)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.up)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
             );
             view.add(
                     Line.create()
                             .append(Language.setSizeTuiText.down)
-                            .append(ResizeDominionInputter.createExpandOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
-                            .append(ResizeDominionInputter.createContractOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
+                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
+                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
             );
 
             view.showOn(sender, 1);

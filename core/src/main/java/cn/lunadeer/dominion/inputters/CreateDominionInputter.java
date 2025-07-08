@@ -16,17 +16,21 @@ public class CreateDominionInputter {
         public String hint = "A new Dominion will be created around you with the input name.";
     }
 
-    public static FunctionalButton createOn(CommandSender sender) {
+    public static void createOn(CommandSender sender) {
+        new InputterRunner(sender, Language.createDominionInputterText.hint) {
+            @Override
+            public void run(String input) {
+                DominionCreateCommand.autoCreate(sender, input);
+                DominionList.show(sender, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender) {
         return new FunctionalButton(Language.createDominionInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.createDominionInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        DominionCreateCommand.autoCreate(sender, input);
-                        DominionList.show(sender, "1");
-                    }
-                };
+                createOn(sender);
             }
         };
     }

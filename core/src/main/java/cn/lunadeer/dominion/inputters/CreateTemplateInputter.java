@@ -14,17 +14,21 @@ public class CreateTemplateInputter {
         public String hint = "Enter the name of the new template.";
     }
 
-    public static FunctionalButton createEnterOn(CommandSender sender) {
+    public static void createOn(CommandSender sender) {
+        new InputterRunner(sender, Language.createTemplateInputterText.hint) {
+            @Override
+            public void run(String input) {
+                TemplateCommand.createTemplate(sender, input);
+                TemplateList.show(sender, "1");
+            }
+        };
+    }
+
+    public static FunctionalButton createTuiButtonOn(CommandSender sender) {
         return new FunctionalButton(Language.createTemplateInputterText.button) {
             @Override
             public void function() {
-                new InputterRunner(sender, Language.createTemplateInputterText.hint) {
-                    @Override
-                    public void run(String input) {
-                        TemplateCommand.createTemplate(sender, input);
-                        TemplateList.show(sender, "1");
-                    }
-                };
+                createOn(sender);
             }
         };
     }
