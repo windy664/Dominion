@@ -119,7 +119,7 @@ public class EnvSetting extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration backButton = new ButtonConfiguration(
+        public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
                 '<', Material.RED_STAINED_GLASS_PANE,
                 "Back",
                 List.of(
@@ -166,7 +166,7 @@ public class EnvSetting extends AbstractUI {
                 String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
                 List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
                 List<String> flagLore = formatStringList(ChestUserInterface.envSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
-                ButtonConfiguration btnConfig = new ButtonConfiguration(
+                ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
                         ChestUserInterface.envSettingCui.listConfiguration.itemSymbol.charAt(0),
                         flag.getMaterial(),
                         flagName,

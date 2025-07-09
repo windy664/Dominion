@@ -7,6 +7,7 @@ import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.utils.Notification;
+import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
 import cn.lunadeer.dominion.utils.databse.FIelds.*;
@@ -281,6 +282,13 @@ public class DatabaseTables {
             Alter.alter().table("dominion_group").drop().column(new FieldString("player_damage")).execute();
             Alter.alter().table("privilege_template").drop().column(new FieldString("player_damage")).execute();
         }
+
+        // 4.4.0-beta add skin url cache for cui
+        if (!Show.show().columns().from("player_name").execute().containsKey("skin_url")) {
+            Column skin_url = Column.of(new FieldString("skin_url")).notNull()
+                    .defaultSqlVal("'http://textures.minecraft.net/texture/613ba1403f98221fab6f4ae0f9e5298068262258966e8f9e53cdedd97aa45ef1'");
+            Alter.alter().table("player_name").add().column(skin_url).execute();
+        }
     }
 
     public static class DatabaseManagerText extends ConfigurationPart {
@@ -369,6 +377,7 @@ public class DatabaseTables {
                 importCsv("dominion_member", dominion_member_csv, "id");
             } catch (Exception e) {
                 Notification.error(sender, Language.databaseManagerText.importDatabaseFail, e.getMessage());
+                XLogger.error(e);
                 return;
             }
             Notification.info(sender, Language.databaseManagerText.importDatabaseSuccess);

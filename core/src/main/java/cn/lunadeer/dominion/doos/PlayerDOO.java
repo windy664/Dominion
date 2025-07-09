@@ -11,7 +11,10 @@ import cn.lunadeer.dominion.utils.databse.syntax.Insert;
 import cn.lunadeer.dominion.utils.databse.syntax.Select;
 import cn.lunadeer.dominion.utils.databse.syntax.Update;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -27,6 +30,7 @@ public class PlayerDOO implements PlayerDTO {
     private final FieldString lastKnownName = new FieldString("last_known_name");
     private final FieldTimestamp lastJoinAt = new FieldTimestamp("last_join_at");
     private final FieldInteger using_group_title_id = new FieldInteger("using_group_title_id");
+    private final FieldString skinUrl = new FieldString("skin_url");
 
     private static Field<?>[] fields() {
         return new Field<?>[]{
@@ -34,7 +38,8 @@ public class PlayerDOO implements PlayerDTO {
                 new FieldString("uuid"),
                 new FieldString("last_known_name"),
                 new FieldTimestamp("last_join_at"),
-                new FieldInteger("using_group_title_id")
+                new FieldInteger("using_group_title_id"),
+                new FieldString("skin_url")
         };
     }
 
@@ -44,7 +49,8 @@ public class PlayerDOO implements PlayerDTO {
                 UUID.fromString((String) map.get("uuid").getValue()),
                 (String) map.get("last_known_name").getValue(),
                 ((Timestamp) (map.get("last_join_at").getValue())).toLocalDateTime(),
-                (Integer) map.get("using_group_title_id").getValue()
+                (Integer) map.get("using_group_title_id").getValue(),
+                (String) map.get("skin_url").getValue()
         );
     }
 
@@ -103,12 +109,13 @@ public class PlayerDOO implements PlayerDTO {
         return player;
     }
 
-    private PlayerDOO(Integer id, UUID uuid, String lastKnownName, LocalDateTime lastJoinAt, Integer using_group_title_id) {
+    private PlayerDOO(Integer id, UUID uuid, String lastKnownName, LocalDateTime lastJoinAt, Integer using_group_title_id, String skinUrl) {
         this.id.setValue(id);
         this.uuid.setValue(uuid.toString());
         this.lastKnownName.setValue(lastKnownName);
         this.lastJoinAt.setValue(Timestamp.valueOf(lastJoinAt));
         this.using_group_title_id.setValue(using_group_title_id);
+        this.skinUrl.setValue(skinUrl);
     }
 
     @Override
@@ -127,11 +134,12 @@ public class PlayerDOO implements PlayerDTO {
     }
 
     @Override
-    public PlayerDTO updateLastKnownName(String name) throws SQLException {
+    public PlayerDTO updateLastKnownName(String name, URL skinUrl) throws SQLException {
         this.setLastKnownName(name);
+        this.setSkinUrl(skinUrl);
         this.setLastJoinAt(LocalDateTime.now());
         Update.update("player_name")
-                .set(this.lastKnownName, this.lastJoinAt)
+                .set(this.lastKnownName, this.skinUrl, this.lastJoinAt)
                 .where("uuid = ?", this.getUuid().toString())
                 .execute();
         CacheManager.instance.getPlayerCache().load(this.getId());
@@ -154,6 +162,10 @@ public class PlayerDOO implements PlayerDTO {
         this.lastKnownName.setValue(lastKnownName);
     }
 
+    public void setSkinUrl(URL skinUrl) {
+        this.skinUrl.setValue(skinUrl.toString());
+    }
+
     public void setLastJoinAt(LocalDateTime lastJoinAt) {
         this.lastJoinAt.setValue(Timestamp.valueOf(lastJoinAt));
     }
@@ -161,6 +173,15 @@ public class PlayerDOO implements PlayerDTO {
     @Override
     public Integer getUsingGroupTitleID() {
         return using_group_title_id.getValue();
+    }
+
+    @Override
+    public @NotNull URL getSkinUrl() throws MalformedURLException {
+        String skinUrlValue = skinUrl.getValue();
+        if (skinUrlValue == null || skinUrlValue.isEmpty()) {
+            return new URL("http://textures.minecraft.net/texture/613ba1403f98221fab6f4ae0f9e5298068262258966e8f9e53cdedd97aa45ef1");
+        }
+        return new URL(skinUrlValue);
     }
 
     public void setUsingGroupTitleID(Integer usingGroupTitleID) throws SQLException {

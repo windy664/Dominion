@@ -1,6 +1,9 @@
 package cn.lunadeer.dominion.utils.scui;
 
+import cn.lunadeer.dominion.api.dtos.PlayerDTO;
+import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.utils.ColorParser;
+import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import cn.lunadeer.dominion.utils.scui.configuration.ButtonConfiguration;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -34,30 +37,41 @@ public abstract class ChestButton {
             if (parts.length == 3 && parts[0].equalsIgnoreCase("PLAYER_HEAD")) {
                 // Handle PLAYER_HEAD with B64 or URL
                 this.item = new ItemStack(Material.PLAYER_HEAD);
-                SkullMeta meta = (SkullMeta) this.item.getItemMeta();
-                URL skinUrl;
-                try {
-                    if (parts[1].equalsIgnoreCase("B64")) {
-                        String textureDecoded = new String(Base64.getDecoder().decode(parts[2]));
-                        // decode: {"textures":{"SKIN":{"url":"http://textures.minecraft.net/texture/bb772b2b9bf108ef15de1556c41eec0cc781a9e6cc6507669e0d2c3b56b740cc"}}}
-                        JSONObject json = (JSONObject) new JSONParser().parse(textureDecoded);
-                        String skinUrlString = (String) ((JSONObject) ((JSONObject) json.get("textures")).get("SKIN")).get("url");
-                        skinUrl = new URL(skinUrlString);
-                    } else if (parts[1].equalsIgnoreCase("URL")) {
-                        skinUrl = new URL(parts[2]);
-                    } else {
-                        throw new IllegalArgumentException("Invalid PLAYER_HEAD texture type: " + parts[1] +
-                                ". Expected 'B64' or 'URL'.");
+                Scheduler.runTaskAsync(() -> {
+                    SkullMeta meta = (SkullMeta) this.item.getItemMeta();
+                    PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID(), null);
+                    PlayerTextures textures = profile.getTextures();
+                    try {
+                        if (parts[1].equalsIgnoreCase("B64")) {
+                            String textureDecoded = new String(Base64.getDecoder().decode(parts[2]));
+                            // decode: {"textures":{"SKIN":{"url":"http://textures.minecraft.net/texture/bb772b2b9bf108ef15de1556c41eec0cc781a9e6cc6507669e0d2c3b56b740cc"}}}
+                            JSONObject json = (JSONObject) new JSONParser().parse(textureDecoded);
+                            String skinUrlString = (String) ((JSONObject) ((JSONObject) json.get("textures")).get("SKIN")).get("url");
+                            textures.setSkin(new URL(skinUrlString));
+                        } else if (parts[1].equalsIgnoreCase("URL")) {
+                            // Handle PLAYER_HEAD with URL
+                            String skinUrlString = parts[2];
+                            textures.setSkin(new URL(skinUrlString));
+                        } else if (parts[1].equalsIgnoreCase("NAME")) {
+                            // Handle PLAYER_HEAD with NAME
+                            PlayerDTO cachedPlayer = CacheManager.instance.getPlayer(parts[2]);
+                            if (cachedPlayer == null) {
+                                URL url = new URL("http://textures.minecraft.net/texture/613ba1403f98221fab6f4ae0f9e5298068262258966e8f9e53cdedd97aa45ef1");
+                                textures.setSkin(url);
+                            } else {
+                                textures.setSkin(cachedPlayer.getSkinUrl());
+                            }
+                        } else {
+                            throw new IllegalArgumentException("Invalid PLAYER_HEAD texture type: " + parts[1] +
+                                    ". Expected 'B64' or 'URL' or 'NAME'.");
+                        }
+                    } catch (Exception e) {
+                        throw new IllegalArgumentException("Failed to parse texture data: " + parts[2], e);
                     }
-                } catch (Exception e) {
-                    throw new IllegalArgumentException("Failed to parse texture data: " + parts[2], e);
-                }
-                PlayerProfile profile = Bukkit.createPlayerProfile(UUID.randomUUID(), null);
-                PlayerTextures textures = profile.getTextures();
-                textures.setSkin(skinUrl);
-                profile.setTextures(textures);
-                meta.setOwnerProfile(profile);
-                this.item.setItemMeta(meta);
+                    profile.setTextures(textures);
+                    meta.setOwnerProfile(profile);
+                    this.item.setItemMeta(meta);
+                });
             } else {
                 throw new IllegalArgumentException("Invalid material type: " + config.material);
             }

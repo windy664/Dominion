@@ -152,7 +152,7 @@ public class MainMenu extends AbstractUI {
                 "###D#E###",
                 "#########"
         );
-        public ButtonConfiguration createButton = new ButtonConfiguration(
+        public ButtonConfiguration createButton = ButtonConfiguration.createMaterial(
                 'A', Material.NETHER_STAR, "Create Dominion",
                 List.of(
                         "Create a new ",
@@ -160,28 +160,28 @@ public class MainMenu extends AbstractUI {
                         "you."
                 )
         );
-        public ButtonConfiguration listButton = new ButtonConfiguration(
+        public ButtonConfiguration listButton = ButtonConfiguration.createMaterial(
                 'B', Material.BOOKSHELF, "List Dominion",
                 List.of(
                         "List all dominions ",
                         "you can manage."
                 )
         );
-        public ButtonConfiguration titleButton = new ButtonConfiguration(
+        public ButtonConfiguration titleButton = ButtonConfiguration.createMaterial(
                 'C', Material.NAME_TAG, "Title List",
                 List.of(
                         "List all titles ",
                         "you can use."
                 )
         );
-        public ButtonConfiguration templateButton = new ButtonConfiguration(
+        public ButtonConfiguration templateButton = ButtonConfiguration.createMaterial(
                 'D', Material.PAPER, "Template List",
                 List.of(
                         "Manage your ",
                         "templates."
                 )
         );
-        public ButtonConfiguration migrateButton = new ButtonConfiguration(
+        public ButtonConfiguration migrateButton = ButtonConfiguration.createMaterial(
                 'E', Material.ENDER_PEARL, "Migrate Residence",
                 List.of(
                         "Migrate your ",
@@ -189,7 +189,7 @@ public class MainMenu extends AbstractUI {
                         "dominion."
                 )
         );
-        public ButtonConfiguration allButton = new ButtonConfiguration(
+        public ButtonConfiguration allButton = ButtonConfiguration.createMaterial(
                 'F', Material.DIAMOND, "All Dominion",
                 List.of(
                         "List all",

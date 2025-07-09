@@ -93,7 +93,7 @@ public class AllDominion extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration dominionItemButton = new ButtonConfiguration(
+        public ButtonConfiguration dominionItemButton = ButtonConfiguration.createMaterial(
                 'i', Material.PAPER, "Name: {0}",
                 List.of(
                         "Owner: {0}",
@@ -102,7 +102,7 @@ public class AllDominion extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration backButton = new ButtonConfiguration(
+        public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
                 '<', Material.RED_STAINED_GLASS_PANE,
                 "Back",
                 List.of(

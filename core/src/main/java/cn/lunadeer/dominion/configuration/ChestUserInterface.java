@@ -6,6 +6,8 @@ import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
 import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
+import cn.lunadeer.dominion.uis.dominion.manage.group.GroupManage;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationFile;
 import cn.lunadeer.dominion.utils.configuration.Heads;
 
@@ -20,9 +22,10 @@ import cn.lunadeer.dominion.utils.configuration.Heads;
         "",
         "For button material:",
         "    Use the material name in uppercase, e.g., STONE, DIAMOND_SWORD.",
-        "    If you want to use player heads with textures, we support two formats:",
+        "    If you want to use player heads with textures, we support three formats:",
         "        1. PLAYER_HEAD;B64;{base64 texture value}",
         "        2. PLAYER_HEAD;URL;{texture image URL}",
+        "        3. PLAYER_HEAD;NAME;{player name}",
         "    The first format uses a base64-encoded texture value, while the second",
         "    uses a URL to an image. The URL must point to a Mojang server skin image.",
         "    You can search textures on e.g. https://mcheads.ru/ to get the base64 ",
@@ -35,4 +38,6 @@ public class ChestUserInterface extends ConfigurationFile {
     public static DominionManage.DominionManageCui dominionManageCui = new DominionManage.DominionManageCui();
     public static EnvSetting.EnvSettingCui envSettingCui = new EnvSetting.EnvSettingCui();
     public static GuestSetting.GuestSettingCui guestSettingCui = new GuestSetting.GuestSettingCui();
+    public static GroupList.GroupListCui groupListCui = new GroupList.GroupListCui();
+    public static GroupManage.GroupManageCUI groupManageCUI = new GroupManage.GroupManageCUI();
 }

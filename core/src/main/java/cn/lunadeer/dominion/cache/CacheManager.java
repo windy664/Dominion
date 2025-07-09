@@ -180,7 +180,7 @@ public class CacheManager {
     public void updatePlayerName(@NotNull Player bukkitPlayer) throws SQLException {
         PlayerDTO player = playerCache.getPlayer(bukkitPlayer.getUniqueId());
         if (player != null) {
-            player.updateLastKnownName(bukkitPlayer.getName());
+            player.updateLastKnownName(bukkitPlayer.getName(), bukkitPlayer.getPlayerProfile().getTextures().getSkin());
         } else {
             PlayerDOO.create(bukkitPlayer);
         }

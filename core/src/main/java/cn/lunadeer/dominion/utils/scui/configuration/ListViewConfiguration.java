@@ -33,11 +33,11 @@ public class ListViewConfiguration extends ConfigurationPart {
             "#iiiiiii#",
             "#p#####n#"
     );
-    public ButtonConfiguration previewButton = new ButtonConfiguration('p',
+    public ButtonConfiguration previewButton = ButtonConfiguration.createHeadByB64('p',
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=",
             "<<<",
             List.of("Page: {0}/{1}"));
-    public ButtonConfiguration nextButton = new ButtonConfiguration('n',
+    public ButtonConfiguration nextButton = ButtonConfiguration.createHeadByB64('n',
             "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=",
             ">>>",
             List.of("Page: {0}/{1}"));

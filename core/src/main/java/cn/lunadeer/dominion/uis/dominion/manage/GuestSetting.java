@@ -119,7 +119,7 @@ public class GuestSetting extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration backButton = new ButtonConfiguration(
+        public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
                 '<', Material.RED_STAINED_GLASS_PANE,
                 "Back",
                 List.of(
@@ -161,12 +161,13 @@ public class GuestSetting extends AbstractUI {
 
             for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
                 PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
+                if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
                 Integer page = (int) Math.ceil((double) i / view.getPageSize());
                 String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
                 String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
                 List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
                 List<String> flagLore = formatStringList(ChestUserInterface.guestSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
-                ButtonConfiguration btnConfig = new ButtonConfiguration(
+                ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
                         ChestUserInterface.guestSettingCui.listConfiguration.itemSymbol.charAt(0),
                         flag.getMaterial(),
                         flagName,

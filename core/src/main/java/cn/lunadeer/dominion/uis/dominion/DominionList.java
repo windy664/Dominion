@@ -174,7 +174,7 @@ public class DominionList extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration ownDominionButton = new ButtonConfiguration(
+        public ButtonConfiguration ownDominionButton = ButtonConfiguration.createMaterial(
                 'i', Material.GRASS_BLOCK, "Name: {0}",
                 List.of(
                         "This is your dominion.",
@@ -182,7 +182,7 @@ public class DominionList extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration adminDominionButton = new ButtonConfiguration(
+        public ButtonConfiguration adminDominionButton = ButtonConfiguration.createMaterial(
                 'i', Material.DIRT_PATH, "Name: {0}",
                 List.of(
                         "Owner: {0}",
@@ -191,7 +191,7 @@ public class DominionList extends AbstractUI {
                 )
         );
 
-        public ButtonConfiguration backButton = new ButtonConfiguration(
+        public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
                 '<', Material.RED_STAINED_GLASS_PANE,
                 "Back",
                 List.of(

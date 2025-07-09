@@ -15,7 +15,7 @@ libraries += "com.zaxxer:HikariCP:6.2.1"
 
 
 group = "cn.lunadeer"
-version = "4.3.5-beta"
+version = "4.4.0-alpha.0"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
