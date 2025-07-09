@@ -7,7 +7,6 @@ import cn.lunadeer.dominion.commands.GroupCommand;
 import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.inputters.RenameGroupInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
-import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestListView;
@@ -21,6 +20,7 @@ import org.bukkit.event.inventory.ClickType;
 
 import java.util.List;
 
+import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.*;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
@@ -106,79 +106,76 @@ public class GroupManage extends AbstractUI {
     }
 
     @Override
-    protected void showCUI(Player player, String... args) {
-        try {
-            DominionDTO dominion = toDominionDTO(args[0]);
-            GroupDTO group = toGroupDTO(dominion, args[1]);
-            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view.setTitle(formatString(ChestUserInterface.groupManageCUI.title, group.getNameColoredBukkit()));
-            view.applyListConfiguration(ChestUserInterface.groupManageCUI.listConfiguration, toIntegrity(args[2]));
+    protected void showCUI(Player player, String... args) throws Exception {
+        DominionDTO dominion = toDominionDTO(args[0]);
+        assertDominionAdmin(player, dominion);
+        GroupDTO group = toGroupDTO(dominion, args[1]);
+        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+        view.setTitle(formatString(ChestUserInterface.groupManageCUI.title, group.getNameColoredBukkit()));
+        view.applyListConfiguration(ChestUserInterface.groupManageCUI.listConfiguration, toIntegrity(args[2]));
 
-            view.setButton(ChestUserInterface.groupManageCUI.backButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.groupManageCUI.backButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            GroupList.show(player, args[0], "1");
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.groupManageCUI.groupFlagsButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.groupManageCUI.groupFlagsButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            GroupSetting.show(player, args[0], args[1], "1");
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.groupManageCUI.renameGroupButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.groupManageCUI.renameGroupButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            RenameGroupInputter.createOn(player, args[0], args[1]);
-                            view.close();
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.groupManageCUI.deleteGroupButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.groupManageCUI.deleteGroupButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            GroupCommand.deleteGroup(player, args[0], args[1], "1");
-                        }
-                    }
-            );
-
-            view.addItem(new ChestButton(ChestUserInterface.groupManageCUI.addMemberButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    SelectMember.show(player, dominion.getName(), group.getNamePlain(), "1", "1");
-                }
-            });
-
-            for (int i = 0; i < group.getMembers().size(); i++) {
-                MemberDTO m = group.getMembers().get(i);
-                Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
-                ButtonConfiguration item = ButtonConfiguration.createHeadByName(
-                        ChestUserInterface.groupManageCUI.listConfiguration.nextButton.getSymbol(),
-                        m.getPlayer().getLastKnownName(),
-                        m.getPlayer().getLastKnownName(),
-                        ChestUserInterface.groupManageCUI.playerHeadItemLore
-                );
-                view.addItem(new ChestButton(item) {
+        view.setButton(ChestUserInterface.groupManageCUI.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.groupManageCUI.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        GroupCommand.removeMember(player, dominion.getName(), group.getNamePlain(), m.getPlayer().getLastKnownName(), page.toString());
-                        GroupManage.show(player, dominion.getName(), group.getNamePlain(), page.toString());
+                        GroupList.show(player, args[0], "1");
                     }
-                });
-            }
+                }
+        );
 
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
+        view.setButton(ChestUserInterface.groupManageCUI.groupFlagsButton.getSymbol(),
+                new ChestButton(ChestUserInterface.groupManageCUI.groupFlagsButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        GroupSetting.show(player, args[0], args[1], "1");
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.groupManageCUI.renameGroupButton.getSymbol(),
+                new ChestButton(ChestUserInterface.groupManageCUI.renameGroupButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        RenameGroupInputter.createOn(player, args[0], args[1]);
+                        view.close();
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.groupManageCUI.deleteGroupButton.getSymbol(),
+                new ChestButton(ChestUserInterface.groupManageCUI.deleteGroupButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        GroupCommand.deleteGroup(player, args[0], args[1], "1");
+                    }
+                }
+        );
+
+        view.addItem(new ChestButton(ChestUserInterface.groupManageCUI.addMemberButton) {
+            @Override
+            public void onClick(ClickType type) {
+                SelectMember.show(player, dominion.getName(), group.getNamePlain(), "1", "1");
+            }
+        });
+
+        for (int i = 0; i < group.getMembers().size(); i++) {
+            MemberDTO m = group.getMembers().get(i);
+            Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
+            ButtonConfiguration item = ButtonConfiguration.createHeadByName(
+                    ChestUserInterface.groupManageCUI.listConfiguration.nextButton.getSymbol(),
+                    m.getPlayer().getLastKnownName(),
+                    m.getPlayer().getLastKnownName(),
+                    ChestUserInterface.groupManageCUI.playerHeadItemLore
+            );
+            view.addItem(new ChestButton(item) {
+                @Override
+                public void onClick(ClickType type) {
+                    GroupCommand.removeMember(player, dominion.getName(), group.getNamePlain(), m.getPlayer().getLastKnownName(), page.toString());
+                    GroupManage.show(player, dominion.getName(), group.getNamePlain(), page.toString());
+                }
+            });
         }
+
+        view.open();
     }
 }

@@ -10,7 +10,6 @@ import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestListView;
@@ -60,47 +59,44 @@ public class EnvSetting extends AbstractUI {
 
     @Override
     protected void showTUI(CommandSender sender, String... args) {
-        try {
-            String dominionName = args[0];
-            String pageStr = args.length > 1 ? args[1] : "1";
-            DominionDTO dominion = toDominionDTO(dominionName);
-            assertDominionAdmin(sender, dominion);
-            int page = toIntegrity(pageStr);
+        String dominionName = args[0];
+        String pageStr = args.length > 1 ? args[1] : "1";
+        DominionDTO dominion = toDominionDTO(dominionName);
+        assertDominionAdmin(sender, dominion);
+        int page = toIntegrity(pageStr);
 
-            ListView view = ListView.create(10, button(sender, dominionName));
-            view.title(formatString(Language.envSettingTuiText.title, dominion.getName()))
-                    .navigator(Line.create()
-                            .append(MainMenu.button(sender).build())
-                            .append(DominionList.button(sender).build())
-                            .append(DominionManage.button(sender, dominionName).build())
-                            .append(Language.envSettingTuiText.button));
-            for (EnvFlag flag : Flags.getAllEnvFlagsEnable()) {
-                if (dominion.getEnvFlagValue(flag)) {
-                    view.add(Line.create()
-                            .append(new FunctionalButton("☑") {
-                                @Override
-                                public void function() {
-                                    DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "false", pageStr);
-                                }
-                            }.needPermission(defaultPermission).green().build())
-                            .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
-                    );
-                } else {
-                    view.add(Line.create()
-                            .append(new FunctionalButton("☐") {
-                                @Override
-                                public void function() {
-                                    DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "true", pageStr);
-                                }
-                            }.needPermission(defaultPermission).red().build())
-                            .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
-                    );
-                }
+        ListView view = ListView.create(10, button(sender, dominionName));
+        view.title(formatString(Language.envSettingTuiText.title, dominion.getName()))
+                .navigator(Line.create()
+                        .append(MainMenu.button(sender).build())
+                        .append(DominionList.button(sender).build())
+                        .append(DominionManage.button(sender, dominionName).build())
+                        .append(Language.envSettingTuiText.button));
+        for (EnvFlag flag : Flags.getAllEnvFlagsEnable()) {
+            if (dominion.getEnvFlagValue(flag)) {
+                view.add(Line.create()
+                        .append(new FunctionalButton("☑") {
+                            @Override
+                            public void function() {
+                                DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "false", pageStr);
+                            }
+                        }.needPermission(defaultPermission).green().build())
+                        .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
+                );
+            } else {
+                view.add(Line.create()
+                        .append(new FunctionalButton("☐") {
+                            @Override
+                            public void function() {
+                                DominionFlagCommand.setEnv(sender, dominionName, flag.getFlagName(), "true", pageStr);
+                            }
+                        }.needPermission(defaultPermission).red().build())
+                        .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
+                );
             }
-            view.showOn(sender, page);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
         }
+        view.showOn(sender, page);
+
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -142,48 +138,44 @@ public class EnvSetting extends AbstractUI {
 
     @Override
     protected void showCUI(Player player, String... args) {
-        try {
-            DominionDTO dominion = toDominionDTO(args[0]);
-            assertDominionAdmin(player, dominion);
+        DominionDTO dominion = toDominionDTO(args[0]);
+        assertDominionAdmin(player, dominion);
 
-            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view.setTitle(formatString(ChestUserInterface.envSettingCui.title, dominion.getName()));
-            view.applyListConfiguration(ChestUserInterface.envSettingCui.listConfiguration, toIntegrity(args[1]));
+        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+        view.setTitle(formatString(ChestUserInterface.envSettingCui.title, dominion.getName()));
+        view.applyListConfiguration(ChestUserInterface.envSettingCui.listConfiguration, toIntegrity(args[1]));
 
-            view.setButton(ChestUserInterface.envSettingCui.backButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.envSettingCui.backButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            DominionManage.show(player, dominion.getName(), "1");
-                        }
-                    }
-            );
-
-            for (int i = 0; i < Flags.getAllEnvFlags().size(); i++) {
-                EnvFlag flag = Flags.getAllEnvFlags().get(i);
-                Integer page = (int) Math.ceil((double) i / view.getPageSize());
-                String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
-                String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
-                List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
-                List<String> flagLore = formatStringList(ChestUserInterface.envSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
-                ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
-                        ChestUserInterface.envSettingCui.listConfiguration.itemSymbol.charAt(0),
-                        flag.getMaterial(),
-                        flagName,
-                        flagLore
-                );
-                view.addItem(new ChestButton(btnConfig) {
+        view.setButton(ChestUserInterface.envSettingCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.envSettingCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        DominionFlagCommand.setEnv(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getEnvFlagValue(flag)), page.toString());
+                        DominionManage.show(player, dominion.getName(), "1");
                     }
-                });
-            }
+                }
+        );
 
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
+        for (int i = 0; i < Flags.getAllEnvFlags().size(); i++) {
+            EnvFlag flag = Flags.getAllEnvFlags().get(i);
+            Integer page = (int) Math.ceil((double) i / view.getPageSize());
+            String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
+            List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
+            List<String> flagLore = formatStringList(ChestUserInterface.envSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
+            ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
+                    ChestUserInterface.envSettingCui.listConfiguration.itemSymbol.charAt(0),
+                    flag.getMaterial(),
+                    flagName,
+                    flagLore
+            );
+            view.addItem(new ChestButton(btnConfig) {
+                @Override
+                public void onClick(ClickType type) {
+                    DominionFlagCommand.setEnv(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getEnvFlagValue(flag)), page.toString());
+                }
+            });
         }
+
+        view.open();
     }
 
 }

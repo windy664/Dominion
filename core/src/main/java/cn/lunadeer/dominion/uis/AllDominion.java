@@ -6,7 +6,6 @@ import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -62,19 +61,15 @@ public class AllDominion extends AbstractUI {
 
     @Override
     protected void showTUI(CommandSender sender, String... args) {
-        try {
-            int page = toIntegrity(args[0], 1);
-            ListView view = ListView.create(10, button(sender));
+        int page = toIntegrity(args[0], 1);
+        ListView view = ListView.create(10, button(sender));
 
-            view.title(Language.allDominionTuiText.title);
-            view.navigator(Line.create()
-                    .append(MainMenu.button(sender).build())
-                    .append(Language.allDominionTuiText.button));
-            view.addLines(BuildTreeLines(sender, CacheManager.instance.getCache().getDominionCache().getAllDominionNodes(), 0));
-            view.showOn(sender, page);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
-        }
+        view.title(Language.allDominionTuiText.title);
+        view.navigator(Line.create()
+                .append(MainMenu.button(sender).build())
+                .append(Language.allDominionTuiText.button));
+        view.addLines(BuildTreeLines(sender, CacheManager.instance.getCache().getDominionCache().getAllDominionNodes(), 0));
+        view.showOn(sender, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -114,36 +109,32 @@ public class AllDominion extends AbstractUI {
 
     @Override
     protected void showCUI(Player player, String... args) {
-        try {
-            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view.setTitle(ChestUserInterface.allDominionCui.title);
-            view.applyListConfiguration(ChestUserInterface.allDominionCui.listConfiguration, toIntegrity(args[0]));
+        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+        view.setTitle(ChestUserInterface.allDominionCui.title);
+        view.applyListConfiguration(ChestUserInterface.allDominionCui.listConfiguration, toIntegrity(args[0]));
 
-            List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
-            for (DominionDTO dominion : dominions) {
-                ChestButton btn = new ChestButton(ChestUserInterface.allDominionCui.dominionItemButton) {
+        List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
+        for (DominionDTO dominion : dominions) {
+            ChestButton btn = new ChestButton(ChestUserInterface.allDominionCui.dominionItemButton) {
+                @Override
+                public void onClick(ClickType type) {
+                    DominionManage.show(player, dominion.getName(), "1");
+                }
+            };
+            btn = btn.setDisplayNameArgs(dominion.getName());
+            btn = btn.setLoreArgs(List.of(dominion.getOwnerDTO().getLastKnownName()));
+            view = view.addItem(btn);
+        }
+
+        view.setButton(ChestUserInterface.allDominionCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.allDominionCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        DominionManage.show(player, dominion.getName(), "1");
+                        MainMenu.show(player, "1");
                     }
-                };
-                btn = btn.setDisplayNameArgs(dominion.getName());
-                btn = btn.setLoreArgs(List.of(dominion.getOwnerDTO().getLastKnownName()));
-                view = view.addItem(btn);
-            }
+                }
+        );
 
-            view.setButton(ChestUserInterface.allDominionCui.backButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.allDominionCui.backButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            MainMenu.show(player, "1");
-                        }
-                    }
-            );
-
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
-        }
+        view.open();
     }
 }

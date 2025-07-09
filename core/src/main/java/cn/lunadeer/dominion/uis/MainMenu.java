@@ -76,63 +76,59 @@ public class MainMenu extends AbstractUI {
 
     @Override
     protected void showTUI(CommandSender sender, String... args) {
-        try {
-            Player player = toPlayer(sender);
-            int page = toIntegrity(args[0], 1);
+        Player player = toPlayer(sender);
+        int page = toIntegrity(args[0], 1);
 
-            Line create = Line.create()
-                    .append(CreateDominionInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build())
-                    .append(Language.createDominionInputterText.description);
-            Line list = Line.create()
-                    .append(DominionList.button(sender).build())
-                    .append(Language.dominionListTuiText.description);
-            Line title = Line.create()
-                    .append(TitleList.button(sender).build())
-                    .append(Language.titleListTuiText.description);
-            Line template = Line.create()
-                    .append(TemplateList.button(sender).build())
-                    .append(Language.templateListTuiText.description);
-            Line help = Line.create()
-                    .append(new UrlButton(Language.menuTuiText.commandHelpButton, Configuration.externalLinks.commandHelp).build())
-                    .append(Language.menuTuiText.commandHelpDescription);
-            Line link = Line.create()
-                    .append(new UrlButton(Language.menuTuiText.documentButton, Configuration.externalLinks.documentation).build())
-                    .append(Language.menuTuiText.documentDescription);
-            Line migrate = Line.create()
-                    .append(MigrateList.button(sender).build())
-                    .append(Language.migrateListText.description);
-            Line all = Line.create()
-                    .append(AllDominion.button(sender).build())
-                    .append(Language.allDominionTuiText.description);
-            Line reload_cache = Line.create()
-                    .append(AdministratorCommand.reloadCacheButton(sender).build())
-                    .append(Language.administratorCommandText.reloadCacheDescription);
-            Line reload_config = Line.create()
-                    .append(AdministratorCommand.reloadConfigButton(sender).build())
-                    .append(Language.administratorCommandText.reloadConfigDescription);
-            ListView view = ListView.create(10, button(sender));
-            view.title(Language.menuTuiText.title);
-            view.navigator(Line.create().append(Language.menuTuiText.button));
-            view.add(create);
-            view.add(list);
-            if (Configuration.groupTitle.enable) view.add(title);
-            view.add(template);
-            if (!Configuration.externalLinks.commandHelp.isEmpty()) view.add(help);
-            if (!Configuration.externalLinks.documentation.isEmpty()) view.add(link);
-            if (Configuration.residenceMigration) {
-                view.add(migrate);
-            }
-            if (player.hasPermission(adminPermission)) {
-                view.add(Line.create().append(""));
-                view.add(Line.create().append(Component.text(Language.menuTuiText.adminOnlySection, ViewStyles.main_color)));
-                view.add(all);
-                view.add(reload_cache);
-                view.add(reload_config);
-            }
-            view.showOn(player, page);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
+        Line create = Line.create()
+                .append(CreateDominionInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build())
+                .append(Language.createDominionInputterText.description);
+        Line list = Line.create()
+                .append(DominionList.button(sender).build())
+                .append(Language.dominionListTuiText.description);
+        Line title = Line.create()
+                .append(TitleList.button(sender).build())
+                .append(Language.titleListTuiText.description);
+        Line template = Line.create()
+                .append(TemplateList.button(sender).build())
+                .append(Language.templateListTuiText.description);
+        Line help = Line.create()
+                .append(new UrlButton(Language.menuTuiText.commandHelpButton, Configuration.externalLinks.commandHelp).build())
+                .append(Language.menuTuiText.commandHelpDescription);
+        Line link = Line.create()
+                .append(new UrlButton(Language.menuTuiText.documentButton, Configuration.externalLinks.documentation).build())
+                .append(Language.menuTuiText.documentDescription);
+        Line migrate = Line.create()
+                .append(MigrateList.button(sender).build())
+                .append(Language.migrateListText.description);
+        Line all = Line.create()
+                .append(AllDominion.button(sender).build())
+                .append(Language.allDominionTuiText.description);
+        Line reload_cache = Line.create()
+                .append(AdministratorCommand.reloadCacheButton(sender).build())
+                .append(Language.administratorCommandText.reloadCacheDescription);
+        Line reload_config = Line.create()
+                .append(AdministratorCommand.reloadConfigButton(sender).build())
+                .append(Language.administratorCommandText.reloadConfigDescription);
+        ListView view = ListView.create(10, button(sender));
+        view.title(Language.menuTuiText.title);
+        view.navigator(Line.create().append(Language.menuTuiText.button));
+        view.add(create);
+        view.add(list);
+        if (Configuration.groupTitle.enable) view.add(title);
+        view.add(template);
+        if (!Configuration.externalLinks.commandHelp.isEmpty()) view.add(help);
+        if (!Configuration.externalLinks.documentation.isEmpty()) view.add(link);
+        if (Configuration.residenceMigration) {
+            view.add(migrate);
         }
+        if (player.hasPermission(adminPermission)) {
+            view.add(Line.create().append(""));
+            view.add(Line.create().append(Component.text(Language.menuTuiText.adminOnlySection, ViewStyles.main_color)));
+            view.add(all);
+            view.add(reload_cache);
+            view.add(reload_config);
+        }
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -201,79 +197,75 @@ public class MainMenu extends AbstractUI {
 
     @Override
     protected void showCUI(Player player, String... args) {
-        try {
-            ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player).setTitle(ChestUserInterface.mainMenuCui.title);
+        ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player).setTitle(ChestUserInterface.mainMenuCui.title);
 
-            if (player.hasPermission(adminPermission)) {
-                view.setLayout(ChestUserInterface.mainMenuCui.adminLayout);
-            } else {
-                view.setLayout(ChestUserInterface.mainMenuCui.userLayout);
-            }
-
-            view.setButton(ChestUserInterface.mainMenuCui.createButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.createButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            CreateDominionInputter.createOn(player);
-                            view.close();
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.mainMenuCui.listButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.listButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            DominionList.show(player, "1");
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.mainMenuCui.titleButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.titleButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            if (Configuration.groupTitle.enable) {
-                                TitleList.show(player, "1");
-                            }
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.mainMenuCui.templateButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.templateButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            TemplateList.show(player, "1");
-                        }
-                    }
-            );
-
-            view.setButton(ChestUserInterface.mainMenuCui.migrateButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.mainMenuCui.migrateButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            if (Configuration.residenceMigration) {
-                                MigrateList.show(player, "1");
-                            }
-                        }
-                    }
-            );
-
-            if (player.hasPermission(adminPermission)) {
-                view.setButton(ChestUserInterface.mainMenuCui.allButton.getSymbol(),
-                        new ChestButton(ChestUserInterface.mainMenuCui.allButton) {
-                            @Override
-                            public void onClick(ClickType type) {
-                                AllDominion.show(player, "1");
-                            }
-                        }
-                );
-            }
-
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
+        if (player.hasPermission(adminPermission)) {
+            view.setLayout(ChestUserInterface.mainMenuCui.adminLayout);
+        } else {
+            view.setLayout(ChestUserInterface.mainMenuCui.userLayout);
         }
+
+        view.setButton(ChestUserInterface.mainMenuCui.createButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.createButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        CreateDominionInputter.createOn(player);
+                        view.close();
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.mainMenuCui.listButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.listButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        DominionList.show(player, "1");
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.mainMenuCui.titleButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.titleButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        if (Configuration.groupTitle.enable) {
+                            TitleList.show(player, "1");
+                        }
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.mainMenuCui.templateButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.templateButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        TemplateList.show(player, "1");
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.mainMenuCui.migrateButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.migrateButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        if (Configuration.residenceMigration) {
+                            MigrateList.show(player, "1");
+                        }
+                    }
+                }
+        );
+
+        if (player.hasPermission(adminPermission)) {
+            view.setButton(ChestUserInterface.mainMenuCui.allButton.getSymbol(),
+                    new ChestButton(ChestUserInterface.mainMenuCui.allButton) {
+                        @Override
+                        public void onClick(ClickType type) {
+                            AllDominion.show(player, "1");
+                        }
+                    }
+            );
+        }
+
+        view.open();
     }
 }

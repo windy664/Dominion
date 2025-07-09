@@ -17,8 +17,6 @@ import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.Info;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
-import cn.lunadeer.dominion.utils.Notification;
-import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -80,76 +78,71 @@ public class DominionManage extends AbstractUI {
 
     @Override
     protected void showTUI(CommandSender sender, String... args) {
-        try {
-            Player player = toPlayer(sender);
-            DominionDTO dominion = toDominionDTO(args[1]);
-            assertDominionAdmin(player, dominion);
-            int page = toIntegrity(args[2], 1);
+        Player player = toPlayer(sender);
+        DominionDTO dominion = toDominionDTO(args[1]);
+        assertDominionAdmin(player, dominion);
+        int page = toIntegrity(args[2], 1);
 
-            Line size_info = Line.create()
-                    .append(Info.button(sender, args[1]).build())
-                    .append(Language.sizeInfoTuiText.description);
-            Line env_info = Line.create()
-                    .append(EnvSetting.button(sender, args[1]).build())
-                    .append(Language.envSettingTuiText.description);
-            Line flag_info = Line.create()
-                    .append(GuestSetting.button(sender, args[1]).build())
-                    .append(Language.guestSettingTuiText.description);
-            Line member_list = Line.create()
-                    .append(MemberList.button(sender, args[1]).build())
-                    .append(Language.memberListTuiText.description);
-            Line group_list = Line.create()
-                    .append(GroupList.button(sender, args[1]).build())
-                    .append(Language.groupListTuiText.description);
-            Line set_tp = Line.create()
-                    .append(new FunctionalButton(Language.dominionManageTuiText.setTpButton) {
-                        @Override
-                        public void function() {
-                            DominionOperateCommand.setTp(sender, args[1]);
-                        }
-                    }.build())
-                    .append(Language.dominionManageTuiText.setTpDescription);
-            Line rename = Line.create()
-                    .append(RenameDominionInputter.createTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
-                    .append(Language.renameDominionInputterText.description);
-            Line enter_msg = Line.create()
-                    .append(EditMessageInputter.createEnterTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
-                    .append(Language.editMessageInputterText.enterDescription);
-            Line leave_msg = Line.create()
-                    .append(EditMessageInputter.createLeaveTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
-                    .append(Language.editMessageInputterText.leaveDescription);
-            Line map_color = Line.create()
-                    .append(SetMapColorInputter.createTuiButtonOn(sender, args[1]).build())
-                    .append(Component.text(Language.setMapColorInputterText.description)
-                            .append(Component.text(dominion.getColor(),
-                                    TextColor.color(dominion.getColorR(), dominion.getColorG(), dominion.getColorB()))));
-            Line copy_menu = Line.create()
-                    .append(CopyMenu.button(sender, args[1]).build())
-                    .append(Language.copyMenuTuiText.description);
-            ListView view = ListView.create(10, button(sender, dominion.getName()));
-            view.title(formatString(Language.dominionManageTuiText.title, dominion.getName()))
-                    .navigator(Line.create()
-                            .append(MainMenu.button(sender).build())
-                            .append(DominionList.button(sender).build())
-                            .append(dominion.getName()))
-                    .add(size_info)
-                    .add(env_info)
-                    .add(flag_info)
-                    .add(member_list)
-                    .add(group_list)
-                    .add(set_tp)
-                    .add(rename)
-                    .add(enter_msg)
-                    .add(leave_msg);
-            if (Configuration.webMapRenderer.blueMap || Configuration.webMapRenderer.dynmap) {
-                view.add(map_color);
-            }
-            view.add(copy_menu);
-            view.showOn(player, page);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
-            XLogger.error(e);
+        Line size_info = Line.create()
+                .append(Info.button(sender, args[1]).build())
+                .append(Language.sizeInfoTuiText.description);
+        Line env_info = Line.create()
+                .append(EnvSetting.button(sender, args[1]).build())
+                .append(Language.envSettingTuiText.description);
+        Line flag_info = Line.create()
+                .append(GuestSetting.button(sender, args[1]).build())
+                .append(Language.guestSettingTuiText.description);
+        Line member_list = Line.create()
+                .append(MemberList.button(sender, args[1]).build())
+                .append(Language.memberListTuiText.description);
+        Line group_list = Line.create()
+                .append(GroupList.button(sender, args[1]).build())
+                .append(Language.groupListTuiText.description);
+        Line set_tp = Line.create()
+                .append(new FunctionalButton(Language.dominionManageTuiText.setTpButton) {
+                    @Override
+                    public void function() {
+                        DominionOperateCommand.setTp(sender, args[1]);
+                    }
+                }.build())
+                .append(Language.dominionManageTuiText.setTpDescription);
+        Line rename = Line.create()
+                .append(RenameDominionInputter.createTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(Language.renameDominionInputterText.description);
+        Line enter_msg = Line.create()
+                .append(EditMessageInputter.createEnterTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(Language.editMessageInputterText.enterDescription);
+        Line leave_msg = Line.create()
+                .append(EditMessageInputter.createLeaveTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(Language.editMessageInputterText.leaveDescription);
+        Line map_color = Line.create()
+                .append(SetMapColorInputter.createTuiButtonOn(sender, args[1]).build())
+                .append(Component.text(Language.setMapColorInputterText.description)
+                        .append(Component.text(dominion.getColor(),
+                                TextColor.color(dominion.getColorR(), dominion.getColorG(), dominion.getColorB()))));
+        Line copy_menu = Line.create()
+                .append(CopyMenu.button(sender, args[1]).build())
+                .append(Language.copyMenuTuiText.description);
+        ListView view = ListView.create(10, button(sender, dominion.getName()));
+        view.title(formatString(Language.dominionManageTuiText.title, dominion.getName()))
+                .navigator(Line.create()
+                        .append(MainMenu.button(sender).build())
+                        .append(DominionList.button(sender).build())
+                        .append(dominion.getName()))
+                .add(size_info)
+                .add(env_info)
+                .add(flag_info)
+                .add(member_list)
+                .add(group_list)
+                .add(set_tp)
+                .add(rename)
+                .add(enter_msg)
+                .add(leave_msg);
+        if (Configuration.webMapRenderer.blueMap || Configuration.webMapRenderer.dynmap) {
+            view.add(map_color);
         }
+        view.add(copy_menu);
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -276,116 +269,111 @@ public class DominionManage extends AbstractUI {
 
     @Override
     protected void showCUI(Player player, String... args) {
-        try {
-            DominionDTO dominion = toDominionDTO(args[0]);
-            assertDominionAdmin(player, dominion);
+        DominionDTO dominion = toDominionDTO(args[0]);
+        assertDominionAdmin(player, dominion);
 
-            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view.setTitle(formatString(ChestUserInterface.dominionManageCui.title, dominion.getName()));
-            view.applyListConfiguration(ChestUserInterface.dominionManageCui.listConfiguration, toIntegrity(args[1]));
+        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+        view.setTitle(formatString(ChestUserInterface.dominionManageCui.title, dominion.getName()));
+        view.applyListConfiguration(ChestUserInterface.dominionManageCui.listConfiguration, toIntegrity(args[1]));
 
-            view.setButton(ChestUserInterface.dominionManageCui.backButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.dominionManageCui.backButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            DominionList.show(player, "1");
-                        }
+        view.setButton(ChestUserInterface.dominionManageCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.dominionManageCui.backButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        DominionList.show(player, "1");
                     }
-            );
-
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.dominionInfoButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    Info.show(player, dominion.getName());
                 }
-            });
+        );
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.envSettingButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    EnvSetting.show(player, dominion.getName(), "1");
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.dominionInfoButton) {
+            @Override
+            public void onClick(ClickType type) {
+                Info.show(player, dominion.getName());
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.guestSettingButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    GuestSetting.show(player, dominion.getName(), "1");
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.envSettingButton) {
+            @Override
+            public void onClick(ClickType type) {
+                EnvSetting.show(player, dominion.getName(), "1");
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.memberListButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    MemberList.show(player, dominion.getName(), "1");
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.guestSettingButton) {
+            @Override
+            public void onClick(ClickType type) {
+                GuestSetting.show(player, dominion.getName(), "1");
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.groupListButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    GroupList.show(player, dominion.getName(), "1");
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.memberListButton) {
+            @Override
+            public void onClick(ClickType type) {
+                MemberList.show(player, dominion.getName(), "1");
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.setTpButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    DominionOperateCommand.setTp(player, dominion.getName());
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.groupListButton) {
+            @Override
+            public void onClick(ClickType type) {
+                GroupList.show(player, dominion.getName(), "1");
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.renameButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    RenameDominionInputter.createOn(player, dominion.getName());
-                    view.close();
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.setTpButton) {
+            @Override
+            public void onClick(ClickType type) {
+                DominionOperateCommand.setTp(player, dominion.getName());
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.enterMessageButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    EditMessageInputter.createEnterOn(player, dominion.getName());
-                    view.close();
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.renameButton) {
+            @Override
+            public void onClick(ClickType type) {
+                RenameDominionInputter.createOn(player, dominion.getName());
+                view.close();
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.leaveMessageButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    EditMessageInputter.createLeaveOn(player, dominion.getName());
-                    view.close();
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.enterMessageButton) {
+            @Override
+            public void onClick(ClickType type) {
+                EditMessageInputter.createEnterOn(player, dominion.getName());
+                view.close();
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.setMapColorButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    SetMapColorInputter.createOn(player, dominion.getName());
-                    view.close();
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.leaveMessageButton) {
+            @Override
+            public void onClick(ClickType type) {
+                EditMessageInputter.createLeaveOn(player, dominion.getName());
+                view.close();
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.copyMenuButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    CopyMenu.show(player, dominion.getName(), "1");
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.setMapColorButton) {
+            @Override
+            public void onClick(ClickType type) {
+                SetMapColorInputter.createOn(player, dominion.getName());
+                view.close();
+            }
+        });
 
-            view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.deleteButton) {
-                @Override
-                public void onClick(ClickType type) {
-                    DominionOperateCommand.delete(player, dominion.getName(), "");
-                    view.close();
-                }
-            });
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.copyMenuButton) {
+            @Override
+            public void onClick(ClickType type) {
+                CopyMenu.show(player, dominion.getName(), "1");
+            }
+        });
 
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
-            XLogger.error(e);
-        }
+        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.deleteButton) {
+            @Override
+            public void onClick(ClickType type) {
+                DominionOperateCommand.delete(player, dominion.getName(), "");
+                view.close();
+            }
+        });
+
+        view.open();
     }
 }

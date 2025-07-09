@@ -10,7 +10,6 @@ import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestListView;
@@ -60,47 +59,43 @@ public class GuestSetting extends AbstractUI {
 
     @Override
     protected void showTUI(CommandSender sender, String... args) {
-        try {
-            String dominionName = args[0];
-            DominionDTO dominion = toDominionDTO(dominionName);
-            assertDominionAdmin(sender, dominion);
-            int page = toIntegrity(args[1]);
+        String dominionName = args[0];
+        DominionDTO dominion = toDominionDTO(dominionName);
+        assertDominionAdmin(sender, dominion);
+        int page = toIntegrity(args[1]);
 
-            ListView view = ListView.create(10, button(sender, dominionName));
-            view.title(formatString(Language.guestSettingTuiText.title, dominion.getName()))
-                    .navigator(Line.create()
-                            .append(MainMenu.button(sender).build())
-                            .append(DominionList.button(sender).build())
-                            .append(DominionManage.button(sender, dominionName).build())
-                            .append(Language.guestSettingTuiText.button));
-            for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-                if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
-                if (dominion.getGuestFlagValue(flag)) {
-                    view.add(Line.create()
-                            .append(new FunctionalButton("☑") {
-                                @Override
-                                public void function() {
-                                    DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "false", String.valueOf(page));
-                                }
-                            }.green().build())
-                            .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
-                    );
-                } else {
-                    view.add(Line.create()
-                            .append(new FunctionalButton("☐") {
-                                @Override
-                                public void function() {
-                                    DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "true", String.valueOf(page));
-                                }
-                            }.red().build())
-                            .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
-                    );
-                }
+        ListView view = ListView.create(10, button(sender, dominionName));
+        view.title(formatString(Language.guestSettingTuiText.title, dominion.getName()))
+                .navigator(Line.create()
+                        .append(MainMenu.button(sender).build())
+                        .append(DominionList.button(sender).build())
+                        .append(DominionManage.button(sender, dominionName).build())
+                        .append(Language.guestSettingTuiText.button));
+        for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
+            if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
+            if (dominion.getGuestFlagValue(flag)) {
+                view.add(Line.create()
+                        .append(new FunctionalButton("☑") {
+                            @Override
+                            public void function() {
+                                DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "false", String.valueOf(page));
+                            }
+                        }.green().build())
+                        .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
+                );
+            } else {
+                view.add(Line.create()
+                        .append(new FunctionalButton("☐") {
+                            @Override
+                            public void function() {
+                                DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "true", String.valueOf(page));
+                            }
+                        }.red().build())
+                        .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
+                );
             }
-            view.showOn(sender, page);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
         }
+        view.showOn(sender, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -142,48 +137,44 @@ public class GuestSetting extends AbstractUI {
 
     @Override
     protected void showCUI(Player player, String... args) {
-        try {
-            DominionDTO dominion = toDominionDTO(args[0]);
-            assertDominionAdmin(player, dominion);
+        DominionDTO dominion = toDominionDTO(args[0]);
+        assertDominionAdmin(player, dominion);
 
-            ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-            view.setTitle(formatString(ChestUserInterface.guestSettingCui.title, dominion.getName()));
-            view.applyListConfiguration(ChestUserInterface.guestSettingCui.listConfiguration, toIntegrity(args[1]));
+        ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
+        view.setTitle(formatString(ChestUserInterface.guestSettingCui.title, dominion.getName()));
+        view.applyListConfiguration(ChestUserInterface.guestSettingCui.listConfiguration, toIntegrity(args[1]));
 
-            view.setButton(ChestUserInterface.guestSettingCui.backButton.getSymbol(),
-                    new ChestButton(ChestUserInterface.guestSettingCui.backButton) {
-                        @Override
-                        public void onClick(ClickType type) {
-                            DominionManage.show(player, dominion.getName(), "1");
-                        }
-                    }
-            );
-
-            for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
-                PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
-                if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
-                Integer page = (int) Math.ceil((double) i / view.getPageSize());
-                String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
-                String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
-                List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
-                List<String> flagLore = formatStringList(ChestUserInterface.guestSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
-                ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
-                        ChestUserInterface.guestSettingCui.listConfiguration.itemSymbol.charAt(0),
-                        flag.getMaterial(),
-                        flagName,
-                        flagLore
-                );
-                view.addItem(new ChestButton(btnConfig) {
+        view.setButton(ChestUserInterface.guestSettingCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.guestSettingCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        DominionFlagCommand.setGuest(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getGuestFlagValue(flag)), page.toString());
+                        DominionManage.show(player, dominion.getName(), "1");
                     }
-                });
-            }
+                }
+        );
 
-            view.open();
-        } catch (Exception e) {
-            Notification.error(player, e.getMessage());
+        for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
+            PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
+            if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
+            Integer page = (int) Math.ceil((double) i / view.getPageSize());
+            String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
+            List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
+            List<String> flagLore = formatStringList(ChestUserInterface.guestSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
+            ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
+                    ChestUserInterface.guestSettingCui.listConfiguration.itemSymbol.charAt(0),
+                    flag.getMaterial(),
+                    flagName,
+                    flagLore
+            );
+            view.addItem(new ChestButton(btnConfig) {
+                @Override
+                public void onClick(ClickType type) {
+                    DominionFlagCommand.setGuest(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getGuestFlagValue(flag)), page.toString());
+                }
+            });
         }
+
+        view.open();
     }
 }
