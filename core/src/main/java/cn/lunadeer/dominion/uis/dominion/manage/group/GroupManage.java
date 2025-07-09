@@ -171,6 +171,7 @@ public class GroupManage extends AbstractUI {
                     @Override
                     public void onClick(ClickType type) {
                         GroupCommand.removeMember(player, dominion.getName(), group.getNamePlain(), m.getPlayer().getLastKnownName(), page.toString());
+                        GroupManage.show(player, dominion.getName(), group.getNamePlain(), page.toString());
                     }
                 });
             }
