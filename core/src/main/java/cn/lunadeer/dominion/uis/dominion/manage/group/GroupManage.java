@@ -160,7 +160,7 @@ public class GroupManage extends AbstractUI {
 
         for (int i = 0; i < group.getMembers().size(); i++) {
             MemberDTO m = group.getMembers().get(i);
-            Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
+            Integer page = (int) Math.ceil((double) (i + 2) / view.getPageSize());
             ButtonConfiguration item = ButtonConfiguration.createHeadByName(
                     ChestUserInterface.groupManageCUI.listConfiguration.itemSymbol.charAt(0),
                     m.getPlayer().getLastKnownName(),

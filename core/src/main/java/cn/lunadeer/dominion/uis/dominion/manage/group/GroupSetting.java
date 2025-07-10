@@ -167,7 +167,7 @@ public class GroupSetting extends AbstractUI {
 
         for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
-            Integer page = (int) Math.ceil((double) i / view.getPageSize());
+            Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
             String flagState = group.getFlagValue(flag) ? ChestUserInterface.groupSettingCui.flagItemStateTrue : ChestUserInterface.groupSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.groupSettingCui.flagItemName, flag.getDisplayName());
             List<String> descriptions = foldLore2Line(flag.getDescription(), 30);

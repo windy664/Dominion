@@ -156,7 +156,7 @@ public class GuestSetting extends AbstractUI {
         for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
-            Integer page = (int) Math.ceil((double) i / view.getPageSize());
+            Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
             String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
             List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
