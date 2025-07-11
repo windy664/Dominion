@@ -44,6 +44,9 @@ public class TemplateCommand {
 
         public String setFlagSuccess = "Successfully set {0} flag of template {1} to {2}";
         public String setFlagFail = "Failed to set flag, reason: {0}";
+
+        public String renameTemplateSuccess = "Successfully renamed template to {0}";
+        public String renameTemplateFail = "Failed to rename template, reason: {0}";
     }
 
     /**
@@ -187,6 +190,35 @@ public class TemplateCommand {
             Notification.info(sender, Language.templateCommandText.applyTemplateSuccess, templateName, playerName);
         } catch (Exception e) {
             Notification.error(sender, Language.templateCommandText.applyTemplateFail, e.getMessage());
+        }
+    }
+
+    public static SecondaryCommand renameTemplate = new SecondaryCommand("template_rename", List.of(
+            new CommandArguments.RequiredTemplateArgument(),
+            new Argument("new_name", true),
+            new CommandArguments.OptionalPageArgument()
+    )) {
+        @Override
+        public void executeHandler(CommandSender sender) {
+            renameTemplate(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
+        }
+    }.needPermission(defaultPermission).register();
+
+    public static void renameTemplate(CommandSender sender, String templateName, String newTemplateName, String pageStr) {
+        try {
+            Player player = toPlayer(sender);
+            TemplateDOO template = TemplateDOO.select(player.getUniqueId(), templateName);
+            if (template == null) {
+                throw new DominionException(Language.templateCommandText.templateNotExist, templateName);
+            }
+            if (newTemplateName.contains(" ")) {
+                throw new DominionException(Language.templateCommandText.nameNotValid);
+            }
+            template.setName(newTemplateName);
+            Notification.info(sender, Language.templateCommandText.renameTemplateSuccess, newTemplateName);
+            TemplateList.show(sender, pageStr);
+        } catch (Exception e) {
+            Notification.error(sender, Language.templateCommandText.renameTemplateFail, e.getMessage());
         }
     }
 

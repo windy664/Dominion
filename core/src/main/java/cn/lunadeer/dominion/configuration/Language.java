@@ -108,6 +108,7 @@ public class Language extends ConfigurationFile {
     public static ResizeDominionInputter.ResizeDominionInputterText resizeDominionInputterText = new ResizeDominionInputter.ResizeDominionInputterText();
     public static SearchPlayerInputter.SearchPlayerInputterText searchPlayerInputterText = new SearchPlayerInputter.SearchPlayerInputterText();
     public static SetMapColorInputter.SetMapColorInputterText setMapColorInputterText = new SetMapColorInputter.SetMapColorInputterText();
+    public static RenameTemplateInputter.RenameTemplateInputterText renameTemplateInputterText = new RenameTemplateInputter.RenameTemplateInputterText();
 
     // Commands
     public static AdministratorCommand.AdministratorCommandText administratorCommandText = new AdministratorCommand.AdministratorCommandText();
