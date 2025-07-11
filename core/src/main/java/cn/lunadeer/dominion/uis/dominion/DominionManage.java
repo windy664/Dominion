@@ -15,6 +15,7 @@ import cn.lunadeer.dominion.uis.dominion.copy.CopyMenu;
 import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.Info;
+import cn.lunadeer.dominion.uis.dominion.manage.SetSize;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -153,7 +154,7 @@ public class DominionManage extends AbstractUI {
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
-                        "<########",
+                        "<###I####",
                         "#i#i#i#i#",
                         "#i#i#i#i#",
                         "p#######n"
@@ -172,15 +173,21 @@ public class DominionManage extends AbstractUI {
         );
 
         public ButtonConfiguration dominionInfoButton = ButtonConfiguration.createMaterial(
-                'i', Material.BOOK,
-                "§6📋 §eDominion Information",
+                'I', Material.GRASS_BLOCK,
+                "§6📊 §e§lDominion Overview",
                 List.of(
-                        "§7View detailed information",
-                        "§7about this dominion.",
                         "",
-                        "§6▶ Click to view details",
+                        "§f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+                        "§b▪ §7Size:     §f{0}",
+                        "§b▪ §7Height:   §f{1}",
+                        "§b▪ §7Square:   §f{2} §7blocks²",
+                        "§b▪ §7Volume:   §f{3} §7blocks³",
+                        "§b▪ §7Location: §f{4}",
+                        "§f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
                         "",
-                        "§8Size, coordinates, permissions..."
+                        "§a▶ §2Click §7- Resize dominion",
+                        "",
+                        "§8💡 Manage your dominion's size."
                 )
         );
 
@@ -347,12 +354,22 @@ public class DominionManage extends AbstractUI {
                 }
         );
 
-        view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.dominionInfoButton) {
-            @Override
-            public void onClick(ClickType type) {
-                Info.show(player, dominion.getName());
-            }
-        });
+        view.setButton(ChestUserInterface.dominionManageCui.dominionInfoButton.getSymbol(),
+                new ChestButton(ChestUserInterface.dominionManageCui.dominionInfoButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        SetSize.show(player, dominion.getName());
+                    }
+                }.setLoreArgs(
+                        dominion.getCuboid().xLength() + " x " + dominion.getCuboid().yLength() + " x " + dominion.getCuboid().zLength(),
+                        dominion.getCuboid().y1() + " ~ " + dominion.getCuboid().y2(),
+                        dominion.getCuboid().getSquare(),
+                        dominion.getCuboid().getVolume(),
+                        dominion.getTpLocation().getWorld() + ":" +
+                                dominion.getTpLocation().getBlockX() + "," +
+                                dominion.getTpLocation().getBlockY() + "," +
+                                dominion.getTpLocation().getBlockZ()
+                ));
 
         view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.envSettingButton) {
             @Override
