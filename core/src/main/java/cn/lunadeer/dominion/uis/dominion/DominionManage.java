@@ -322,7 +322,7 @@ public class DominionManage extends AbstractUI {
         );
 
         public ButtonConfiguration deleteButton = ButtonConfiguration.createMaterial(
-                'i', Material.RED_STAINED_GLASS_PANE,
+                'i', Material.RED_DYE,
                 "§c💀 §4Delete Dominion",
                 List.of(
                         "§c§lDANGER ZONE",
