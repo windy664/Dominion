@@ -135,7 +135,7 @@ public class MainMenu extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class MainMenuCui extends ConfigurationPart {
-        public String title = "Dominion Main Menu";
+        public String title = "§b✦ §6§lDominion Main Menu §b✦";
         public List<String> adminLayout = List.of(
                 "#########",
                 "##A#B#C##",

@@ -149,7 +149,7 @@ public class DominionManage extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class DominionManageCui extends ConfigurationPart {
-        public String title = "Manage {0}";
+        public String title = "§6✦ §a§lManage {0} §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(

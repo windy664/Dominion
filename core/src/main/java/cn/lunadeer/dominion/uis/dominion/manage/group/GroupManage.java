@@ -41,7 +41,7 @@ public class GroupManage extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class GroupManageCUI extends ConfigurationPart {
-        public String title = "Group {0} Management";
+        public String title = "§6✦ §d§lManage Group {0} §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
@@ -90,7 +90,7 @@ public class GroupManage extends AbstractUI {
         );
 
         public ButtonConfiguration addMemberButton = ButtonConfiguration.createMaterial(
-                'i', Material.GREEN_DYE,
+                'i', Material.LIME_DYE,
                 "&a&lAdd",
                 List.of(
                         "&fClick to select a",

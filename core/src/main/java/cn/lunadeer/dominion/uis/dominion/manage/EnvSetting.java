@@ -103,7 +103,7 @@ public class EnvSetting extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class EnvSettingCui extends ConfigurationPart {
-        public String title = "Environment of {0}";
+        public String title = "§6✦ §2§lEnvironment of {0} §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(

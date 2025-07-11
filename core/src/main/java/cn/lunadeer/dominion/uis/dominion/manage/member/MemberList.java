@@ -162,7 +162,7 @@ public class MemberList extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class MemberListCui extends ConfigurationPart {
-        public String title = "{0} Member List";
+        public String title = "§6✦ §3§lMember List of {0} §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(

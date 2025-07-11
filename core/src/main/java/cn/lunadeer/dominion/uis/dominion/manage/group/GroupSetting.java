@@ -114,7 +114,7 @@ public class GroupSetting extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class GroupSettingCui extends ConfigurationPart {
-        public String title = "Flags of {0}";
+        public String title = "§6✦ §9§lGroup {0} Settings §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
