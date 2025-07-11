@@ -131,7 +131,7 @@ public class MemberSetting extends AbstractUI {
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
-                        "<########",
+                        "<######T#",
                         "#iiiiiii#",
                         "#iiiiiii#",
                         "#iiiiiii#",
@@ -145,6 +145,17 @@ public class MemberSetting extends AbstractUI {
                 List.of(
                         "Go back to the",
                         "member list."
+                )
+        );
+
+        public ButtonConfiguration templateButton = ButtonConfiguration.createMaterial(
+                'T', Material.PAPER,
+                "§e✏ §6Select Template",
+                List.of(
+                        "§7Select a template to apply",
+                        "§7to this member's privileges.",
+                        "",
+                        "§6▶ Click to select template"
                 )
         );
 
@@ -173,6 +184,15 @@ public class MemberSetting extends AbstractUI {
                     @Override
                     public void onClick(ClickType type) {
                         MemberList.show(player, dominion.getName(), "1");
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.memberSettingCui.templateButton.getSymbol(),
+                new ChestButton(ChestUserInterface.memberSettingCui.templateButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        SelectTemplate.show(player, dominion.getName(), args[1], "1");
                     }
                 }
         );
