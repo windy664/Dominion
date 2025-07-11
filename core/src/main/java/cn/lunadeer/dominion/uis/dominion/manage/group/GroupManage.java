@@ -54,54 +54,79 @@ public class GroupManage extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Group List",
                 List.of(
-                        "&fGo back to the",
-                        "&fgroup list."
+                        "§7Return to the group list",
+                        "§7to manage other groups.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
 
         public ButtonConfiguration groupFlagsButton = ButtonConfiguration.createMaterial(
-                'P', Material.OAK_SIGN,
-                "Group Flags",
+                'P', Material.BAMBOO_SIGN,
+                "§6📋 §e§lGroup Permissions",
                 List.of(
-                        "&fClick to setting",
-                        "&fthe group flags."
+                        "§7Configure what this group",
+                        "§7can and cannot do in the dominion.",
+                        "",
+                        "§e▶ Click to edit permissions",
+                        "§8  Set build, interact, etc...",
+                        "",
+                        "§7Type: §6Permission Settings"
                 )
         );
 
         public ButtonConfiguration renameGroupButton = ButtonConfiguration.createMaterial(
-                'R', Material.PAPER,
-                "Rename Group",
+                'R', Material.NAME_TAG,
+                "§b✏ §3§lRename Group",
                 List.of(
-                        "&fClick to rename",
-                        "&fthe group."
+                        "§7Change the display name",
+                        "§7of this permission group.",
+                        "",
+                        "§3▶ Click to rename group",
+                        "§8  Choose a new creative name!",
+                        "",
+                        "§7Current: §f{0}"
                 )
         );
 
         public ButtonConfiguration deleteGroupButton = ButtonConfiguration.createMaterial(
-                'D', Material.RED_DYE,
-                "Delete Group",
+                'D', Material.TNT,
+                "§c💥 §4§lDelete Group",
                 List.of(
-                        "&cClick to delete",
-                        "&cthis group."
+                        "§c⚠ §7This action cannot be undone!",
+                        "§7All members will be moved to",
+                        "§7the default group automatically.",
+                        "",
+                        "§4▶ Click to delete group",
+                        "",
+                        "§8Think twice before proceeding..."
                 )
         );
 
         public ButtonConfiguration addMemberButton = ButtonConfiguration.createMaterial(
                 'i', Material.LIME_DYE,
-                "&a&lAdd",
+                "§a➕ §2§lAdd Member",
                 List.of(
-                        "&fClick to select a",
-                        "&fmember added to",
-                        "&fthe group."
+                        "§7Select a player from your",
+                        "§7dominion to add to this group.",
+                        "",
+                        "§2▶ Click to select player",
+                        "§8  Grant them group permissions!",
+                        "",
+                        "§7Action: §aAdd to Group"
                 )
         );
 
         public List<String> playerHeadItemLore = List.of(
-                "&cClick to remove",
-                "&cout of this group."
+                "§7Member of this permission group",
+                "",
+                "§c▶ Click to remove from group",
+                "§8  They'll return to default group",
+                "",
+                "§7Status: §aActive Member"
         );
     }
 
