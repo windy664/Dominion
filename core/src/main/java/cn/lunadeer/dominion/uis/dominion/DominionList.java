@@ -171,28 +171,39 @@ public class DominionList extends AbstractUI {
         );
 
         public ButtonConfiguration ownDominionButton = ButtonConfiguration.createMaterial(
-                'i', Material.GRASS_BLOCK, "Name: {0}",
+                'i', Material.GRASS_BLOCK, "§2👑 §a{0}",
                 List.of(
-                        "This is your dominion.",
-                        "Click to manage this dominion."
+                        "§7This is §ayour dominion§7.",
+                        "§8You have full control here!",
+                        "",
+                        "§a▶ Click to manage",
+                        "§8  Settings, members, permissions",
+                        "",
+                        "§7Status: §2Owner"
                 )
         );
 
         public ButtonConfiguration adminDominionButton = ButtonConfiguration.createMaterial(
-                'i', Material.DIRT_PATH, "Name: {0}",
+                'i', Material.DIRT_PATH, "§9⚡ §b{0}",
                 List.of(
-                        "Owner: {0}",
-                        "Click to manage ",
-                        "this dominion."
+                        "§7Owner: §e{0}",
+                        "§8You have admin access here.",
+                        "",
+                        "§b▶ Click to manage",
+                        "§8  Help the owner manage this dominion",
+                        "",
+                        "§7Status: §9Administrator"
                 )
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Main Menu",
                 List.of(
-                        "Go back to the",
-                        "dominion list."
+                        "§7Return to the main menu",
+                        "§8to access other features.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
     }

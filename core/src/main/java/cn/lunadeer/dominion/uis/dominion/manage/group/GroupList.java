@@ -153,31 +153,39 @@ public class GroupList extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Dominion Management",
                 List.of(
-                        "&fGo back to the",
-                        "&fdominion manage."
+                        "§7Return to the dominion",
+                        "§7management menu.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
 
         public ButtonConfiguration newGroupButton = ButtonConfiguration.createMaterial(
-                'i', Material.GREEN_DYE,
-                "&a&lNew Group",
+                'i', Material.LIME_DYE,
+                "§a➕ §2Create New Group",
                 List.of(
-                        "&fCreate a new group",
-                        "&ffor this dominion."
+                        "§7Create a new permission group",
+                        "§7for organizing your members.",
+                        "",
+                        "§2▶ Click to create group",
+                        "",
+                        "§8Perfect for ranks and roles!"
                 )
         );
 
         public ButtonConfiguration groupItemButton = ButtonConfiguration.createMaterial(
                 'i', Material.CHEST,
-                "&fGroup: &9{0}",
+                "§6👑 §e{0}",
                 List.of(
-                        "&fMembers: &a{0}",
+                        "§7Members: §a{0}",
                         "",
-                        "&fClick to manage edit",
-                        "&fthis group's flags."
+                        "§e▶ Click to manage this group",
+                        "§8  Edit permissions, add members...",
+                        "",
+                        "§7Type: §6Permission Group"
                 )
         );
     }

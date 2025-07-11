@@ -142,9 +142,9 @@ public class TitleList extends AbstractUI {
         );
 
         public ButtonConfiguration titleItemButton = ButtonConfiguration.createMaterial(
-                'i', Material.ENCHANTED_BOOK, "§6✦ §f{0} §6✦",
+                'i', Material.NAME_TAG, "§6✦ §f{0} §6✦",
                 List.of(
-                        "§7From dominion: §b{1}",
+                        "§7From dominion: §b{0}",
                         "",
                         "§e▶ Click to equip this title",
                         "§8  and show it to everyone!",
@@ -156,7 +156,7 @@ public class TitleList extends AbstractUI {
         public ButtonConfiguration activeTitleItemButton = ButtonConfiguration.createMaterial(
                 'i', Material.GOLDEN_HELMET, "§6★ §e{0} §6★ §a(ACTIVE)",
                 List.of(
-                        "§7From dominion: §b{1}",
+                        "§7From dominion: §b{0}",
                         "",
                         "§a✓ This is your current title",
                         "§8  Everyone can see this!",
@@ -217,7 +217,7 @@ public class TitleList extends AbstractUI {
                 }
             };
             btn = btn.setDisplayNameArgs(group.getNamePlain());
-            btn = btn.setLoreArgs(List.of(dominion.getName()));
+            btn = btn.setLoreArgs(dominion.getName());
             view = view.addItem(btn);
         }
 

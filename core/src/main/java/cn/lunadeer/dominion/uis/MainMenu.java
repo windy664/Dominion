@@ -149,48 +149,76 @@ public class MainMenu extends AbstractUI {
                 "#########"
         );
         public ButtonConfiguration createButton = ButtonConfiguration.createMaterial(
-                'A', Material.NETHER_STAR, "Create Dominion",
+                'A', Material.NETHER_STAR, "§6✨ §eCreate Dominion §6✨",
                 List.of(
-                        "Create a new ",
-                        "dominion around ",
-                        "you."
+                        "§7Start your empire by creating",
+                        "§7a new dominion at your location.",
+                        "",
+                        "§e▶ Click to begin creation",
+                        "",
+                        "§8Tip: Make sure you're in the",
+                        "§8area you want to claim!"
                 )
         );
         public ButtonConfiguration listButton = ButtonConfiguration.createMaterial(
-                'B', Material.BOOKSHELF, "List Dominion",
+                'B', Material.BOOKSHELF, "§b📋 §fManage My Dominions",
                 List.of(
-                        "List all dominions ",
-                        "you can manage."
+                        "§7View and manage all dominions",
+                        "§7that you have access to.",
+                        "",
+                        "§b▶ Click to view list",
+                        "",
+                        "§8Includes: Your dominions &",
+                        "§8dominions you're admin of!"
                 )
         );
         public ButtonConfiguration titleButton = ButtonConfiguration.createMaterial(
-                'C', Material.NAME_TAG, "Title List",
+                'C', Material.NAME_TAG, "§6👑 §eGroup Titles",
                 List.of(
-                        "List all titles ",
-                        "you can use."
+                        "§7Browse and equip titles from",
+                        "§7groups you're member of.",
+                        "",
+                        "§e▶ Click to browse titles",
+                        "",
+                        "§8Show off your rank and",
+                        "§8membership status!"
                 )
         );
         public ButtonConfiguration templateButton = ButtonConfiguration.createMaterial(
-                'D', Material.PAPER, "Template List",
+                'D', Material.WRITABLE_BOOK, "§a📝 §fTemplate Manager",
                 List.of(
-                        "Manage your ",
-                        "templates."
+                        "§7Create and manage permission",
+                        "§7templates for quick setup.",
+                        "",
+                        "§a▶ Click to manage templates",
+                        "",
+                        "§8Save time when setting up",
+                        "§8new dominions!"
                 )
         );
         public ButtonConfiguration migrateButton = ButtonConfiguration.createMaterial(
-                'E', Material.ENDER_PEARL, "Migrate Residence",
+                'E', Material.ENDER_PEARL, "§d🔄 §fMigrate from Residence",
                 List.of(
-                        "Migrate your ",
-                        "residence to ",
-                        "dominion."
+                        "§7Convert your existing Residence",
+                        "§7plots to Dominion format.",
+                        "",
+                        "§d▶ Click to start migration",
+                        "",
+                        "§c⚠ Make sure to backup first!",
+                        "§8This process is irreversible."
                 )
         );
         public ButtonConfiguration allButton = ButtonConfiguration.createMaterial(
-                'F', Material.DIAMOND, "All Dominion",
+                'F', Material.DIAMOND, "§c💎 §fAll Server Dominions",
                 List.of(
-                        "List all",
-                        "dominions ",
-                        "in the server."
+                        "§7§lADMIN ONLY§r",
+                        "§7View all dominions across",
+                        "§7the entire server.",
+                        "",
+                        "§c▶ Click to view all dominions",
+                        "",
+                        "§8Perfect for server management",
+                        "§8and moderation purposes."
                 )
         );
     }

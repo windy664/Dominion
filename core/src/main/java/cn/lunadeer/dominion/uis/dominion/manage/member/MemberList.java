@@ -175,27 +175,34 @@ public class MemberList extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Dominion Management",
                 List.of(
-                        "&fGo back to the",
-                        "&fdominion manage."
+                        "§7Return to the dominion",
+                        "§7management menu.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
 
         public ButtonConfiguration addPlayerButton = ButtonConfiguration.createMaterial(
-                'i', Material.GREEN_DYE,
-                "&a&lAdd",
+                'i', Material.LIME_DYE,
+                "§a➕ §2Add New Member",
                 List.of(
-                        "&fClick to select a",
-                        "&fplayer added to",
-                        "&fthe member list."
+                        "§7Invite a player to join",
+                        "§7this dominion as a member.",
+                        "",
+                        "§2▶ Click to select player",
+                        "",
+                        "§8Grant access to your dominion!"
                 )
         );
 
         public List<String> playerHeadItemLore = List.of(
-                "&aClick to manage",
-                "&aplayer's privilege."
+                "§e▶ Click to manage permissions",
+                "§8  Set custom privileges for this player",
+                "",
+                "§7Status: §aDominion Member"
         );
 
         public List<String> playerHeadItemLoreDisable = List.of(

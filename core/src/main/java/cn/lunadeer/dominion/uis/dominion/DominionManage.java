@@ -161,109 +161,171 @@ public class DominionManage extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Dominion List",
                 List.of(
-                        "Go back to the",
-                        "dominion list."
+                        "§7Return to your dominion list",
+                        "§8to manage other dominions.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
 
         public ButtonConfiguration dominionInfoButton = ButtonConfiguration.createMaterial(
-                'i', Material.PAPER,
-                "Dominion Info",
+                'i', Material.BOOK,
+                "§6📋 §eDominion Information",
                 List.of(
-                        "View the information",
-                        "of this dominion."
+                        "§7View detailed information",
+                        "§7about this dominion.",
+                        "",
+                        "§6▶ Click to view details",
+                        "",
+                        "§8Size, coordinates, permissions..."
                 )
         );
 
         public ButtonConfiguration envSettingButton = ButtonConfiguration.createMaterial(
                 'i', Material.COMPASS,
-                "Environment Settings",
+                "§2🌍 §aEnvironment Settings",
                 List.of(
-                        "Set the environment",
-                        "settings for this",
-                        "dominion."
+                        "§7Configure environment rules",
+                        "§7for this dominion.",
+                        "",
+                        "§a▶ Click to configure",
+                        "",
+                        "§8Weather, time, mob spawning..."
                 )
         );
 
         public ButtonConfiguration guestSettingButton = ButtonConfiguration.createMaterial(
                 'i', Material.OAK_DOOR,
-                "Guest Settings",
-                List.of("Set the guest",
-                        "flags for this",
-                        "dominion.")
+                "§e🚪 §6Guest Permissions",
+                List.of(
+                        "§7Set permissions for visitors",
+                        "§7who aren't members.",
+                        "",
+                        "§6▶ Click to configure",
+                        "",
+                        "§8Build, interact, use items..."
+                )
         );
 
         public ButtonConfiguration memberListButton = ButtonConfiguration.createMaterial(
                 'i', Material.PLAYER_HEAD,
-                "Member List",
-                List.of("View and manage",
-                        "the members of",
-                        "this dominion.")
+                "§b👥 §3Member Management",
+                List.of(
+                        "§7View and manage dominion",
+                        "§7members and their roles.",
+                        "",
+                        "§3▶ Click to manage members",
+                        "",
+                        "§8Add, remove, set permissions..."
+                )
         );
 
         public ButtonConfiguration groupListButton = ButtonConfiguration.createMaterial(
                 'i', Material.CHEST,
-                "Group List",
-                List.of("View and manage",
-                        "the groups of",
-                        "this dominion.")
+                "§d📦 §5Group Management",
+                List.of(
+                        "§7Create and manage member",
+                        "§7groups with custom permissions.",
+                        "",
+                        "§5▶ Click to manage groups",
+                        "",
+                        "§8Create ranks, set titles..."
+                )
         );
 
         public ButtonConfiguration setTpButton = ButtonConfiguration.createMaterial(
                 'i', Material.ENDER_PEARL,
-                "Set TP",
-                List.of("Set your current",
-                        "location as the",
-                        "teleport location",
-                        "for this dominion.")
+                "§9🎯 §bSet Teleport Point",
+                List.of(
+                        "§7Set your current location",
+                        "§7as the dominion's TP point.",
+                        "",
+                        "§b▶ Click to set location",
+                        "",
+                        "§8Members can teleport here!"
+                )
         );
 
         public ButtonConfiguration renameButton = ButtonConfiguration.createMaterial(
                 'i', Material.NAME_TAG,
-                "Rename Dominion",
-                List.of("Rename this dominion.")
+                "§e✏️ §6Rename Dominion",
+                List.of(
+                        "§7Change the name of",
+                        "§7this dominion.",
+                        "",
+                        "§6▶ Click to rename",
+                        "",
+                        "§8Choose a memorable name!"
+                )
         );
 
         public ButtonConfiguration enterMessageButton = ButtonConfiguration.createMaterial(
                 'i', Material.WRITABLE_BOOK,
-                "Edit Enter Message",
-                List.of("Edit the message",
-                        "shown when a player",
-                        "enters this dominion.")
+                "§a📝 §2Enter Message",
+                List.of(
+                        "§7Edit the welcome message",
+                        "§7shown when players enter.",
+                        "",
+                        "§2▶ Click to edit message",
+                        "",
+                        "§8Greet your visitors!"
+                )
         );
 
         public ButtonConfiguration leaveMessageButton = ButtonConfiguration.createMaterial(
                 'i', Material.BOOK,
-                "Edit Leave Message",
-                List.of("Edit the message",
-                        "shown when a player",
-                        "leaves this dominion.")
+                "§c📄 §4Leave Message",
+                List.of(
+                        "§7Edit the farewell message",
+                        "§7shown when players leave.",
+                        "",
+                        "§4▶ Click to edit message",
+                        "",
+                        "§8Say goodbye in style!"
+                )
         );
 
         public ButtonConfiguration setMapColorButton = ButtonConfiguration.createMaterial(
                 'i', Material.PAINTING,
-                "Set Map Color",
-                List.of("Set the color",
-                        "of this dominion",
-                        "the map.")
+                "§6🎨 §eMap Color",
+                List.of(
+                        "§7Set the display color for",
+                        "§7this dominion on the map.",
+                        "",
+                        "§e▶ Click to choose color",
+                        "",
+                        "§8Make it stand out!"
+                )
         );
 
         public ButtonConfiguration copyMenuButton = ButtonConfiguration.createMaterial(
                 'i', Material.GLASS,
-                "Copy Menu",
-                List.of("Open the copy",
-                        "menu for this",
-                        "dominion.")
+                "§b📋 §3Copy Settings",
+                List.of(
+                        "§7Copy permissions and settings",
+                        "§7to other dominions.",
+                        "",
+                        "§3▶ Click to access copy menu",
+                        "",
+                        "§8Save time with templates!"
+                )
         );
 
         public ButtonConfiguration deleteButton = ButtonConfiguration.createMaterial(
                 'i', Material.BARRIER,
-                "Delete Dominion",
-                List.of("Delete this",
-                        "dominion permanently.")
+                "§c💀 §4Delete Dominion",
+                List.of(
+                        "§c§lDANGER ZONE",
+                        "§7Permanently delete this",
+                        "§7dominion and all its data.",
+                        "",
+                        "§4▶ Click to delete",
+                        "",
+                        "§c⚠ This cannot be undone!"
+                )
         );
     }
 

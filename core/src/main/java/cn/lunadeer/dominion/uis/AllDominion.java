@@ -89,20 +89,26 @@ public class AllDominion extends AbstractUI {
         );
 
         public ButtonConfiguration dominionItemButton = ButtonConfiguration.createMaterial(
-                'i', Material.PAPER, "Name: {0}",
+                'i', Material.FILLED_MAP, "§6🏰 §e{0}",
                 List.of(
-                        "Owner: {0}",
-                        "Click to manage ",
-                        "this dominion."
+                        "§7Owner: §b{0}",
+                        "",
+                        "§e▶ Click to manage this dominion",
+                        "§8  View settings, members & permissions",
+                        "",
+                        "§7Status: §aActive",
+                        "§8Admin access granted"
                 )
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Main Menu",
                 List.of(
-                        "Go back to the",
-                        "dominion list."
+                        "§7Return to the main menu",
+                        "§8to access other features.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
     }

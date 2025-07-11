@@ -115,23 +115,28 @@ public class GuestSetting extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.RED_STAINED_GLASS_PANE,
-                "Back",
+                '<', Material.BARRIER,
+                "§c« Back to Dominion Management",
                 List.of(
-                        "Go back to the",
-                        "dominion manage."
+                        "§7Return to the dominion",
+                        "§7management menu.",
+                        "",
+                        "§e▶ Click to go back"
                 )
         );
 
-        public String flagItemName = "&7Flag: &9{0}";
-        public String flagItemStateTrue = "&a&l[ENABLED]";
-        public String flagItemStateFalse = "&c&l[DISABLED]";
+        public String flagItemName = "§6🚪 §e{0}";
+        public String flagItemStateTrue = "§a§l✓ ALLOWED";
+        public String flagItemStateFalse = "§c§l✗ DENIED";
         public List<String> flagItemLore = List.of(
-                "&7State: {0}",
-                "&7Des: &f{1}",
-                "       &f{2}",
+                "§7Guest Permission: {0}",
                 "",
-                "&7Click to toggle this flag."
+                "§7Description:",
+                "§f{1}",
+                "§f{2}",
+                "",
+                "§e▶ Click to toggle for guests",
+                "§8Affects non-member visitors"
         );
     }
 
