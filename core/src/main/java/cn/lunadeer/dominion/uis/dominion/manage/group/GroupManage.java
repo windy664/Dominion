@@ -110,7 +110,7 @@ public class GroupManage extends AbstractUI {
                 'i', Material.LIME_DYE,
                 "§a➕ §2§lAdd Member",
                 List.of(
-                        "§7Select a player from your",
+                        "§7Select a member from your",
                         "§7dominion to add to this group.",
                         "",
                         "§2▶ Click to select player",
@@ -124,9 +124,7 @@ public class GroupManage extends AbstractUI {
                 "§7Member of this permission group",
                 "",
                 "§c▶ Click to remove from group",
-                "§8  They'll return to default group",
-                "",
-                "§7Status: §aActive Member"
+                "§8  They'll return to default group"
         );
     }
 
