@@ -148,6 +148,13 @@ public class MainMenu extends AbstractUI {
                 "###D#E###",
                 "#########"
         );
+        public List<String> statusDisabledLore = List.of(
+                "§c✘ §4This feature is currently disabled.",
+                "§7Please check back later or contact",
+                "§7§oServer Administrators §rfor more info.",
+                "",
+                "§8§lStatus: §c✘ Disabled by Operator"
+        );
         public ButtonConfiguration createButton = ButtonConfiguration.createMaterial(
                 'A', Material.NETHER_STAR, "§6✨ §eCreate Dominion §6✨",
                 List.of(
@@ -252,6 +259,10 @@ public class MainMenu extends AbstractUI {
                 }
         );
 
+        if (!Configuration.groupTitle.enable) {
+            ChestUserInterface.mainMenuCui.titleButton.lore = ChestUserInterface.mainMenuCui.statusDisabledLore;
+        }
+
         view.setButton(ChestUserInterface.mainMenuCui.titleButton.getSymbol(),
                 new ChestButton(ChestUserInterface.mainMenuCui.titleButton) {
                     @Override
@@ -271,6 +282,10 @@ public class MainMenu extends AbstractUI {
                     }
                 }
         );
+
+        if (!Configuration.residenceMigration) {
+            ChestUserInterface.mainMenuCui.migrateButton.lore = ChestUserInterface.mainMenuCui.statusDisabledLore;
+        }
 
         view.setButton(ChestUserInterface.mainMenuCui.migrateButton.getSymbol(),
                 new ChestButton(ChestUserInterface.mainMenuCui.migrateButton) {
