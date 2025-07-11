@@ -158,6 +158,15 @@ public class MemberList extends AbstractUI {
         view.showOn(sender, page);
     }
 
+    private static final TextComponent adminTag = Component.text("[A]", Style.style(TextColor.color(97, 97, 210)))
+            .hoverEvent(Component.text(Language.memberListTuiText.tagAdmin));
+    private static final TextComponent normalTag = Component.text("[N]", Style.style(TextColor.color(255, 255, 255)))
+            .hoverEvent(Component.text(Language.memberListTuiText.tagNormal));
+    private static final TextComponent banTag = Component.text("[B]", Style.style(TextColor.color(255, 67, 0)))
+            .hoverEvent(Component.text(Language.memberListTuiText.tagBan));
+    private static final TextComponent groupTag = Component.text("[G]", Style.style(TextColor.color(0, 185, 153)))
+            .hoverEvent(Component.text(Language.memberListTuiText.tagGroup));
+
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
@@ -198,11 +207,15 @@ public class MemberList extends AbstractUI {
                 )
         );
 
+        public String normalMember = "§aNormal Member";
+        public String adminMember = "§bAdmin Member";
+        public String banMember = "§cBanned Member";
+
         public List<String> playerHeadItemLore = List.of(
                 "§e▶ Click to manage permissions",
                 "§8  Set custom privileges for this player",
                 "",
-                "§7Status: §aDominion Member"
+                "§7Status: {0}"
         );
 
         public List<String> playerHeadItemLoreDisable = List.of(
@@ -246,6 +259,12 @@ public class MemberList extends AbstractUI {
                     m.getGroupId() == -1 ?
                             ChestUserInterface.memberListCui.playerHeadItemLore : ChestUserInterface.memberListCui.playerHeadItemLoreDisable
             );
+            String status = ChestUserInterface.memberListCui.normalMember;
+            if (m.getFlagValue(Flags.ADMIN)) {
+                status = ChestUserInterface.memberListCui.adminMember;
+            } else if (!m.getFlagValue(Flags.MOVE)) {
+                status = ChestUserInterface.memberListCui.banMember;
+            }
             view.addItem(new ChestButton(item) {
                 @Override
                 public void onClick(ClickType type) {
@@ -253,18 +272,9 @@ public class MemberList extends AbstractUI {
                         MemberSetting.show(player, dominion.getName(), m.getPlayer().getLastKnownName(), "1");
                     }
                 }
-            });
+            }.setLoreArgs(status));
         }
 
         view.open();
     }
-
-    private static final TextComponent adminTag = Component.text("[A]", Style.style(TextColor.color(97, 97, 210)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagAdmin));
-    private static final TextComponent normalTag = Component.text("[N]", Style.style(TextColor.color(255, 255, 255)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagNormal));
-    private static final TextComponent banTag = Component.text("[B]", Style.style(TextColor.color(255, 67, 0)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagBan));
-    private static final TextComponent groupTag = Component.text("[G]", Style.style(TextColor.color(0, 185, 153)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagGroup));
 }
