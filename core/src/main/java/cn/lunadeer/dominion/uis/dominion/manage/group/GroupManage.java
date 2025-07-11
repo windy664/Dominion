@@ -54,7 +54,7 @@ public class GroupManage extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.BARRIER,
+                '<', Material.RED_STAINED_GLASS_PANE,
                 "§c« Back to Group List",
                 List.of(
                         "§7Return to the group list",

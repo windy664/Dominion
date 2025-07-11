@@ -153,7 +153,7 @@ public class GroupList extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.BARRIER,
+                '<', Material.RED_STAINED_GLASS_PANE,
                 "§c« Back to Dominion Management",
                 List.of(
                         "§7Return to the dominion",

@@ -168,7 +168,7 @@ public class TitleList extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.BARRIER,
+                '<', Material.RED_STAINED_GLASS_PANE,
                 "§c« Back to Main Menu",
                 List.of(
                         "§7Return to the main menu",

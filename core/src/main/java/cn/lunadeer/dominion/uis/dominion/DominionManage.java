@@ -161,7 +161,7 @@ public class DominionManage extends AbstractUI {
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
-                '<', Material.BARRIER,
+                '<', Material.RED_STAINED_GLASS_PANE,
                 "§c« Back to Dominion List",
                 List.of(
                         "§7Return to your dominion list",
@@ -315,7 +315,7 @@ public class DominionManage extends AbstractUI {
         );
 
         public ButtonConfiguration deleteButton = ButtonConfiguration.createMaterial(
-                'i', Material.BARRIER,
+                'i', Material.RED_STAINED_GLASS_PANE,
                 "§c💀 §4Delete Dominion",
                 List.of(
                         "§c§lDANGER ZONE",
