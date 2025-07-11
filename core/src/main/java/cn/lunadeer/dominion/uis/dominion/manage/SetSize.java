@@ -1,25 +1,52 @@
 package cn.lunadeer.dominion.uis.dominion.manage;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
+import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
 import cn.lunadeer.dominion.inputters.ResizeDominionInputter;
+import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
+import cn.lunadeer.dominion.utils.scui.ChestButton;
+import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
+import cn.lunadeer.dominion.utils.scui.ChestView;
+import cn.lunadeer.dominion.utils.scui.configuration.ButtonConfiguration;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionOwner;
 import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
-public class SetSize {
+public class SetSize extends AbstractUI {
+
+    // Direction data structure for better organization
+    private static final List<DirectionInfo> DIRECTIONS = Arrays.asList(
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.NORTH, () -> Language.setSizeTuiText.north),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.SOUTH, () -> Language.setSizeTuiText.south),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.WEST, () -> Language.setSizeTuiText.west),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.EAST, () -> Language.setSizeTuiText.east),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.UP, () -> Language.setSizeTuiText.up),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.DOWN, () -> Language.setSizeTuiText.down)
+    );
+
+    public static void show(CommandSender sender, String dominionName) {
+        new SetSize().displayByPreference(sender, dominionName);
+    }
+
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     public static class SetSizeTuiText extends ConfigurationPart {
         public String title = "Resize {0}";
@@ -41,61 +68,293 @@ public class SetSize {
         }.needPermission(defaultPermission);
     }
 
-    public static void show(CommandSender sender, String dominionName) {
-        try {
-            DominionDTO dominion = toDominionDTO(dominionName);
-            assertDominionOwner(sender, dominion);
+    @Override
+    protected void showTUI(CommandSender sender, String... args) {
+        String dominionName = args[0];
+        DominionDTO dominion = toDominionDTO(dominionName);
+        assertDominionOwner(sender, dominion);
 
-            ListView view = ListView.create(10, button(sender, dominionName));
-            view.title(formatString(Language.setSizeTuiText.title, dominion.getName()));
-            view.navigator(Line.create()
-                    .append(MainMenu.button(sender).build())
-                    .append(DominionList.button(sender).build())
-                    .append(DominionManage.button(sender, dominionName).build())
-                    .append(Info.button(sender, dominionName).build())
-                    .append(Language.setSizeTuiText.button));
+        ListView view = createTUIView(sender, dominion);
+        addDirectionButtons(view, sender, dominion.getName());
+        view.showOn(sender, 1);
+    }
 
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.north)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.NORTH).build())
-            );
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.south)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.SOUTH).build())
-            );
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.west)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.WEST).build())
-            );
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.east)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.EAST).build())
-            );
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.up)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.UP).build())
-            );
-            view.add(
-                    Line.create()
-                            .append(Language.setSizeTuiText.down)
-                            .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
-                            .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominion.getName(), DominionReSizeEvent.DIRECTION.DOWN).build())
-            );
+    private ListView createTUIView(CommandSender sender, DominionDTO dominion) {
+        ListView view = ListView.create(10, button(sender, dominion.getName()));
+        view.title(formatString(Language.setSizeTuiText.title, dominion.getName()));
+        view.navigator(createNavigationLine(sender, dominion.getName()));
+        return view;
+    }
 
-            view.showOn(sender, 1);
-        } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
+    private Line createNavigationLine(CommandSender sender, String dominionName) {
+        return Line.create()
+                .append(MainMenu.button(sender).build())
+                .append(DominionList.button(sender).build())
+                .append(DominionManage.button(sender, dominionName).build())
+                .append(Info.button(sender, dominionName).build())
+                .append(Language.setSizeTuiText.button);
+    }
+
+    private void addDirectionButtons(ListView view, CommandSender sender, String dominionName) {
+        for (DirectionInfo directionInfo : DIRECTIONS) {
+            view.add(createDirectionLine(sender, dominionName, directionInfo));
         }
     }
 
+    private Line createDirectionLine(CommandSender sender, String dominionName, DirectionInfo directionInfo) {
+        return Line.create()
+                .append(directionInfo.getDisplayName())
+                .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominionName, directionInfo.getDirection()).build())
+                .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominionName, directionInfo.getDirection()).build());
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    public static class SetSizeCui extends ConfigurationPart {
+        public String title = "§6✦ §2§lResize {0} §6✦";
+        public List<String> layout = List.of(
+                "<########",
+                "##Nn##Uu#",
+                "#Ww#Ee###",
+                "##Ss##Dd#",
+                "#########"
+        );
+
+        public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
+                '<', Material.RED_STAINED_GLASS_PANE,
+                "§c« Back to Dominion Management",
+                List.of(
+                        "§7Return to the dominion",
+                        "§7management menu.",
+                        "",
+                        "§e▶ Click to go back"
+                )
+        );
+
+        public ButtonConfiguration addNorthButton = ButtonConfiguration.createMaterial(
+                'N', Material.OAK_SIGN,
+                "§6🧭 §eExpand North (Z-)",
+                List.of(
+                        "§7Expand the dominion to the north",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration addSouthButton = ButtonConfiguration.createMaterial(
+                'S', Material.OAK_SIGN,
+                "§6🧭 §eExpand South (Z+)",
+                List.of(
+                        "§7Expand the dominion to the south",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration addWestButton = ButtonConfiguration.createMaterial(
+                'W', Material.OAK_SIGN,
+                "§6🧭 §eExpand West (X-)",
+                List.of(
+                        "§7Expand the dominion to the west",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration addEastButton = ButtonConfiguration.createMaterial(
+                'E', Material.OAK_SIGN,
+                "§6🧭 §eExpand East (X+)",
+                List.of(
+                        "§7Expand the dominion to the east",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration addUpButton = ButtonConfiguration.createMaterial(
+                'U', Material.OAK_SIGN,
+                "§6🧭 §eExpand Up (Y+)",
+                List.of(
+                        "§7Expand the dominion upwards",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration addDownButton = ButtonConfiguration.createMaterial(
+                'D', Material.OAK_SIGN,
+                "§6🧭 §eExpand Down (Y-)",
+                List.of(
+                        "§7Expand the dominion downwards",
+                        "§7with input size.",
+                        "",
+                        "§a▶ Click to expand"
+                )
+        );
+
+        public ButtonConfiguration contractNorthButton = ButtonConfiguration.createMaterial(
+                'n', Material.BARRIER,
+                "§6🧭 §cContract North (Z-)",
+                List.of(
+                        "§7Contract the dominion from the north",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+
+        public ButtonConfiguration contractSouthButton = ButtonConfiguration.createMaterial(
+                's', Material.BARRIER,
+                "§6🧭 §cContract South (Z+)",
+                List.of(
+                        "§7Contract the dominion from the south",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+
+        public ButtonConfiguration contractWestButton = ButtonConfiguration.createMaterial(
+                'w', Material.BARRIER,
+                "§6🧭 §cContract West (X-)",
+                List.of(
+                        "§7Contract the dominion from the west",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+
+        public ButtonConfiguration contractEastButton = ButtonConfiguration.createMaterial(
+                'e', Material.BARRIER,
+                "§6🧭 §cContract East (X+)",
+                List.of(
+                        "§7Contract the dominion from the east",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+
+        public ButtonConfiguration contractUpButton = ButtonConfiguration.createMaterial(
+                'u', Material.BARRIER,
+                "§6🧭 §cContract Up (Y+)",
+                List.of(
+                        "§7Contract the dominion upwards",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+
+        public ButtonConfiguration contractDownButton = ButtonConfiguration.createMaterial(
+                'd', Material.BARRIER,
+                "§6🧭 §cContract Down (Y-)",
+                List.of(
+                        "§7Contract the dominion downwards",
+                        "§7with input size.",
+                        "",
+                        "§c▶ Click to contract"
+                )
+        );
+    }
+
+    @Override
+    protected void showCUI(Player player, String... args) {
+        String dominionName = args[0];
+        DominionDTO dominion = toDominionDTO(dominionName);
+        assertDominionOwner(player, dominion);
+
+        ChestView view = createCUIView(player, dominion);
+        setupCUIButtons(view, player, dominion);
+        view.open();
+    }
+
+    private ChestView createCUIView(Player player, DominionDTO dominion) {
+        ChestView view = ChestUserInterfaceManager.getInstance().getViewOf(player);
+        view.setTitle(formatString(ChestUserInterface.setSizeCui.title, dominion.getName()));
+        view.setLayout(ChestUserInterface.setSizeCui.layout);
+        return view;
+    }
+
+    private void setupCUIButtons(ChestView view, Player player, DominionDTO dominion) {
+        setupBackButton(view, player, dominion);
+        setupDirectionButtons(view, player, dominion);
+    }
+
+    private void setupBackButton(ChestView view, Player player, DominionDTO dominion) {
+        view.setButton(ChestUserInterface.setSizeCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.setSizeCui.backButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        DominionManage.show(player, dominion.getName(), "1");
+                    }
+                }
+        );
+    }
+
+    private void setupDirectionButtons(ChestView view, Player player, DominionDTO dominion) {
+        // Expand buttons
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addNorthButton, DominionReSizeEvent.DIRECTION.NORTH);
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addSouthButton, DominionReSizeEvent.DIRECTION.SOUTH);
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addWestButton, DominionReSizeEvent.DIRECTION.WEST);
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addEastButton, DominionReSizeEvent.DIRECTION.EAST);
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addUpButton, DominionReSizeEvent.DIRECTION.UP);
+        setupExpandButton(view, player, dominion, ChestUserInterface.setSizeCui.addDownButton, DominionReSizeEvent.DIRECTION.DOWN);
+
+        // Contract buttons
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractNorthButton, DominionReSizeEvent.DIRECTION.NORTH);
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractSouthButton, DominionReSizeEvent.DIRECTION.SOUTH);
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractWestButton, DominionReSizeEvent.DIRECTION.WEST);
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractEastButton, DominionReSizeEvent.DIRECTION.EAST);
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractUpButton, DominionReSizeEvent.DIRECTION.UP);
+        setupContractButton(view, player, dominion, ChestUserInterface.setSizeCui.contractDownButton, DominionReSizeEvent.DIRECTION.DOWN);
+    }
+
+    private void setupExpandButton(ChestView view, Player player, DominionDTO dominion, ButtonConfiguration buttonConfig, DominionReSizeEvent.DIRECTION direction) {
+        view.setButton(buttonConfig.getSymbol(),
+                new ChestButton(buttonConfig) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        ResizeDominionInputter.createExpandOn(player, dominion.getName(), direction);
+                    }
+                }
+        );
+    }
+
+    private void setupContractButton(ChestView view, Player player, DominionDTO dominion, ButtonConfiguration buttonConfig, DominionReSizeEvent.DIRECTION direction) {
+        view.setButton(buttonConfig.getSymbol(),
+                new ChestButton(buttonConfig) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        ResizeDominionInputter.createContractOn(player, dominion.getName(), direction);
+                    }
+                }
+        );
+    }
+
+    // Helper class to organize direction information
+    private static class DirectionInfo {
+        private final DominionReSizeEvent.DIRECTION direction;
+        private final java.util.function.Supplier<String> displayNameSupplier;
+
+        public DirectionInfo(DominionReSizeEvent.DIRECTION direction, java.util.function.Supplier<String> displayNameSupplier) {
+            this.direction = direction;
+            this.displayNameSupplier = displayNameSupplier;
+        }
+
+        public DominionReSizeEvent.DIRECTION getDirection() {
+            return direction;
+        }
+
+        public String getDisplayName() {
+            return displayNameSupplier.get();
+        }
+    }
 }
