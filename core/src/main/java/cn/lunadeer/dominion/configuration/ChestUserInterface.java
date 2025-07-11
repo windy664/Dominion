@@ -2,6 +2,7 @@ package cn.lunadeer.dominion.configuration;
 
 import cn.lunadeer.dominion.uis.AllDominion;
 import cn.lunadeer.dominion.uis.MainMenu;
+import cn.lunadeer.dominion.uis.TitleList;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
 import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
@@ -37,6 +38,7 @@ import cn.lunadeer.dominion.utils.configuration.Heads;
 public class ChestUserInterface extends ConfigurationFile {
     public static MainMenu.MainMenuCui mainMenuCui = new MainMenu.MainMenuCui();
     public static AllDominion.AllDominionCui allDominionCui = new AllDominion.AllDominionCui();
+    public static TitleList.TitleListCui titleListCui = new TitleList.TitleListCui();
     public static DominionList.DominionListCui dominionListCui = new DominionList.DominionListCui();
     public static DominionManage.DominionManageCui dominionManageCui = new DominionManage.DominionManageCui();
     public static EnvSetting.EnvSettingCui envSettingCui = new EnvSetting.EnvSettingCui();
