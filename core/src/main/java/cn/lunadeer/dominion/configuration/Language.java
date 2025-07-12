@@ -21,7 +21,8 @@ import cn.lunadeer.dominion.uis.MigrateList;
 import cn.lunadeer.dominion.uis.TitleList;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.uis.dominion.copy.*;
+import cn.lunadeer.dominion.uis.dominion.copy.CopyMenu;
+import cn.lunadeer.dominion.uis.dominion.copy.DominionCopy;
 import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.Info;
@@ -93,10 +94,7 @@ public class Language extends ConfigurationFile {
     public static AllDominion.AllDominionTuiText allDominionTuiText = new AllDominion.AllDominionTuiText();
     public static TemplateSetting.TemplateSettingText templateSettingText = new TemplateSetting.TemplateSettingText();
     public static CopyMenu.CopyMenuTuiText copyMenuTuiText = new CopyMenu.CopyMenuTuiText();
-    public static EnvCopy.EnvCopyTuiText envCopyTuiText = new EnvCopy.EnvCopyTuiText();
-    public static GuestCopy.GuestCopyTuiText guestCopyTuiText = new GuestCopy.GuestCopyTuiText();
-    public static MemberCopy.MemberCopyTuiText memberCopyTuiText = new MemberCopy.MemberCopyTuiText();
-    public static GroupCopy.GroupCopyTuiText groupCopyTuiText = new GroupCopy.GroupCopyTuiText();
+    public static DominionCopy.DominionCopyTuiText dominionCopyTuiText = new DominionCopy.DominionCopyTuiText();
 
     // Inputter
     public static CreateDominionInputter.CreateDominionInputterText createDominionInputterText = new CreateDominionInputter.CreateDominionInputterText();

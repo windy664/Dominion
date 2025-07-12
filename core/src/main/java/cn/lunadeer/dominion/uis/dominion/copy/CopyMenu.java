@@ -68,17 +68,17 @@ public class CopyMenu extends AbstractUI {
                         .append(Language.copyMenuTuiText.button)
         );
         view.add(Line.create()
-                .append(EnvCopy.button(sender, toDominionName).build())
-                .append(Language.envCopyTuiText.description));
+                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.ENVIRONMENT).build())
+                .append(Language.dominionCopyTuiText.envDescription));
         view.add(Line.create()
-                .append(GuestCopy.button(sender, toDominionName).build())
-                .append(Language.guestCopyTuiText.description));
+                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.GUEST).build())
+                .append(Language.dominionCopyTuiText.guestDescription));
         view.add(Line.create()
-                .append(MemberCopy.button(sender, toDominionName).build())
-                .append(Language.memberCopyTuiText.description));
+                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.MEMBER).build())
+                .append(Language.dominionCopyTuiText.memberDescription));
         view.add(Line.create()
-                .append(GroupCopy.button(sender, toDominionName).build())
-                .append(Language.groupCopyTuiText.description));
+                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.GROUP).build())
+                .append(Language.dominionCopyTuiText.groupDescription));
         view.showOn(sender, page);
     }
 
@@ -181,7 +181,7 @@ public class CopyMenu extends AbstractUI {
                 new ChestButton(ChestUserInterface.copyMenuCui.envCopyButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        EnvCopy.show(player, toDominionName, "1");
+                        DominionCopy.show(player, toDominionName, DominionCopy.CopyType.ENVIRONMENT, "1");
                     }
                 }
         );
@@ -190,7 +190,7 @@ public class CopyMenu extends AbstractUI {
                 new ChestButton(ChestUserInterface.copyMenuCui.guestCopyButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        GuestCopy.show(player, toDominionName, "1");
+                        DominionCopy.show(player, toDominionName, DominionCopy.CopyType.GUEST, "1");
                     }
                 }
         );
@@ -199,7 +199,7 @@ public class CopyMenu extends AbstractUI {
                 new ChestButton(ChestUserInterface.copyMenuCui.memberCopyButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        MemberCopy.show(player, toDominionName, "1");
+                        DominionCopy.show(player, toDominionName, DominionCopy.CopyType.MEMBER, "1");
                     }
                 }
         );
@@ -208,7 +208,7 @@ public class CopyMenu extends AbstractUI {
                 new ChestButton(ChestUserInterface.copyMenuCui.groupCopyButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        GroupCopy.show(player, toDominionName, "1");
+                        DominionCopy.show(player, toDominionName, DominionCopy.CopyType.GROUP, "1");
                     }
                 }
         );
