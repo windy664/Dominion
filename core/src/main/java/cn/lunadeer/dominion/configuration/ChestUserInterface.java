@@ -6,6 +6,7 @@ import cn.lunadeer.dominion.uis.MigrateList;
 import cn.lunadeer.dominion.uis.TitleList;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.uis.dominion.copy.CopyMenu;
 import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.SetSize;
@@ -51,6 +52,7 @@ public class ChestUserInterface extends ConfigurationFile {
     public static TemplateSetting.TemplateSettingCui templateSettingCui = new TemplateSetting.TemplateSettingCui();
     public static DominionList.DominionListCui dominionListCui = new DominionList.DominionListCui();
     public static DominionManage.DominionManageCui dominionManageCui = new DominionManage.DominionManageCui();
+    public static CopyMenu.CopyMenuCui copyMenuCui = new CopyMenu.CopyMenuCui();
     public static EnvSetting.EnvSettingCui envSettingCui = new EnvSetting.EnvSettingCui();
     public static GuestSetting.GuestSettingCui guestSettingCui = new GuestSetting.GuestSettingCui();
     public static SetSize.SetSizeCui setSizeCui = new SetSize.SetSizeCui();
