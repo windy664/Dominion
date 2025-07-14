@@ -289,6 +289,18 @@ public class DatabaseTables {
                     .defaultSqlVal("'http://textures.minecraft.net/texture/613ba1403f98221fab6f4ae0f9e5298068262258966e8f9e53cdedd97aa45ef1'");
             Alter.alter().table("player_name").add().column(skin_url).execute();
         }
+        if (!Show.show().columns().from("player_name").execute().containsKey("ui_preference")) {
+            Column ui_preference = Column.of(new FieldString("ui_preference")).notNull()
+                    .defaultSqlVal("'TUI'");
+            Alter.alter().table("player_name").add().column(ui_preference).execute();
+
+            try (Connection conn = DatabaseManager.instance.getConnection()) {
+                // update ui_preference to CUI if player_name UUID starts with 00000000
+                String sql = "UPDATE player_name SET ui_preference = 'CUI' WHERE uuid LIKE '00000000%';";
+                conn.createStatement().executeUpdate(sql);
+            } catch (Exception ignored) {
+            }
+        }
     }
 
     public static class DatabaseManagerText extends ConfigurationPart {

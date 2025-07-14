@@ -1,5 +1,7 @@
 package cn.lunadeer.dominion.uis;
 
+import cn.lunadeer.dominion.api.dtos.PlayerDTO;
+import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.AdministratorCommand;
 import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Configuration;
@@ -18,7 +20,9 @@ import cn.lunadeer.dominion.utils.scui.configuration.ButtonConfiguration;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.ViewStyles;
 import cn.lunadeer.dominion.utils.stui.components.Line;
+import cn.lunadeer.dominion.utils.stui.components.buttons.FunctionalButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
+import cn.lunadeer.dominion.utils.stui.components.buttons.PermissionButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.UrlButton;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -63,6 +67,8 @@ public class MainMenu extends AbstractUI {
         public String documentDescription = "Open the documentation external link.";
         public String commandHelpButton = "COMMAND HELP";
         public String commandHelpDescription = "Open the command help external link.";
+        public String switchToCuiButton = "SWITCH TO CUI";
+        public String failToSwitchMessage = "Failed to switch to {0}: {1}";
     }
 
     public static ListViewButton button(CommandSender sender) {
@@ -109,9 +115,24 @@ public class MainMenu extends AbstractUI {
         Line reload_config = Line.create()
                 .append(AdministratorCommand.reloadConfigButton(sender).build())
                 .append(Language.administratorCommandText.reloadConfigDescription);
+        PermissionButton switchToCui = new FunctionalButton(Language.menuTuiText.switchToCuiButton) {
+            @Override
+            public void function() {
+                try {
+                    PlayerDTO p = CacheManager.instance.getPlayer(player.getUniqueId());
+                    if (p == null) {
+                        throw new IllegalStateException("Player data not found in cache.");
+                    }
+                    p.setUiPreference(PlayerDTO.UI_TYPE.CUI);
+                    MainMenu.show(player, "1");
+                } catch (Exception e) {
+                    Notification.error(player, Language.menuTuiText.failToSwitchMessage, "CUI", e.getMessage());
+                }
+            }
+        }.needPermission(defaultPermission);
         ListView view = ListView.create(10, button(sender));
         view.title(Language.menuTuiText.title);
-        view.navigator(Line.create().append(Language.menuTuiText.button));
+        view.navigator(Line.create().append(Language.menuTuiText.button).append(switchToCui.build()));
         view.add(create);
         view.add(list);
         if (Configuration.groupTitle.enable) view.add(title);
@@ -140,13 +161,13 @@ public class MainMenu extends AbstractUI {
                 "#########",
                 "##A#B#C##",
                 "##D#E#F##",
-                "#########"
+                "####S####"
         );
         public List<String> userLayout = List.of(
                 "#########",
                 "##A#B#C##",
                 "###D#E###",
-                "#########"
+                "####S####"
         );
         public List<String> statusDisabledLore = List.of(
                 "§c✘ §4This feature is currently disabled.",
@@ -226,6 +247,19 @@ public class MainMenu extends AbstractUI {
                         "",
                         "§8Perfect for server management",
                         "§8and moderation purposes."
+                )
+        );
+
+        public ButtonConfiguration switchTuiButton = ButtonConfiguration.createMaterial(
+                'S', Material.COMPASS, "§e§lSwitch to TUI",
+                List.of(
+                        "§7Switch to the text-based TUI",
+                        "§7for a different user interface.",
+                        "",
+                        "§e▶ Click to switch to TUI",
+                        "",
+                        "§8Use this if you prefer a",
+                        "§8text-based experience!"
                 )
         );
     }
@@ -308,6 +342,25 @@ public class MainMenu extends AbstractUI {
                     }
             );
         }
+
+        view.setButton(ChestUserInterface.mainMenuCui.switchTuiButton.getSymbol(),
+                new ChestButton(ChestUserInterface.mainMenuCui.switchTuiButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        try {
+                            PlayerDTO p = CacheManager.instance.getPlayer(player.getUniqueId());
+                            if (p == null) {
+                                throw new IllegalStateException("Player data not found in cache.");
+                            }
+                            p.setUiPreference(PlayerDTO.UI_TYPE.TUI);
+                            view.close();
+                            MainMenu.show(player, "1");
+                        } catch (Exception e) {
+                            Notification.error(player, Language.menuTuiText.failToSwitchMessage, "TUI", e.getMessage());
+                        }
+                    }
+                }
+        );
 
         view.open();
     }
