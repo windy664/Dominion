@@ -67,7 +67,7 @@ public class MainMenu extends AbstractUI {
         public String documentDescription = "Open the documentation external link.";
         public String commandHelpButton = "COMMAND HELP";
         public String commandHelpDescription = "Open the command help external link.";
-        public String switchToCuiButton = "SWITCH TO CUI";
+        public String switchToCuiButton = " SWITCH TO CUI \uD83C\uDD95 ";
         public String failToSwitchMessage = "Failed to switch to {0}: {1}";
     }
 
