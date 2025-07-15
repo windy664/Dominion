@@ -52,7 +52,7 @@ public class MainMenu extends AbstractUI {
             try {
                 MainMenu.show(sender, getArgumentValue(0));
             } catch (Exception e) {
-                Notification.error(sender, e.getMessage());
+                Notification.error(sender, e);
             }
         }
     }.needPermission(defaultPermission).register();
@@ -161,12 +161,14 @@ public class MainMenu extends AbstractUI {
                 "#########",
                 "##A#B#C##",
                 "##D#E#F##",
+                "#########",
                 "####S####"
         );
         public List<String> userLayout = List.of(
                 "#########",
                 "##A#B#C##",
                 "###D#E###",
+                "#########",
                 "####S####"
         );
         public List<String> statusDisabledLore = List.of(

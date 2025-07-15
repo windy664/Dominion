@@ -33,7 +33,7 @@ public abstract class AbstractUI {
                 showTUI(sender, args);
             }
         } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
+            Notification.error(sender, e);
         }
     }
 }

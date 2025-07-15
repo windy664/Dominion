@@ -1,6 +1,7 @@
 package cn.lunadeer.dominion.utils.scui;
 
 import cn.lunadeer.dominion.utils.ColorParser;
+import cn.lunadeer.dominion.utils.Notification;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -239,24 +240,29 @@ public class ChestView {
     }
 
     protected void refresh(@NotNull InventoryView view) {
-        title = setPlaceholder(viewOwner, title);
-        title = ColorParser.getBukkitType(title);
-        view.setTitle(title);
-        for (Map.Entry<Integer, ChestButton> entry : buttons.entrySet()) {
-            int slot = entry.getKey();
-            ChestButton button = entry.getValue();
-            if (button != null) {
-                ItemStack item = attachTag(viewOwner.getUniqueId(), button.build(viewOwner));
-                view.setItem(slot, item);
-            } else {
-                view.setItem(slot, null);
+        try {
+            title = setPlaceholder(viewOwner, title);
+            title = ColorParser.getBukkitType(title);
+            view.setTitle(title);
+            for (Map.Entry<Integer, ChestButton> entry : buttons.entrySet()) {
+                int slot = entry.getKey();
+                ChestButton button = entry.getValue();
+                if (button != null) {
+                    ItemStack item = attachTag(viewOwner.getUniqueId(), button.build(viewOwner));
+                    view.setItem(slot, item);
+                } else {
+                    view.setItem(slot, null);
+                }
             }
-        }
-        // Fill empty slots with placeholder items
-        int totalSlots = layout.isEmpty() ? 54 : layout.length();
-        for (int i = 0; i < totalSlots; i++) {
-            if (view.getItem(i) != null) continue; // Skip if item is already set
-            view.setItem(i, ChestUserInterfaceManager.PLACE_HOLDER_ITEM);
+            // Fill empty slots with placeholder items
+            int totalSlots = layout.isEmpty() ? 54 : layout.length();
+            for (int i = 0; i < totalSlots; i++) {
+                if (view.getItem(i) != null) continue; // Skip if item is already set
+                view.setItem(i, ChestUserInterfaceManager.PLACE_HOLDER_ITEM);
+            }
+        } catch (Exception e) {
+            view.close();
+            Notification.error(viewOwner, e);
         }
     }
 
