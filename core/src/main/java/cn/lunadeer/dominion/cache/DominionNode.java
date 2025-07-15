@@ -50,6 +50,15 @@ public class DominionNode {
     }
 
     /**
+     * Gets the dominion ID associated with this node.
+     *
+     * @return the dominion ID
+     */
+    public Integer getDominionId() {
+        return dominionId;
+    }
+
+    /**
      * Builds a dominion node tree from a list of DominionDTOs.
      *
      * @param rootId    the root ID of the tree

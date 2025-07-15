@@ -9,7 +9,6 @@ import cn.lunadeer.dominion.cache.DominionNode;
 import cn.lunadeer.dominion.cache.DominionNodeSectored;
 import cn.lunadeer.dominion.doos.DominionDOO;
 import cn.lunadeer.dominion.misc.DominionException;
-import cn.lunadeer.dominion.utils.XLogger;
 import org.bukkit.Location;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -161,32 +160,39 @@ public class DominionCache extends Cache {
 
     @Override
     void loadExecution() throws Exception {
-        idDominions = new ConcurrentHashMap<>();
-        dominionChildrenMap = new ConcurrentHashMap<>();
-        dominionNameToId = new ConcurrentHashMap<>();
-        playerOwnDominions = new ConcurrentHashMap<>();
-        dominionNodeMap = new ConcurrentHashMap<>();
+        // Create temporary maps to avoid race conditions
+        ConcurrentHashMap<Integer, DominionDTO> tempIdDominions = new ConcurrentHashMap<>();
+        ConcurrentHashMap<Integer, CopyOnWriteArrayList<Integer>> tempDominionChildrenMap = new ConcurrentHashMap<>();
+        ConcurrentHashMap<String, Integer> tempDominionNameToId = new ConcurrentHashMap<>();
+        ConcurrentHashMap<UUID, CopyOnWriteArrayList<Integer>> tempPlayerOwnDominions = new ConcurrentHashMap<>();
+        ConcurrentHashMap<Integer, DominionNode> tempDominionNodeMap = new ConcurrentHashMap<>();
+        ConcurrentHashMap<UUID, CopyOnWriteArrayList<DominionNode>> tempPlayerDominionNodes = new ConcurrentHashMap<>();
+
         CopyOnWriteArrayList<DominionDTO> dominions = new CopyOnWriteArrayList<>(DominionDOO.selectAll(serverId));
 
-        dominions.forEach(dominion -> idDominions.put(dominion.getId(), dominion));
-
-        // build tree
-        CompletableFuture<Void> buildTreeFuture = rebuildTreeAsync();
+        dominions.forEach(dominion -> tempIdDominions.put(dominion.getId(), dominion));
 
         // build other caches
-        CompletableFuture<Void> buildCachesFuture = CompletableFuture.runAsync(() -> {
-            dominions.forEach(dominion -> {
-                dominionNameToId.put(dominion.getName(), dominion.getId());
-                playerOwnDominions.computeIfAbsent(dominion.getOwner(), k -> new CopyOnWriteArrayList<>()).add(dominion.getId());
-                dominionChildrenMap.computeIfAbsent(dominion.getParentDomId(), k -> new CopyOnWriteArrayList<>()).add(dominion.getId());
-            });
+        dominions.forEach(dominion -> {
+            tempDominionNameToId.put(dominion.getName(), dominion.getId());
+            tempPlayerOwnDominions.computeIfAbsent(dominion.getOwner(), k -> new CopyOnWriteArrayList<>()).add(dominion.getId());
+            tempDominionChildrenMap.computeIfAbsent(dominion.getParentDomId(), k -> new CopyOnWriteArrayList<>()).add(dominion.getId());
         });
 
-        CompletableFuture.allOf(buildTreeFuture, buildCachesFuture)
-                .exceptionally(ex -> {
-                    XLogger.error(ex);
-                    return null;
-                }).join();
+        // Build tree synchronously using temporary cache
+        CopyOnWriteArrayList<DominionNode> nodeTree = DominionNode.BuildNodeTree(-1, dominions);
+        parseNodeTree(tempPlayerDominionNodes, tempDominionNodeMap, nodeTree, tempIdDominions);
+
+        // Atomically replace all cache data
+        synchronized (this) {
+            idDominions = tempIdDominions;
+            dominionChildrenMap = tempDominionChildrenMap;
+            dominionNameToId = tempDominionNameToId;
+            playerOwnDominions = tempPlayerOwnDominions;
+            dominionNodeMap = tempDominionNodeMap;
+            playerDominionNodes = tempPlayerDominionNodes;
+            dominionNodeSectored.build(nodeTree);
+        }
     }
 
     @Override
@@ -228,13 +234,28 @@ public class DominionCache extends Cache {
 
     private CompletableFuture<Void> rebuildTreeAsync() {
         return CompletableFuture.runAsync(() -> {
-            playerDominionNodes = new ConcurrentHashMap<>();
-            CopyOnWriteArrayList<DominionNode> nodeTree = DominionNode.BuildNodeTree(-1, new CopyOnWriteArrayList<>(idDominions.values()));
-            nodeTree.forEach(node -> {
-                dominionNodeMap.put(node.getDominion().getId(), node);
-                playerDominionNodes.computeIfAbsent(node.getDominion().getOwner(), k -> new CopyOnWriteArrayList<>()).add(node);
-            });
-            dominionNodeSectored.build(nodeTree);
+            synchronized (this) {
+                ConcurrentHashMap<UUID, CopyOnWriteArrayList<DominionNode>> tempPlayerDominionNodes = new ConcurrentHashMap<>();
+                ConcurrentHashMap<Integer, DominionNode> tempDominionNodeMap = new ConcurrentHashMap<>();
+
+                CopyOnWriteArrayList<DominionNode> nodeTree = DominionNode.BuildNodeTree(-1, new CopyOnWriteArrayList<>(idDominions.values()));
+                parseNodeTree(tempPlayerDominionNodes, tempDominionNodeMap, nodeTree, idDominions);
+
+                playerDominionNodes = tempPlayerDominionNodes;
+                dominionNodeMap = tempDominionNodeMap;
+                dominionNodeSectored.build(nodeTree);
+            }
+        });
+    }
+
+    private static void parseNodeTree(ConcurrentHashMap<UUID, CopyOnWriteArrayList<DominionNode>> tempPlayerDominionNodes, ConcurrentHashMap<Integer, DominionNode> tempDominionNodeMap, CopyOnWriteArrayList<DominionNode> nodeTree, ConcurrentHashMap<Integer, DominionDTO> idDominions) {
+        nodeTree.forEach(node -> {
+            Integer dominionId = node.getDominionId();
+            DominionDTO dominionDTO = idDominions.get(dominionId);
+            if (dominionDTO != null) {
+                tempDominionNodeMap.put(dominionId, node);
+                tempPlayerDominionNodes.computeIfAbsent(dominionDTO.getOwner(), k -> new CopyOnWriteArrayList<>()).add(node);
+            }
         });
     }
 
