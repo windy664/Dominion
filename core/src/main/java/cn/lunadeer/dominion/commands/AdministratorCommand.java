@@ -7,7 +7,7 @@ import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.managers.DatabaseTables;
 import cn.lunadeer.dominion.misc.DominionException;
-import cn.lunadeer.dominion.uis.tuis.MainMenu;
+import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Option;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -218,6 +218,7 @@ public class AdministratorCommand {
                 Notification.warn(sender, Language.administratorCommandText.importHint);
                 Notification.warn(sender, Language.administratorCommandText.importInfo);
                 Notification.warn(sender, Language.administratorCommandText.importConfirm);
+                return;
             }
             DatabaseTables.importTables(sender);
         }

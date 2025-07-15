@@ -9,7 +9,7 @@ import cn.lunadeer.dominion.managers.PlaceHolderApi;
 import cn.lunadeer.dominion.managers.TeleportManager;
 import cn.lunadeer.dominion.misc.InitCommands;
 import cn.lunadeer.dominion.misc.Others;
-import cn.lunadeer.dominion.uis.tuis.MainMenu;
+import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.VaultConnect.VaultConnect;
 import cn.lunadeer.dominion.utils.XLogger;
@@ -19,6 +19,7 @@ import cn.lunadeer.dominion.utils.command.CommandManager;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
+import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
 import cn.lunadeer.dominion.utils.stui.inputter.Inputter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -69,6 +70,7 @@ public final class Dominion extends JavaPlugin {
         new TeleportManager(this);
         new CacheManager();
         new Inputter(this);
+        new ChestUserInterfaceManager(this);
         new DominionInterface();
 
         if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {

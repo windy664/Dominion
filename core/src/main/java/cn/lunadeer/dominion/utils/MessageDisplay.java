@@ -1,8 +1,8 @@
 package cn.lunadeer.dominion.utils;
 
-import me.clip.placeholderapi.PlaceholderAPI;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+
+import static cn.lunadeer.dominion.utils.Misc.setPlaceholder;
 
 public class MessageDisplay {
     public enum Place {
@@ -14,9 +14,7 @@ public class MessageDisplay {
     }
 
     public static void show(Player player, Place place, String message) {
-        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
-            message = PlaceholderAPI.setPlaceholders(player, message);
-        }
+        message = setPlaceholder(player, message);
         message = ColorParser.getBukkitType(message);
         // BOSS_BAR, ACTION_BAR, TITLE, SUBTITLE, CHAT
         if (place == Place.BOSS_BAR) {

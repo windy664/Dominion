@@ -119,4 +119,13 @@ public class TemplateDOO {
         return this;
     }
 
+    public TemplateDOO setName(String name) throws SQLException {
+        this.name.setValue(name);
+        Update.update("privilege_template")
+                .set(new FieldString("name", name))
+                .where("id = ?", getId())
+                .execute();
+        return this;
+    }
+
 }

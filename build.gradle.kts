@@ -1,4 +1,7 @@
 import io.papermc.hangarpublishplugin.model.Platforms
+import java.io.FileInputStream
+import java.io.FileOutputStream
+import java.util.*
 
 plugins {
     id("java")
@@ -13,9 +16,11 @@ libraries += "mysql:mysql-connector-java:8.0.33"
 libraries += "net.kyori:adventure-platform-bukkit:4.3.3"
 libraries += "com.zaxxer:HikariCP:6.2.1"
 
+// beta or alpha based on git branch
+var suffixes = getAndIncrementVersion()
 
 group = "cn.lunadeer"
-version = "4.3.5-beta"
+version = "4.4.0-$suffixes"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))
@@ -36,19 +41,9 @@ allprojects {
         maven("https://oss.sonatype.org/content/groups/public")
         maven("https://repo.papermc.io/repository/maven-public/")
         maven("https://jitpack.io")
-        maven("https://repo.mikeprimm.com/")
-        maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
-        maven("https://repo.codemc.org/repository/maven-public")
     }
 
     dependencies {
-        compileOnly("com.github.BlueMap-Minecraft:BlueMapAPI:v2.6.2")
-        compileOnly("us.dynmap:DynmapCoreAPI:3.4")
-        compileOnly("xyz.jpenilla:squaremap-api:1.3.4")
-        compileOnly("me.clip:placeholderapi:2.11.6")
-        compileOnly("com.github.MilkBowl:VaultAPI:1.7")
-        compileOnly("net.milkbowl.vault:VaultUnlockedAPI:2.10")
-
         if (!buildFull) {
             libraries.forEach {
                 compileOnly(it)
@@ -120,7 +115,7 @@ hangarPublish {
             register(Platforms.PAPER) {
                 jar.set(tasks.shadowJar.flatMap { it.archiveFile })
                 println("ShadowJar: ${tasks.shadowJar.flatMap { it.archiveFile }}")
-                platformVersions.set(listOf("1.20.1-1.20.6","1.21.x"))
+                platformVersions.set(listOf("1.20.1-1.20.6", "1.21.x"))
             }
         }
     }
@@ -128,4 +123,63 @@ hangarPublish {
 
 tasks.named("publishPluginPublicationToHangar") {
     dependsOn(tasks.named("jar"))
+}
+
+// Function to get current git branch
+fun getCurrentGitBranch(): String {
+    return try {
+        val process = ProcessBuilder("git", "rev-parse", "--abbrev-ref", "HEAD")
+            .directory(projectDir)
+            .start()
+        process.inputStream.bufferedReader().readText().trim()
+    } catch (_: Exception) {
+        "unknown"
+    }
+}
+
+// Function to get and increment version based on branch
+fun getAndIncrementVersion(): String {
+    val versionFile = file("version.properties")
+    val props = Properties()
+
+    // Load existing version or create default
+    if (versionFile.exists()) {
+        FileInputStream(versionFile).use { props.load(it) }
+    }
+
+    val currentBranch = getCurrentGitBranch()
+    val versionType = if (currentBranch == "master") "beta" else "alpha"
+
+    val currentSuffix = props.getProperty("suffixes", "${versionType}.24")
+
+    // Check if we need to switch version type (branch changed)
+    val currentType = currentSuffix.split(".")[0]
+    if (currentType != versionType) {
+        // Branch changed, reset to default number for new type
+        val newSuffix = "${versionType}.1"
+        props.setProperty("suffixes", newSuffix)
+        FileOutputStream(versionFile).use {
+            props.store(it, "Auto-generated version file - branch: $currentBranch")
+        }
+        return newSuffix
+    }
+
+    // Same branch type, increment if it's alpha or beta
+    if (currentSuffix.startsWith("alpha.") || currentSuffix.startsWith("beta.")) {
+        val parts = currentSuffix.split(".")
+        if (parts.size >= 2) {
+            val currentNumber = parts[1].toIntOrNull() ?: 1
+            val newSuffix = "${versionType}.${currentNumber + 1}"
+
+            // Save the new version
+            props.setProperty("suffixes", newSuffix)
+            FileOutputStream(versionFile).use {
+                props.store(it, "Auto-generated version file - branch: $currentBranch")
+            }
+
+            return newSuffix
+        }
+    }
+
+    return currentSuffix
 }

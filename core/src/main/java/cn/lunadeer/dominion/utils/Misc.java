@@ -1,5 +1,8 @@
 package cn.lunadeer.dominion.utils;
 
+import cn.lunadeer.dominion.managers.PlaceHolderApi;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -27,6 +30,32 @@ public class Misc {
             formatStr = formatStr.replace("{" + i + "}", args[i].toString());
         }
         return formatStr;
+    }
+
+    public static List<String> formatStringList(List<String> list, Object... args) {
+        List<String> formattedList = new ArrayList<>(list);
+        for (int i = 0; i < args.length; i++) {
+            for (int j = 0; j < list.size(); j++) {
+                formattedList.set(j, formattedList.get(j).replace("{" + i + "}", args[i].toString()));
+            }
+        }
+        return formattedList;
+    }
+
+    public static List<String> foldLore2Line(String str, int length) {
+        List<String> result = new ArrayList<>();
+        if (str.length() > length) {
+            result.add(str.substring(0, length));
+            if (str.length() > 2 * length) {
+                result.add(str.substring(length, 2 * length - 3) + "...");
+            } else {
+                result.add(str.substring(length));
+            }
+        } else {
+            result.add(str);
+            result.add("");
+        }
+        return result;
     }
 
     public static List<String> listClassOfPackage(JavaPlugin plugin, String packageName) {
@@ -61,6 +90,24 @@ public class Misc {
             return classesInPackage;
         }
         return classesInPackage;
+    }
+
+    /**
+     * Set placeholder for the message.
+     * <p>
+     * Use this method instead of PlaceholderAPI directly to avoid not installed PlaceholderAPI
+     * throwing NoClassDefFoundError.
+     *
+     * @param player  the player
+     * @param message the message
+     * @return the message with placeholder
+     */
+    public static String setPlaceholder(Player player, String message) {
+        if (Bukkit.getPluginManager().isPluginEnabled("PlaceholderAPI")) {
+            return PlaceHolderApi.setPlaceholders(player, message);
+        } else {
+            return message;
+        }
     }
 
 }

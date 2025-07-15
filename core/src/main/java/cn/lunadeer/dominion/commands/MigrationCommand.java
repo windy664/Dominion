@@ -11,7 +11,7 @@ import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.events.dominion.DominionCreateEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.misc.DominionException;
-import cn.lunadeer.dominion.uis.tuis.MigrateList;
+import cn.lunadeer.dominion.uis.MigrateList;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.ResMigration;
 import cn.lunadeer.dominion.utils.XLogger;
@@ -76,22 +76,7 @@ public class MigrationCommand {
     )) {
         @Override
         public void executeHandler(CommandSender sender) {
-            List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
-            if (res_data == null || res_data.isEmpty()) {
-                Notification.error(sender, Language.migrateListText.noData);
-                return;
-            }
-            int successCount = 0;
-            for (ResMigration.ResidenceNode resNode : res_data) {
-                try {
-                    doMigrateCreate(sender, resNode, null);
-                    successCount++;
-                } catch (Exception e) {
-                    Notification.error(sender, Language.migrationCommandText.migrateFailed, e.getMessage());
-                    XLogger.error(e);
-                }
-            }
-            Notification.info(sender, Language.migrationCommandText.migrateSuccess, successCount + "/" + res_data.size());
+            migrateAll(sender);
         }
     }.needPermission(adminPermission).register();
 
@@ -161,5 +146,24 @@ public class MigrationCommand {
                 }
             }
         }
+    }
+
+    public static void migrateAll(CommandSender sender) {
+        List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
+        if (res_data == null || res_data.isEmpty()) {
+            Notification.error(sender, Language.migrateListText.noData);
+            return;
+        }
+        int successCount = 0;
+        for (ResMigration.ResidenceNode resNode : res_data) {
+            try {
+                doMigrateCreate(sender, resNode, null);
+                successCount++;
+            } catch (Exception e) {
+                Notification.error(sender, Language.migrationCommandText.migrateFailed, e.getMessage());
+                XLogger.error(e);
+            }
+        }
+        Notification.info(sender, Language.migrationCommandText.migrateSuccess, successCount + "/" + res_data.size());
     }
 }

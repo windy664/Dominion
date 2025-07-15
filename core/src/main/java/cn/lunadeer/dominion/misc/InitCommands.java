@@ -1,7 +1,7 @@
 package cn.lunadeer.dominion.misc;
 
 import cn.lunadeer.dominion.commands.*;
-import cn.lunadeer.dominion.uis.tuis.MainMenu;
+import cn.lunadeer.dominion.uis.MainMenu;
 
 public class InitCommands {
     public InitCommands() {

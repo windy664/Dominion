@@ -2,10 +2,13 @@ package cn.lunadeer.dominion.commands;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
+import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.events.dominion.DominionDeleteEvent;
 import cn.lunadeer.dominion.events.dominion.modify.*;
 import cn.lunadeer.dominion.managers.TeleportManager;
 import cn.lunadeer.dominion.misc.CommandArguments;
+import cn.lunadeer.dominion.misc.DominionException;
+import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.Option;
@@ -113,6 +116,39 @@ public class DominionOperateCommand {
                 Player player = toPlayer(sender);
                 DominionDTO dominion = toDominionDTO(getArgumentValue(0));
                 TeleportManager.teleportToDominion(player, dominion);
+            } catch (Exception e) {
+                Notification.error(sender, e);
+            }
+        }
+    }.needPermission(defaultPermission).register();
+
+    public static SecondaryCommand switchUi = new SecondaryCommand("switch_ui", List.of(
+            new Option(List.of(PlayerDTO.UI_TYPE.TUI.name(), PlayerDTO.UI_TYPE.CUI.name()), "")
+    ),
+            "Switches the UI type. If no argument is provided, it toggles between TUI and CUI."
+    ) {
+        @Override
+        public void executeHandler(CommandSender sender) {
+            try {
+                Player player = toPlayer(sender);
+                PlayerDTO playerDTO = CacheManager.instance.getPlayer(player.getUniqueId());
+                if (playerDTO == null) {
+                    throw new DominionException("Player data not found.");
+                }
+                PlayerDTO.UI_TYPE uiType;
+                String uiTypeStr = getArgumentValue(0);
+                if (uiTypeStr.isEmpty()) {
+                    // Toggle UI type
+                    uiType = playerDTO.getUiPreference() == PlayerDTO.UI_TYPE.TUI ? PlayerDTO.UI_TYPE.CUI : PlayerDTO.UI_TYPE.TUI;
+                } else if (!Arrays.stream(PlayerDTO.UI_TYPE.values()).map(Enum::name).toList().contains(uiTypeStr)) {
+                    throw new DominionException("Invalid UI type: " + uiTypeStr + ". Valid types are: " +
+                            Arrays.stream(PlayerDTO.UI_TYPE.values()).map(Enum::name).toList());
+                } else {
+                    // Set UI type directly
+                    uiType = PlayerDTO.UI_TYPE.valueOf(uiTypeStr);
+                }
+                playerDTO.setUiPreference(uiType);
+                MainMenu.show(sender, "1");
             } catch (Exception e) {
                 Notification.error(sender, e);
             }

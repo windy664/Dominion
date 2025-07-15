@@ -35,7 +35,11 @@ public class Backup {
                 .execute();
         for (Map<String, Field<?>> row : rows) {
             for (Map.Entry<String, Field<?>> entry : row.entrySet()) {
-                builder.append(entry.getValue().getValue()).append(",");
+                String value = entry.getValue().getValue().toString();
+                if (value.contains(",")) {
+                    value = "\"" + value.replace("\"", "\"\"") + "\""; // Escape quotes
+                }
+                builder.append(value).append(",");
             }
             builder.deleteCharAt(builder.length() - 1).append("\n");
         }
@@ -50,7 +54,31 @@ public class Backup {
         String[] columnsStr = lines[0].split(",");
         String[] types = lines[1].split(",");
         for (int i = 2; i < lines.length; i++) {
-            String[] valuesStr = lines[i].split(",");
+            String[] valuesStr = new String[columnsStr.length];
+            int flag = 0;
+            StringBuilder valuesBuilder = new StringBuilder();
+            boolean inQuotes = false;
+            for (int j = 0; j < lines[i].length(); j++) {
+                char c = lines[i].charAt(j);
+                if (c == '"') {
+                    if (inQuotes && j + 1 < lines[i].length() && lines[i].charAt(j + 1) == '"') {
+                        // 处理转义引号
+                        valuesBuilder.append('"');
+                        j++;
+                    } else {
+                        inQuotes = !inQuotes;
+                    }
+                } else if (c == ',' && !inQuotes) {
+                    valuesStr[flag++] = valuesBuilder.toString().trim();
+                    valuesBuilder.setLength(0);
+                } else {
+                    valuesBuilder.append(c);
+                }
+            }
+            // 处理最后一个字段
+            if (flag < columnsStr.length) {
+                valuesStr[flag] = valuesBuilder.toString().trim();
+            }
             Field<?>[] fields = new Field[columnsStr.length];
             for (int j = 0; j < columnsStr.length; j++) {
                 String columnStr = columnsStr[j].trim();
