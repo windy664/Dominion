@@ -1,0 +1,1306 @@
+main-menu-cui:
+  title: §b✦ §6§lDominion Main Menu §b✦
+  admin-layout:
+    - '#########'
+    - '##A#B#C##'
+    - '##D#E#F##'
+    - '#########'
+    - '####S####'
+  user-layout:
+    - '#########'
+    - '##A#B#C##'
+    - '###D#E###'
+    - '#########'
+    - '####S####'
+  status-disabled-lore:
+    - §c✘ §4This feature is currently disabled.
+    - §7Please check back later or contact
+    - §7§oServer Administrators §rfor more info.
+    - ''
+    - '§8§lStatus: §c✘ Disabled by Operator'
+  create-button:
+    symbol: A
+    name: §6✨ §eCreate Dominion §6✨
+    lore:
+      - §7Start your empire by creating
+      - §7a new dominion at your location.
+      - ''
+      - §e▶ Click to begin creation
+      - ''
+      - '§8Tip: Make sure you''re in the'
+      - §8area you want to claim!
+    material: NETHER_STAR
+  list-button:
+    symbol: B
+    name: §b📋 §fManage My Dominions
+    lore:
+      - §7View and manage all dominions
+      - §7that you have access to.
+      - ''
+      - §b▶ Click to view list
+      - ''
+      - '§8Includes: Your dominions &'
+      - §8dominions you're admin of!
+    material: BOOKSHELF
+  title-button:
+    symbol: C
+    name: §6👑 §eGroup Titles
+    lore:
+      - §7Browse and equip titles from
+      - §7groups you're member of.
+      - ''
+      - §e▶ Click to browse titles
+      - ''
+      - §8Show off your rank and
+      - §8membership status!
+    material: NAME_TAG
+  template-button:
+    symbol: D
+    name: §a📝 §fTemplate Manager
+    lore:
+      - §7Create and manage permission
+      - §7templates for quick setup.
+      - ''
+      - §a▶ Click to manage templates
+      - ''
+      - §8Save time when setting up
+      - §8new dominions!
+    material: WRITABLE_BOOK
+  migrate-button:
+    symbol: E
+    name: §d🔄 §fMigrate from Residence
+    lore:
+      - §7Convert your existing Residence
+      - §7plots to Dominion format.
+      - ''
+      - §d▶ Click to start migration
+      - ''
+      - §c⚠ Make sure to backup first!
+      - §8This process is irreversible.
+    material: ENDER_PEARL
+  all-button:
+    symbol: F
+    name: §c💎 §fAll Server Dominions
+    lore:
+      - §7§lADMIN ONLY§r
+      - §7View all dominions across
+      - §7the entire server.
+      - ''
+      - §c▶ Click to view all dominions
+      - ''
+      - §8Perfect for server management
+      - §8and moderation purposes.
+    material: DIAMOND
+  switch-tui-button:
+    symbol: S
+    name: §e§lSwitch to TUI
+    lore:
+      - §7Switch to the text-based TUI
+      - §7for a different user interface.
+      - ''
+      - §e▶ Click to switch to TUI
+      - ''
+      - §8Use this if you prefer a
+      - §8text-based experience!
+    material: COMPASS
+all-dominion-cui:
+  title: §6✦ §c§lAll Dominions §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  dominion-item-button:
+    symbol: i
+    name: §6🏰 §e{0}
+    lore:
+      - '§7Owner: §b{0}'
+      - ''
+      - §e▶ Click to manage this dominion
+      - §8  View settings, members & permissions
+      - ''
+      - '§7Status: §aActive'
+      - §8Admin access granted
+    material: FILLED_MAP
+  back-button:
+    symbol: <
+    name: §c« Back to Main Menu
+    lore:
+      - §7Return to the main menu
+      - §8to access other features.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+title-list-cui:
+  title: §6✦ §d§lGroup Title List §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  title-item-button:
+    symbol: i
+    name: §6✦ §f{0} §6✦
+    lore:
+      - '§7From dominion: §b{0}'
+      - ''
+      - §e▶ Click to equip this title
+      - §8  and show it to everyone!
+      - ''
+      - '§7Status: §cInactive'
+    material: NAME_TAG
+  active-title-item-button:
+    symbol: i
+    name: §6★ §e{0} §6★ §a(ACTIVE)
+    lore:
+      - '§7From dominion: §b{0}'
+      - ''
+      - §a✓ This is your current title
+      - §8  Everyone can see this!
+      - ''
+      - §c▶ Click to remove this title
+      - ''
+      - '§7Status: §aActive'
+    material: GOLDEN_HELMET
+  back-button:
+    symbol: <
+    name: §c« Back to Main Menu
+    lore:
+      - §7Return to the main menu
+      - §8to access other features.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+migrate-list-cui:
+  title: §6⚡ §c§lMigrate From Residence §6⚡
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <######A#
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  residence-item-button:
+    symbol: i
+    name: §6📋 §f{0}
+    lore:
+      - §e▶ Click to migrate this residence
+      - §8  and all its sub-residences
+    material: PAPER
+  back-button:
+    symbol: <
+    name: §c« Back to Main Menu
+    lore:
+      - §7Return to the main menu
+      - §8to access other features.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  migrate-all-button:
+    symbol: A
+    name: §6⚡ §c§lMIGRATE ALL
+    lore:
+      - §e▶ Click to migrate all residences
+      - §8  and all their sub-residences
+      - ''
+      - §c⚠️ This may take a while,
+      - §c⚠️ please be patient and do not
+      - §c⚠️ interrupt the process.
+    material: DIAMOND
+template-list-cui:
+  title: §6✦ §d§lTemplate Management §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  template-item-button:
+    symbol: i
+    name: §6✦ §f{0} §6✦
+    lore:
+      - §7Template for managing permissions
+      - §8and access controls quickly.
+      - ''
+      - §e▶ Click to edit template
+    material: PAPER
+  create-template-button:
+    symbol: i
+    name: §a+ Create New Template
+    lore:
+      - §7Create a new permission template
+      - §8to quickly setup member privileges.
+      - ''
+      - §e▶ Click to create template
+      - ''
+      - '§7Action: §aCreate Template'
+    material: LIME_DYE
+  back-button:
+    symbol: <
+    name: §c« Back to Main Menu
+    lore:
+      - §7Return to the main menu
+      - §8to access other features.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+template-setting-cui:
+  title: '§6✦ §3§lTemplate: {0} §6✦'
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <#####RD#
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Template List
+    lore:
+      - §7Return to the template
+      - §7list menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  rename-button:
+    symbol: R
+    name: §eRename Template
+    lore:
+      - §7Rename this template.
+      - ''
+      - §e▶ Click to rename this template
+    material: NAME_TAG
+  delete-button:
+    symbol: D
+    name: §cDelete Template
+    lore:
+      - §7Delete this template.
+      - §7This action cannot be undone.
+      - ''
+      - §e▶ Click to delete this template
+    material: RED_DYE
+  flag-item-name: §6⚙️ §e{0}
+  flag-item-state-true: §a§l✓ ENABLED
+  flag-item-state-false: §c§l✗ DISABLED
+  flag-item-lore:
+    - '§7Status: {0}'
+    - ''
+    - '§7Description:'
+    - §f{1}
+    - §f{2}
+    - ''
+    - §e▶ Click to toggle this setting
+    - §8Will not take effect until the
+    - §8next time the template is applied.
+dominion-list-cui:
+  title: §6✦ §b§lDominions List §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  own-dominion-button:
+    symbol: i
+    name: §2👑 §a{0}
+    lore:
+      - §7This is §ayour dominion§7.
+      - §8You have full control here!
+      - ''
+      - §a▶ Click to manage
+      - §8  Settings, members, permissions
+      - ''
+      - '§7Status: §2Owner'
+    material: GRASS_BLOCK
+  admin-dominion-button:
+    symbol: i
+    name: §9⚡ §b{0}
+    lore:
+      - '§7Owner: §e{0}'
+      - §8You have admin access here.
+      - ''
+      - §b▶ Click to manage
+      - §8  Help the owner manage this dominion
+      - ''
+      - '§7Status: §9Administrator'
+    material: DIRT_PATH
+  back-button:
+    symbol: <
+    name: §c« Back to Main Menu
+    lore:
+      - §7Return to the main menu
+      - §8to access other features.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+dominion-manage-cui:
+  title: §6✦ §a§lManage {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <###I####
+      - '#i#i#i#i#'
+      - '#i#i#i#i#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion List
+    lore:
+      - §7Return to your dominion list
+      - §8to manage other dominions.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  dominion-info-button:
+    symbol: I
+    name: §6📊 §e§lDominion Overview
+    lore:
+      - ''
+      - §f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      - '§b▪ §7Size:     §f{0}'
+      - '§b▪ §7Height:   §f{1}'
+      - '§b▪ §7Square:   §f{2} §7blocks²'
+      - '§b▪ §7Volume:   §f{3} §7blocks³'
+      - '§b▪ §7Location: §f{4}'
+      - §f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+      - ''
+      - §a▶ §2Click §7- Resize dominion
+      - ''
+      - §8💡 Manage your dominion's size.
+    material: GRASS_BLOCK
+  env-setting-button:
+    symbol: i
+    name: §2🌍 §aEnvironment Settings
+    lore:
+      - §7Configure environment rules
+      - §7for this dominion.
+      - ''
+      - §a▶ Click to configure
+      - ''
+      - §8Weather, time, mob spawning...
+    material: COMPASS
+  guest-setting-button:
+    symbol: i
+    name: §e🚪 §6Guest Permissions
+    lore:
+      - §7Set permissions for visitors
+      - §7who aren't members.
+      - ''
+      - §6▶ Click to configure
+      - ''
+      - §8Build, interact, use items...
+    material: OAK_DOOR
+  member-list-button:
+    symbol: i
+    name: §b👥 §3Member Management
+    lore:
+      - §7View and manage dominion
+      - §7members and their roles.
+      - ''
+      - §3▶ Click to manage members
+      - ''
+      - §8Add, remove, set permissions...
+    material: PLAYER_HEAD
+  group-list-button:
+    symbol: i
+    name: §d📦 §5Group Management
+    lore:
+      - §7Create and manage member
+      - §7groups with custom permissions.
+      - ''
+      - §5▶ Click to manage groups
+      - ''
+      - §8Create ranks, set titles...
+    material: CHEST
+  set-tp-button:
+    symbol: i
+    name: §9🎯 §bSet Teleport Point
+    lore:
+      - §7Set your current location
+      - §7as the dominion's TP point.
+      - ''
+      - §b▶ Click to set location
+      - ''
+      - §8Members can teleport here!
+    material: ENDER_PEARL
+  rename-button:
+    symbol: i
+    name: §e✏️ §6Rename Dominion
+    lore:
+      - §7Change the name of
+      - §7this dominion.
+      - ''
+      - §6▶ Click to rename
+      - ''
+      - §8Choose a memorable name!
+    material: NAME_TAG
+  enter-message-button:
+    symbol: i
+    name: §a📝 §2Enter Message
+    lore:
+      - §7Edit the welcome message
+      - §7shown when players enter.
+      - ''
+      - §2▶ Click to edit message
+      - ''
+      - §8Greet your visitors!
+    material: WRITABLE_BOOK
+  leave-message-button:
+    symbol: i
+    name: §c📄 §4Leave Message
+    lore:
+      - §7Edit the farewell message
+      - §7shown when players leave.
+      - ''
+      - §4▶ Click to edit message
+      - ''
+      - §8Say goodbye in style!
+    material: BOOK
+  set-map-color-button:
+    symbol: i
+    name: §6🎨 §eMap Color
+    lore:
+      - §7Set the display color for
+      - §7this dominion on the map.
+      - ''
+      - §e▶ Click to choose color
+      - ''
+      - §8Make it stand out!
+    material: PAINTING
+  copy-menu-button:
+    symbol: i
+    name: §b📋 §3Copy Settings
+    lore:
+      - §7Copy permissions and settings
+      - §7to other dominions.
+      - ''
+      - §3▶ Click to access copy menu
+      - ''
+      - §8Save time with templates!
+    material: GLASS
+  delete-button:
+    symbol: i
+    name: §c💀 §4Delete Dominion
+    lore:
+      - §c§lDANGER ZONE
+      - §7Permanently delete this
+      - §7dominion and all its data.
+      - ''
+      - §4▶ Click to delete
+      - ''
+      - §c⚠ This cannot be undone!
+    material: RED_DYE
+copy-menu-cui:
+  title: §6✦ §a§lCopy Settings §6✦
+  layout:
+    - <########
+    - '#E#G#M#P#'
+    - '#########'
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to dominion management
+      - §7to access other settings.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  env-copy-button:
+    symbol: E
+    name: §2🌍 §aEnvironment Copy
+    lore:
+      - §7Copy environment settings
+      - §7from another dominion.
+      - ''
+      - §a▶ Click to copy environment
+      - ''
+      - §8Weather, time, mob spawning...
+    material: GRASS_BLOCK
+  guest-copy-button:
+    symbol: G
+    name: §e🚪 §6Guest Copy
+    lore:
+      - §7Copy guest permissions
+      - §7from another dominion.
+      - ''
+      - §6▶ Click to copy guest settings
+      - ''
+      - §8Build, interact, use items...
+    material: OAK_DOOR
+  member-copy-button:
+    symbol: M
+    name: §b👥 §3Member Copy
+    lore:
+      - §7Copy member permissions
+      - §7from another dominion.
+      - ''
+      - §3▶ Click to copy member settings
+      - ''
+      - §8Individual player permissions...
+    material: PLAYER_HEAD
+  group-copy-button:
+    symbol: P
+    name: §d📦 §5Group Copy
+    lore:
+      - §7Copy group settings
+      - §7from another dominion.
+      - ''
+      - §5▶ Click to copy group settings
+      - ''
+      - §8Permission groups and roles...
+    material: CHEST
+dominion-copy-cui:
+  title: §6✦ §a§lSelect Dominion to Copy §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#p#####n#'
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Copy Menu
+    lore:
+      - §7Return to the copy menu
+      - §7to select a different copy type.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  item-name: §a{0}
+  item-lore:
+    - §7Copy from this dominion
+    - §7to apply its settings.
+    - ''
+    - §a▶ Click to select
+env-setting-cui:
+  title: §6✦ §2§lEnvironment of {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to the dominion
+      - §7management menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: §6⚙️ §e{0}
+  flag-item-state-true: §a§l✓ ENABLED
+  flag-item-state-false: §c§l✗ DISABLED
+  flag-item-lore:
+    - '§7Status: {0}'
+    - ''
+    - '§7Description:'
+    - §f{1}
+    - §f{2}
+    - ''
+    - §e▶ Click to toggle this setting
+    - §8Changes take effect immediately
+guest-setting-cui:
+  title: §6✦ §e§lGuest Setting of {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to the dominion
+      - §7management menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: §6🚪 §e{0}
+  flag-item-state-true: §a§l✓ ALLOWED
+  flag-item-state-false: §c§l✗ DENIED
+  flag-item-lore:
+    - '§7Guest Permission: {0}'
+    - ''
+    - '§7Description:'
+    - §f{1}
+    - §f{2}
+    - ''
+    - §e▶ Click to toggle for guests
+    - §8Affects non-member visitors
+set-size-cui:
+  title: §6✦ §2§lResize {0} §6✦
+  layout:
+    - <########
+    - '##Nn##Uu#'
+    - '#Ww#Ee###'
+    - '##Ss##Dd#'
+    - '#########'
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to the dominion
+      - §7management menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  add-north-button:
+    symbol: N
+    name: §6🧭 §eExpand North (Z-)
+    lore:
+      - §7Expand the dominion to the north
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  add-south-button:
+    symbol: S
+    name: §6🧭 §eExpand South (Z+)
+    lore:
+      - §7Expand the dominion to the south
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  add-west-button:
+    symbol: W
+    name: §6🧭 §eExpand West (X-)
+    lore:
+      - §7Expand the dominion to the west
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  add-east-button:
+    symbol: E
+    name: §6🧭 §eExpand East (X+)
+    lore:
+      - §7Expand the dominion to the east
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  add-up-button:
+    symbol: U
+    name: §6🧭 §eExpand Up (Y+)
+    lore:
+      - §7Expand the dominion upwards
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  add-down-button:
+    symbol: D
+    name: §6🧭 §eExpand Down (Y-)
+    lore:
+      - §7Expand the dominion downwards
+      - §7with input size.
+      - ''
+      - §a▶ Click to expand
+    material: OAK_SIGN
+  contract-north-button:
+    symbol: n
+    name: §6🧭 §cContract North (Z-)
+    lore:
+      - §7Contract the dominion from the north
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+  contract-south-button:
+    symbol: s
+    name: §6🧭 §cContract South (Z+)
+    lore:
+      - §7Contract the dominion from the south
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+  contract-west-button:
+    symbol: w
+    name: §6🧭 §cContract West (X-)
+    lore:
+      - §7Contract the dominion from the west
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+  contract-east-button:
+    symbol: e
+    name: §6🧭 §cContract East (X+)
+    lore:
+      - §7Contract the dominion from the east
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+  contract-up-button:
+    symbol: u
+    name: §6🧭 §cContract Up (Y+)
+    lore:
+      - §7Contract the dominion upwards
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+  contract-down-button:
+    symbol: d
+    name: §6🧭 §cContract Down (Y-)
+    lore:
+      - §7Contract the dominion downwards
+      - §7with input size.
+      - ''
+      - §c▶ Click to contract
+    material: BARRIER
+group-list-cui:
+  title: §6✦ §5§lGroup List of {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to the dominion
+      - §7management menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  new-group-button:
+    symbol: i
+    name: §a➕ §2Create New Group
+    lore:
+      - §7Create a new permission group
+      - §7for organizing your members.
+      - ''
+      - §2▶ Click to create group
+      - ''
+      - §8Perfect for ranks and roles!
+    material: LIME_DYE
+  group-item-button:
+    symbol: i
+    name: §6👑 §e{0}
+    lore:
+      - '§7Members: §a{0}'
+      - ''
+      - §e▶ Click to manage this group
+      - §8  Edit permissions, add members...
+      - ''
+      - '§7Type: §6Permission Group'
+    material: CHEST
+group-manage-cui:
+  title: §6✦ §d§lManage Group {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <##P#R#D#
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Group List
+    lore:
+      - §7Return to the group list
+      - §7to manage other groups.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  group-flags-button:
+    symbol: P
+    name: §6📋 §e§lGroup Permissions
+    lore:
+      - §7Configure what this group
+      - §7can and cannot do in the dominion.
+      - ''
+      - §e▶ Click to edit permissions
+      - §8  Set build, interact, etc...
+      - ''
+      - '§7Type: §6Permission Settings'
+    material: BAMBOO_SIGN
+  rename-group-button:
+    symbol: R
+    name: §b✏ §3§lRename Group
+    lore:
+      - §7Change the display name
+      - §7of this permission group.
+      - ''
+      - §3▶ Click to rename group
+      - §8  Choose a new creative name!
+      - ''
+      - '§7Current: §f{0}'
+    material: NAME_TAG
+  delete-group-button:
+    symbol: D
+    name: §c💥 §4§lDelete Group
+    lore:
+      - §c⚠ §7This action cannot be undone!
+      - §7All members will be moved to
+      - §7the default group automatically.
+      - ''
+      - §4▶ Click to delete group
+      - ''
+      - §8Think twice before proceeding...
+    material: TNT
+  add-member-button:
+    symbol: i
+    name: §a➕ §2§lAdd Member
+    lore:
+      - §7Select a member from your
+      - §7dominion to add to this group.
+      - ''
+      - §2▶ Click to select player
+      - §8  Grant them group permissions!
+      - ''
+      - '§7Action: §aAdd to Group'
+    material: LIME_DYE
+  player-head-item-lore:
+    - §7Member of this permission group
+    - ''
+    - §c▶ Click to remove from group
+    - §8  They'll return to default group
+group-setting-cui:
+  title: §6✦ §9§lGroup {0} Settings §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: Back
+    lore:
+      - Go back to the
+      - guest manage.
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: '&7Flag: &9{0}'
+  flag-item-state-true: '&a&l[ENABLED]'
+  flag-item-state-false: '&c&l[DISABLED]'
+  flag-item-lore:
+    - '&7State: {0}'
+    - '&7Des: &f{1}'
+    - '       &f{2}'
+    - ''
+    - '&7Click to toggle this flag.'
+select-member-cui:
+  title: §6✦ §5§lSelect Member for Group {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Group Manage
+    lore:
+      - §7Return to the group manage
+      - §7without selecting a member.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  member-item-name: §a➕ §2{0}
+  member-item-lore:
+    - §7Add this member to the group.
+    - ''
+    - '§7Player: §e{0}'
+    - ''
+    - §2▶ Click to add to group
+    - ''
+    - §8This member is not in any group.
+member-list-cui:
+  title: §6✦ §3§lMember List of {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Dominion Management
+    lore:
+      - §7Return to the dominion
+      - §7management menu.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  add-player-button:
+    symbol: i
+    name: §a➕ §2Add New Member
+    lore:
+      - §7Invite a player to join
+      - §7this dominion as a member.
+      - ''
+      - §2▶ Click to select player
+      - ''
+      - §8Grant access to your dominion!
+    material: LIME_DYE
+  normal-member: §aNormal Member
+  admin-member: §bAdmin Member
+  ban-member: §cBanned Member
+  player-head-item-lore:
+    - §e▶ Click to manage permissions
+    - §8  Set custom privileges for this player
+    - ''
+    - '§7Status: {0}'
+  player-head-item-lore-disable:
+    - '&cThis player belongs'
+    - '&cto a group, you can''t'
+    - '&cmanage it separately.'
+member-setting-cui:
+  title: §6✦ §f§lMember {0} Settings §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <######T#
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: Back
+    lore:
+      - Go back to the
+      - member list.
+    material: RED_STAINED_GLASS_PANE
+  template-button:
+    symbol: T
+    name: §e✏ §6Select Template
+    lore:
+      - §7Select a template to apply
+      - §7to this member's privileges.
+      - ''
+      - §6▶ Click to select template
+    material: PAPER
+  flag-item-name: '&7Flag: &9{0}'
+  flag-item-state-true: '&a&l[ENABLED]'
+  flag-item-state-false: '&c&l[DISABLED]'
+  flag-item-lore:
+    - '&7State: {0}'
+    - '&7Des: &f{1}'
+    - '       &f{2}'
+    - ''
+    - '&7Click to toggle this flag.'
+select-player-cui:
+  title: §6✦ §5§lSelect Player for {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <######s#
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Member List
+    lore:
+      - §7Return to the member list
+      - §7without adding a player.
+      - ''
+      - §e▶ Click to go back
+    material: RED_STAINED_GLASS_PANE
+  search-button:
+    symbol: s
+    name: §e🔍 §6Search Player
+    lore:
+      - §7Search for a specific player
+      - §7by entering their username.
+      - ''
+      - §6▶ Click to search
+      - ''
+      - §8Useful for finding offline players!
+    material: COMPASS
+  player-button-name: §a➕ §2{0}
+  player-button-lore:
+    - §7Add this player as a member
+    - §7of your dominion.
+    - ''
+    - '§7Player: §e{0}'
+    - ''
+    - §2▶ Click to add member
+select-template-cui:
+  title: §6✦ §5§lSelect Template for {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+      - <########
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - '#iiiiiii#'
+      - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+        - 'Page: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« Back to Member Settings
+    lore:
+      - §7Return to the member settings
+      - §7without applying a template.
+      - ''
+      - §e▶ Click to go back
+    material: BARRIER
+  template-button:
+    symbol: i
+    name: §a⚙ §2{0}
+    lore:
+      - §7Apply this permission template
+      - §7to member {0}.
+      - ''
+      - '§7Template: §e{1}'
+      - ''
+      - §2▶ Click to apply template
+      - ''
+      - §8This will override member's
+      - §8current permissions.
+    material: WRITABLE_BOOK

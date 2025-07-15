@@ -137,6 +137,8 @@ menu-tui-text:
   document-description: 在浏览器中打开插件文档页面。
   command-help-button: 指令帮助
   command-help-description: 在浏览器中打开插件指令帮助页面。
+  switch-to-cui-button: ' 切换到CUI 🆕 '
+  fail-to-switch-message: 切换到 {0} 失败：{1}
 dominion-list-tui-text:
   title: 你的领地列表
   button: 领地列表
@@ -184,6 +186,7 @@ migrate-list-text:
   not-enabled: 服务器管理员未启用迁移功能
   no-data: 没有可迁移的领地数据
   cant-migrate: 子领地只能随同父领地一起迁移
+  migrate-all: 一键迁移
 member-list-tui-text:
   title: 领地 {0} 成员列表
   description: 列出该领地的所有成员
@@ -326,6 +329,8 @@ template-command-text:
   apply-template-fail: 应用模板失败，原因：{0}
   set-flag-success: 成功配置模板 {1} 的权限 {0} 为 {2}
   set-flag-fail: 配置模板失败，原因：{0}
+  rename-template-success: 成功将模板重命名为 {0}
+  rename-template-fail: 重命名模板失败，原因：{0}
 group-title-command-text:
   group-not-belonging: 你不属于权限组 {0}
   using-title-success: 成功使用称号 {0}
@@ -676,3 +681,19 @@ inputter-text:
   only-player: 只有玩家可以使用输入器。
   cancel: ' 【发送大写 C 取消输入】'
   inputter-cancelled: 输入已取消。
+dominion-copy-tui-text:
+  back: 返回
+  copy: 选择
+  title: 选择要从哪个领地复制
+  env-button: 环境配置
+  env-description: 从其他领地复制环境配置。
+  group-button: 权限组配置
+  group-description: 从其他领地复制权限组配置（包括权限组成员）。
+  guest-button: 访客配置
+  guest-description: 从其他领地复制访客权限配置。
+  member-button: 成员配置
+  member-description: 从其他领地复制成员配置（包括成员权限）。
+rename-template-inputter-text:
+  button: 重命名模板
+  hint: 请输入新的模板名称
+  description: 重命名此权限模板。

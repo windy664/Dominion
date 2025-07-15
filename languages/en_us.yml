@@ -137,6 +137,8 @@ menu-tui-text:
   document-description: Open the documentation external link.
   command-help-button: COMMAND HELP
   command-help-description: Open the command help external link.
+  switch-to-cui-button: ' SWITCH TO CUI 🆕 '
+  fail-to-switch-message: 'Failed to switch to {0}: {1}'
 dominion-list-tui-text:
   title: Your Dominions
   button: DOMINIONS
@@ -184,6 +186,7 @@ migrate-list-text:
   not-enabled: Residence migration is not enabled.
   no-data: No data to migrate.
   cant-migrate: Sub-residence will be migrated with the parent.
+  migrate-all: MIGRATE ALL
 member-list-tui-text:
   title: '{0} Member List'
   description: List of members of this dominion.
@@ -350,6 +353,8 @@ template-command-text:
   apply-template-fail: 'Failed to apply template, reason: {0}'
   set-flag-success: Successfully set {0} flag of template {1} to {2}
   set-flag-fail: 'Failed to set flag, reason: {0}'
+  rename-template-success: Successfully renamed template to {0}
+  rename-template-fail: 'Failed to rename template, reason: {0}'
 group-title-command-text:
   group-not-belonging: Don't belong to group {0}.
   using-title-success: Using title {0} successfully.
@@ -635,3 +640,19 @@ flags:
   pvp:
     display-name: PVP
     description: Damage between players
+dominion-copy-tui-text:
+  back: BACK
+  copy: COPY FROM
+  title: Select Dominion to Copy From
+  env-button: ENV
+  env-description: Copy Env Settings From Other Dominion.
+  group-button: GROUPS
+  group-description: Copy Group & Settings From Other Dominion.
+  guest-button: GUEST
+  guest-description: Copy Guest Settings From Other Dominion.
+  member-button: MEMBERS
+  member-description: Copy Member & Settings From Other Dominion.
+rename-template-inputter-text:
+  button: RENAME
+  hint: Enter new template name.
+  description: Rename this template.
