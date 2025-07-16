@@ -80,49 +80,49 @@ public class DominionManage extends AbstractUI {
     @Override
     protected void showTUI(CommandSender sender, String... args) {
         Player player = toPlayer(sender);
-        DominionDTO dominion = toDominionDTO(args[1]);
+        DominionDTO dominion = toDominionDTO(args[0]);
         assertDominionAdmin(player, dominion);
-        int page = toIntegrity(args[2], 1);
+        int page = toIntegrity(args[1], 1);
 
         Line size_info = Line.create()
-                .append(Info.button(sender, args[1]).build())
+                .append(Info.button(sender, dominion.getName()).build())
                 .append(Language.sizeInfoTuiText.description);
         Line env_info = Line.create()
-                .append(EnvSetting.button(sender, args[1]).build())
+                .append(EnvSetting.button(sender, dominion.getName()).build())
                 .append(Language.envSettingTuiText.description);
         Line flag_info = Line.create()
-                .append(GuestSetting.button(sender, args[1]).build())
+                .append(GuestSetting.button(sender, dominion.getName()).build())
                 .append(Language.guestSettingTuiText.description);
         Line member_list = Line.create()
-                .append(MemberList.button(sender, args[1]).build())
+                .append(MemberList.button(sender, dominion.getName()).build())
                 .append(Language.memberListTuiText.description);
         Line group_list = Line.create()
-                .append(GroupList.button(sender, args[1]).build())
+                .append(GroupList.button(sender, dominion.getName()).build())
                 .append(Language.groupListTuiText.description);
         Line set_tp = Line.create()
                 .append(new FunctionalButton(Language.dominionManageTuiText.setTpButton) {
                     @Override
                     public void function() {
-                        DominionOperateCommand.setTp(sender, args[1]);
+                        DominionOperateCommand.setTp(sender, dominion.getName());
                     }
                 }.build())
                 .append(Language.dominionManageTuiText.setTpDescription);
         Line rename = Line.create()
-                .append(RenameDominionInputter.createTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(RenameDominionInputter.createTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.renameDominionInputterText.description);
         Line enter_msg = Line.create()
-                .append(EditMessageInputter.createEnterTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(EditMessageInputter.createEnterTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.editMessageInputterText.enterDescription);
         Line leave_msg = Line.create()
-                .append(EditMessageInputter.createLeaveTuiButtonOn(sender, args[1]).needPermission(defaultPermission).build())
+                .append(EditMessageInputter.createLeaveTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.editMessageInputterText.leaveDescription);
         Line map_color = Line.create()
-                .append(SetMapColorInputter.createTuiButtonOn(sender, args[1]).build())
+                .append(SetMapColorInputter.createTuiButtonOn(sender, dominion.getName()).build())
                 .append(Component.text(Language.setMapColorInputterText.description)
                         .append(Component.text(dominion.getColor(),
                                 TextColor.color(dominion.getColorR(), dominion.getColorG(), dominion.getColorB()))));
         Line copy_menu = Line.create()
-                .append(CopyMenu.button(sender, args[1]).build())
+                .append(CopyMenu.button(sender, dominion.getName()).build())
                 .append(Language.copyMenuTuiText.description);
         ListView view = ListView.create(10, button(sender, dominion.getName()));
         view.title(formatString(Language.dominionManageTuiText.title, dominion.getName()))
