@@ -12,6 +12,7 @@ import cn.lunadeer.dominion.utils.databse.syntax.Select;
 import cn.lunadeer.dominion.utils.databse.syntax.Update;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -170,7 +171,10 @@ public class PlayerDOO implements PlayerDTO {
         this.lastKnownName.setValue(lastKnownName);
     }
 
-    public void setSkinUrl(URL skinUrl) {
+    public void setSkinUrl(@Nullable URL skinUrl) {
+        if (skinUrl == null) {
+            return;
+        }
         this.skinUrl.setValue(skinUrl.toString());
     }
 
