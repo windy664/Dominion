@@ -131,8 +131,9 @@ all-dominion-cui:
     lore:
       - '§7Owner: §b{0}'
       - ''
-      - §e▶ Click to manage this dominion
+      - '§a▶ Left Click: manage'
       - §8  View settings, members & permissions
+      - '§b▶ Right Click: teleport'
       - ''
       - '§7Status: §aActive'
       - §8Admin access granted
@@ -391,8 +392,9 @@ dominion-list-cui:
       - §7This is §ayour dominion§7.
       - §8You have full control here!
       - ''
-      - §a▶ Click to manage
+      - '§a▶ Left Click: manage'
       - §8  Settings, members, permissions
+      - '§b▶ Right Click: teleport'
       - ''
       - '§7Status: §2Owner'
     material: GRASS_BLOCK
@@ -403,8 +405,9 @@ dominion-list-cui:
       - '§7Owner: §e{0}'
       - §8You have admin access here.
       - ''
-      - §b▶ Click to manage
+      - '§a▶ Left Click: manage'
       - §8  Help the owner manage this dominion
+      - '§b▶ Right Click: teleport'
       - ''
       - '§7Status: §9Administrator'
     material: DIRT_PATH

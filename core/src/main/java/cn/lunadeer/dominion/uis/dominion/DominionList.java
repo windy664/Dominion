@@ -176,8 +176,9 @@ public class DominionList extends AbstractUI {
                         "§7This is §ayour dominion§7.",
                         "§8You have full control here!",
                         "",
-                        "§a▶ Click to manage",
+                        "§a▶ Left Click: manage",
                         "§8  Settings, members, permissions",
+                        "§b▶ Right Click: teleport",
                         "",
                         "§7Status: §2Owner"
                 )
@@ -189,8 +190,9 @@ public class DominionList extends AbstractUI {
                         "§7Owner: §e{0}",
                         "§8You have admin access here.",
                         "",
-                        "§b▶ Click to manage",
+                        "§b▶ Left Click: manage",
                         "§8  Help the owner manage this dominion",
+                        "§b▶ Right Click: teleport",
                         "",
                         "§7Status: §9Administrator"
                 )
@@ -231,7 +233,11 @@ public class DominionList extends AbstractUI {
             ChestButton btn = new ChestButton(ChestUserInterface.dominionListCui.adminDominionButton) {
                 @Override
                 public void onClick(ClickType type) {
-                    DominionManage.show(player, dominion.getName(), "1");
+                    if (type.isLeftClick()) {
+                        DominionManage.show(player, dominion.getName(), "1");
+                    } else if (type.isRightClick()) {
+                        teleportToDominion(player, dominion);
+                    }
                 }
             };
             btn = btn.setDisplayNameArgs(dominion.getName());

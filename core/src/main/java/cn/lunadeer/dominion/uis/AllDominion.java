@@ -24,6 +24,7 @@ import org.bukkit.event.inventory.ClickType;
 import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.adminPermission;
+import static cn.lunadeer.dominion.managers.TeleportManager.teleportToDominion;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.uis.dominion.DominionList.BuildTreeLines;
 
@@ -93,8 +94,9 @@ public class AllDominion extends AbstractUI {
                 List.of(
                         "§7Owner: §b{0}",
                         "",
-                        "§e▶ Click to manage this dominion",
+                        "§a▶ Left Click: manage",
                         "§8  View settings, members & permissions",
+                        "§b▶ Right Click: teleport",
                         "",
                         "§7Status: §aActive",
                         "§8Admin access granted"
@@ -124,7 +126,11 @@ public class AllDominion extends AbstractUI {
             ChestButton btn = new ChestButton(ChestUserInterface.allDominionCui.dominionItemButton) {
                 @Override
                 public void onClick(ClickType type) {
-                    DominionManage.show(player, dominion.getName(), "1");
+                    if (type.isLeftClick()) {
+                        DominionManage.show(player, dominion.getName(), "1");
+                    } else if (type.isRightClick()) {
+                        teleportToDominion(player, dominion);
+                    }
                 }
             };
             btn = btn.setDisplayNameArgs(dominion.getName());
