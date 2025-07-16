@@ -159,8 +159,8 @@ public class EnvSetting extends AbstractUI {
                 }
         );
 
-        for (int i = 0; i < Flags.getAllEnvFlags().size(); i++) {
-            EnvFlag flag = Flags.getAllEnvFlags().get(i);
+        for (int i = 0; i < Flags.getAllEnvFlagsEnable().size(); i++) {
+            EnvFlag flag = Flags.getAllEnvFlagsEnable().get(i);
             Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
             String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
