@@ -44,6 +44,13 @@ public class Misc {
 
     public static List<String> foldLore2Line(String str, int length) {
         List<String> result = new ArrayList<>();
+        // if str contains chinese or japanese characters, length should be adjusted 1/2
+        if (str.codePoints().anyMatch(codePoint ->
+                Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.HAN ||
+                        Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.HIRAGANA ||
+                        Character.UnicodeScript.of(codePoint) == Character.UnicodeScript.KATAKANA)) {
+            length /= 2;
+        }
         if (str.length() > length) {
             result.add(str.substring(0, length));
             if (str.length() > 2 * length) {
