@@ -1,9 +1,11 @@
 package cn.lunadeer.dominion.utils;
 
+import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
 import cn.lunadeer.dominion.managers.PlaceHolderApi;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -12,6 +14,15 @@ import java.util.List;
 
 public class Misc {
 
+    /**
+     * Checks if the server is running Paper.
+     * <p>
+     * This method attempts to load a specific class that is unique to Paper servers.
+     * If the class is found, it indicates that the server is running Paper.
+     * Otherwise, it returns false.
+     *
+     * @return true if the server is running Paper, false otherwise
+     */
     public static boolean isPaper() {
         try {
             Class.forName("io.papermc.paper.threadedregions.scheduler.ScheduledTask");
@@ -21,6 +32,17 @@ public class Misc {
         }
     }
 
+    /**
+     * Formats a string by replacing placeholders with the provided arguments.
+     * <p>
+     * Each placeholder in the format `{index}` within the string is replaced
+     * with the corresponding argument from the `args` array. If an argument is `null`,
+     * it is replaced with a default string indicating the null value.
+     *
+     * @param str  the string containing placeholders to format
+     * @param args the arguments to replace placeholders in the string
+     * @return the formatted string
+     */
     public static String formatString(String str, Object... args) {
         String formatStr = str;
         for (int i = 0; i < args.length; i++) {
@@ -32,6 +54,17 @@ public class Misc {
         return formatStr;
     }
 
+    /**
+     * Formats a list of strings by replacing placeholders with the provided arguments.
+     * <p>
+     * Each placeholder in the format `{index}` within the strings in the list is replaced
+     * with the corresponding argument from the `args` array. If an argument is `null`,
+     * it is replaced with a default string indicating the null value.
+     *
+     * @param list the list of strings to format
+     * @param args the arguments to replace placeholders in the strings
+     * @return a new list of formatted strings
+     */
     public static List<String> formatStringList(List<String> list, Object... args) {
         List<String> formattedList = new ArrayList<>(list);
         for (int i = 0; i < args.length; i++) {
@@ -42,6 +75,18 @@ public class Misc {
         return formattedList;
     }
 
+    /**
+     * Splits a string into multiple lines based on the specified length.
+     * <p>
+     * If the string contains Chinese or Japanese characters, the length is halved
+     * to account for the wider character width. The method ensures that the string
+     * is split into lines of the specified length, adding ellipses ("...") if the
+     * string exceeds twice the specified length.
+     *
+     * @param str    the string to be split into lines
+     * @param length the maximum length of each line
+     * @return a list of strings representing the split lines
+     */
     public static List<String> foldLore2Line(String str, int length) {
         List<String> result = new ArrayList<>();
         // if str contains chinese or japanese characters, length should be adjusted 1/2
@@ -65,6 +110,17 @@ public class Misc {
         return result;
     }
 
+    /**
+     * Lists all classes in the specified package within the plugin's jar file.
+     * <p>
+     * This method retrieves the classes in the given package by inspecting the jar file
+     * associated with the provided `JavaPlugin`. If the package is not found or the jar file
+     * is invalid, an empty list is returned.
+     *
+     * @param plugin      the `JavaPlugin` instance to retrieve the jar file from
+     * @param packageName the name of the package to list classes from
+     * @return a list of fully qualified class names in the specified package
+     */
     public static List<String> listClassOfPackage(JavaPlugin plugin, String packageName) {
         List<String> classesInPackage = new ArrayList<>();
         // list all classes in the packageName package
@@ -115,6 +171,36 @@ public class Misc {
         } else {
             return message;
         }
+    }
+
+
+    /**
+     * Determines the direction based on the player's yaw and pitch.
+     * <p>
+     * The yaw is used to determine vertical directions (UP or DOWN),
+     * while the pitch is used to determine horizontal directions (NORTH, EAST, SOUTH, or WEST).
+     *
+     * @param player the player whose direction is to be determined
+     * @return the direction as a {@link DominionReSizeEvent.DIRECTION} enum value
+     */
+    public static DominionReSizeEvent.@NotNull DIRECTION getDirection(Player player) {
+        DominionReSizeEvent.DIRECTION dir;
+        if (player.getYaw() < -45) {
+            dir = DominionReSizeEvent.DIRECTION.UP;
+        } else if (player.getYaw() > 45) {
+            dir = DominionReSizeEvent.DIRECTION.DOWN;
+        } else {
+            if (player.getPitch() > -45 && player.getPitch() <= 45) {
+                dir = DominionReSizeEvent.DIRECTION.NORTH;
+            } else if (player.getPitch() <= 45 && player.getPitch() > -135) {
+                dir = DominionReSizeEvent.DIRECTION.EAST;
+            } else if (player.getPitch() <= -135 || player.getPitch() > 135) {
+                dir = DominionReSizeEvent.DIRECTION.SOUTH;
+            } else {
+                dir = DominionReSizeEvent.DIRECTION.WEST;
+            }
+        }
+        return dir;
     }
 
 }

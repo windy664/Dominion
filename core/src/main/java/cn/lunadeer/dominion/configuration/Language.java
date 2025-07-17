@@ -115,7 +115,7 @@ public class Language extends ConfigurationFile {
     public static TemplateCommand.TemplateCommandText templateCommandText = new TemplateCommand.TemplateCommandText();
     public static GroupTitleCommand.GroupTitleCommandText groupTitleCommandText = new GroupTitleCommand.GroupTitleCommandText();
     public static CopyCommand.CopyCommandText copyCommandText = new CopyCommand.CopyCommandText();
-
+    public static DominionOperateCommand.DominionOperateCommandText dominionOperateCommandText = new DominionOperateCommand.DominionOperateCommandText();
 
     public static Configuration.ConfigurationText configurationText = new Configuration.ConfigurationText();
 
