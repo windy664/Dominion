@@ -300,6 +300,24 @@ public class DatabaseTables {
             } catch (Exception ignored) {
             }
         }
+
+        // 4.4.0 add multiserver support
+        if (!Show.show().tables().execute().contains("server_info")) {
+            Column server_info_id = Column.of(new FieldInteger("id")).primary().serial().notNull().unique();
+            Column server_info_name = Column.of(new FieldString("name")).notNull().defaultSqlVal("'Unnamed'");
+            Create.create().table("server_info")
+                    .column(server_info_id)
+                    .column(server_info_name)
+                    .execute();
+        }
+        if (!Show.show().tables().execute().contains("tp_cache")) {
+            Column tp_cache_uuid = Column.of(new FieldString("uuid")).primary().notNull().foreign("player_name", new FieldString("uuid"));
+            Column tp_cache_dom_id = Column.of(new FieldInteger("dom_id")).notNull().foreign("dominion", new FieldInteger("id"));
+            Create.create().table("tp_cache")
+                    .column(tp_cache_uuid)
+                    .column(tp_cache_dom_id)
+                    .execute();
+        }
     }
 
     public static class DatabaseManagerText extends ConfigurationPart {

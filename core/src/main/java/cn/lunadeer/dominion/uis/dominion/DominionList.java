@@ -3,12 +3,9 @@ package cn.lunadeer.dominion.uis.dominion;
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.cache.DominionNode;
-import cn.lunadeer.dominion.cache.server.ServerCache;
 import cn.lunadeer.dominion.commands.DominionOperateCommand;
 import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
-import cn.lunadeer.dominion.managers.MultiServerManager;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -39,7 +36,6 @@ import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.managers.TeleportManager.teleportToDominion;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.misc.Converts.toPlayer;
-import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 public class DominionList extends AbstractUI {
 
@@ -107,7 +103,7 @@ public class DominionList extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(CommandSender sender, String... args) throws Exception {
         Player player = toPlayer(sender);
         int page = toIntegrity(args[0], 1);
         ListView view = ListView.create(10, button(sender));
@@ -127,28 +123,6 @@ public class DominionList extends AbstractUI {
             for (DominionDTO dominion : admin_dominions) {
                 TextComponent manage = DominionManage.button(sender, dominion.getName()).build();
                 view.add(Line.create().append(manage).append(dominion.getName()));
-            }
-        }
-        // Show dominions on other servers
-        if (Configuration.multiServer.enable) {
-            for (ServerCache serverCache : CacheManager.instance.getOtherServerCaches().values()) {
-                view.add(Line.create().append(""));
-                view.add(Line.create().append(
-                        Component.text(
-                                formatString(
-                                        Language.dominionListTuiText.serverSection, MultiServerManager.instance.getServerName(serverCache.getServerId())
-                                ), ViewStyles.main_color
-                        ))
-                );
-                view.addLines(BuildTreeLines(sender, serverCache.getDominionCache().getPlayerDominionNodes(player.getUniqueId()), 0));
-                // Show admin dominions on other servers
-                List<DominionDTO> admin_dominions_others = serverCache.getDominionCache().getPlayerAdminDominionDTOs(player.getUniqueId());
-                if (!admin_dominions_others.isEmpty()) {
-                    for (DominionDTO dominion : admin_dominions_others) {
-                        TextComponent manage = DominionManage.button(sender, dominion.getName()).build();
-                        view.add(Line.create().append(manage).append(dominion.getName()));
-                    }
-                }
             }
         }
         view.showOn(player, page);

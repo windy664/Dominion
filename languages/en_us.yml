@@ -3,9 +3,9 @@ dominion-text:
   plugin-enabled: Plugin Enabled!
   plugin-version: 'Plugin Version: {0}'
 multi-server-manager-text:
-  sending-notice: Sending notice to all servers... ({0}:{1})
-  received-notice: Received notice from server {0}:{1}, responding... ({2}:{3})
-  receive-resp-notice: Received response notice from server {0}:{1}
+  get-id-by-name-error: Server name ({0}) does not exist.
+  get-name-by-id-error: Server ID ({0}) does not exist.
+  warn-update-server-name: There is already a server with ID {0} and name {1}, but the current server name is {2}. Updating the name to {2}.
 asserts-text:
   dom-name-should-not-empty: Dominion name should not be empty.
   dom-name-invalid: Dominion name should not contain space or dot.

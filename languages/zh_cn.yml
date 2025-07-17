@@ -3,9 +3,9 @@ dominion-text:
   plugin-enabled: 启动完成！
   plugin-version: 插件版本：{0}
 multi-server-manager-text:
-  sending-notice: 正在向群组广播通告... ({0}:{1})
-  received-notice: 收到来自子服 {0}:{1} 的通告，响应通告... ({2}:{3})
-  receive-resp-notice: 收到来自子服 {0}:{1} 的通告响应，已记录。
+  get-id-by-name-error: 服务器名称（{0}）不存在。
+  get-name-by-id-error: 服务器ID（{0}）不存在。
+  warn-update-server-name: 数据库中服务器ID {0} 的名称（{1}）与配置文件中的名称（{2}）不一致，已更新数据库。
 asserts-text:
   dom-name-should-not-empty: 领地名称不能为空
   dom-name-invalid: 领地名称不能包含空格或句点

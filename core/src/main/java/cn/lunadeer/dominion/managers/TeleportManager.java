@@ -7,8 +7,13 @@ import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.utils.Notification;
-import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
+import cn.lunadeer.dominion.utils.databse.FIelds.Field;
+import cn.lunadeer.dominion.utils.databse.FIelds.FieldInteger;
+import cn.lunadeer.dominion.utils.databse.FIelds.FieldString;
+import cn.lunadeer.dominion.utils.databse.syntax.Delete;
+import cn.lunadeer.dominion.utils.databse.syntax.Insert;
+import cn.lunadeer.dominion.utils.databse.syntax.Select;
 import cn.lunadeer.dominion.utils.scheduler.CancellableTask;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import org.bukkit.Bukkit;
@@ -27,7 +32,6 @@ import java.util.Map;
 import java.util.UUID;
 
 import static cn.lunadeer.dominion.Dominion.adminPermission;
-import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.misc.Others.checkPrivilegeFlag;
 import static cn.lunadeer.dominion.utils.Misc.isPaper;
 import static cn.lunadeer.dominion.utils.SafeLocationFinder.findNearestSafeLocation;
@@ -46,26 +50,35 @@ public class TeleportManager implements Listener {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
-    public static Map<UUID, Integer> teleportRequestOtherServer = new HashMap<>();
     public static Map<UUID, Integer> teleportCooldown = new HashMap<>();
     public static Map<UUID, CancellableTask> teleportDelayTasks = new HashMap<>();
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (!teleportRequestOtherServer.containsKey(event.getPlayer().getUniqueId())) {
-            return;
+        try {
+            List<Map<String, Field<?>>> res = Select.select(
+                            new FieldInteger("dom_id")
+                    ).from("tp_cache")
+                    .where("uuid = ?", event.getPlayer().getUniqueId().toString())
+                    .execute();
+            if (res.isEmpty()) {
+                return;
+            }
+            Integer dominionId = (Integer) res.get(0).get("dom_id").getValue();
+            Delete.delete().from("tp_cache").where("uuid = ?", event.getPlayer().getUniqueId().toString()).execute();
+            DominionDTO dominion = CacheManager.instance.getDominion(dominionId);
+            if (dominion == null) {
+                Notification.error(event.getPlayer(), Language.convertsText.unknownDominion, dominionId);
+                return;
+            }
+            if (dominion.getServerId() != Configuration.multiServer.serverId) {
+                return;
+            }
+            doTeleportSafely(event.getPlayer(), dominion.getTpLocation());
+        } catch (Exception e) {
+            Notification.error(event.getPlayer(), e);
         }
-        Integer dominionId = teleportRequestOtherServer.get(event.getPlayer().getUniqueId());
-        teleportRequestOtherServer.remove(event.getPlayer().getUniqueId());
-        DominionDTO dominion = CacheManager.instance.getDominion(dominionId);
-        if (dominion == null) {
-            Notification.error(event.getPlayer(), Language.convertsText.unknownDominion, dominionId);
-            return;
-        }
-        if (dominion.getServerId() != Configuration.multiServer.serverId) {
-            return;
-        }
-        doTeleportSafely(event.getPlayer(), dominion.getTpLocation());
+
     }
 
     @EventHandler
@@ -137,12 +150,12 @@ public class TeleportManager implements Listener {
             } else {
                 if (!Configuration.multiServer.enable) return;
                 try {
-                    MultiServerManager.instance.sendActionMessage(dominion.getServerId(), MultiServerManager.ACTION.TELEPORT,
-                            List.of(
-                                    player.getUniqueId().toString(),
-                                    dominion.getId().toString()
-                            )
-                    );
+                    FieldString cacheUuid = new FieldString("uuid", player.getUniqueId().toString());
+                    FieldInteger cacheDomId = new FieldInteger("dom_id", dominion.getId());
+                    Insert.insert().into("tp_cache")
+                            .values(cacheUuid, cacheDomId)
+                            .onConflict("uuid").doUpdate()
+                            .execute();
                     MultiServerManager.instance.connectToServer(player, MultiServerManager.instance.getServerName(dominion.getServerId()));
                 } catch (Exception e) {
                     Notification.error(player, e);
@@ -153,26 +166,6 @@ public class TeleportManager implements Listener {
             teleportDelayTasks.remove(player.getUniqueId());    // remove task from map for cleanup
         }, delaySec * 20L + 1);
         teleportDelayTasks.put(player.getUniqueId(), task);
-    }
-
-    /**
-     * Handles the teleport BungeeCord message.
-     * <p>
-     * This method processes a teleport BungeeCord message received from another server.
-     * It stores the player UUID and dominion ID in the teleportingPlayers map.
-     * The player will be teleported to the dominion when they join the server.
-     *
-     * @param playerUuid The UUID of the player as a string.
-     * @param dominionId The ID of the dominion as a string.
-     */
-    public static void handleTeleportBcMsg(String playerUuid, String dominionId) {
-        try {
-            UUID uuid = UUID.fromString(playerUuid);
-            Integer id = toIntegrity(dominionId);
-            teleportRequestOtherServer.put(uuid, id);
-        } catch (Exception e) {
-            XLogger.error(e);
-        }
     }
 
     /**
