@@ -311,12 +311,17 @@ administrator-command-text:
   import-hint: 导入数据库仅用于迁移或恢复备份，不要用于合并两个数据库！
   import-info: 如当前数据库中已存在部分数据，则可能导致报错与数据丢失，请谨慎操作！
   import-confirm: 要确认请在指令后加上 confirm，此操作无法撤销！
+  reload-description: 重载缓存或配置文件。
+  export-description: 导出含有领地的存档列表或数据库备份。
+  import-description: 导入数据库备份文件。
 migration-command-text:
   create-player-failed: 创建玩家记录 {0} 失败
   migrate-success: 成功从 Residence 迁移领地 {0} 到 Dominion
   migrate-failed: 从 Residence 迁移领地到 Dominion 失败，原因：{0}
   missing-residence: 没有找到 residence {0} 领地
   not-your-residence: 你不是 residence {0} 领地的所有者
+  migrate-description: 从 Residence 迁移领地到 Dominion。
+  migrate-all-description: 迁移所有 residence 领地到 Dominion。
 template-command-text:
   name-not-valid: 模板名称（{0}）不能包含空格
   template-name-exist: 模板名称 {0} 已存在
@@ -331,10 +336,16 @@ template-command-text:
   set-flag-fail: 配置模板失败，原因：{0}
   rename-template-success: 成功将模板重命名为 {0}
   rename-template-fail: 重命名模板失败，原因：{0}
+  create-template-description: 创建一个新的权限模板。
+  delete-template-description: 删除一个权限模板。
+  set-template-flag-description: 设置权限模板的权限。
+  member-apply-template-description: 将权限模板应用到领地成员。
+  rename-template-description: 重命名一个权限模板。
 group-title-command-text:
   group-not-belonging: 你不属于权限组 {0}
   using-title-success: 成功使用称号 {0}
   using-title-fail: 使用称号失败，原因：{0}
+  use-title-description: 使用权限组称号。
 configuration-text:
   loading-language: 正在加载语言 {0}...
   load-language-fail: 加载语言 {0} 失败，原因：{1}，使用默认语言 en_us。
@@ -677,6 +688,10 @@ copy-command-text:
   copy-guest-success: 成功从领地 {0} 复制访客权限到领地 {1}
   copy-member-success: 成功从领地 {0} 复制成员到领地 {1}
   copy-group-success: 成功从领地 {0} 复制权限组到领地 {1}
+  copy-environment-description: 将一个领地的环境配置复制到另一个领地。
+  copy-guest-description: 将一个领地的访客权限配置复制到另一个领地。
+  copy-member-description: 将一个领地的成员配置复制到另一个领地。
+  copy-group-description: 将一个领地的权限组配置复制到另一个领地。
 inputter-text:
   only-player: 只有玩家可以使用输入器。
   cancel: ' 【发送大写 C 取消输入】'
@@ -697,3 +712,34 @@ rename-template-inputter-text:
   button: 重命名模板
   hint: 请输入新的模板名称
   description: 重命名此权限模板。
+dominion-operate-command-text:
+  resize-description: 使用指定大小和方向调整领地尺寸。
+  easy-expand-description: 根据玩家当前位置轻松扩大领地尺寸。
+  easy-contract-description: 根据玩家当前位置轻松缩小领地尺寸。
+  delete-description: 删除领地。使用 'force' 确认删除。
+  set-message-description: 为领地设置消息，可以是进入或离开消息。
+  set-teleport-description: 设置领地的传送位置。
+  rename-description: 重命名领地。
+  set-map-color-description: 设置领地的地图颜色。
+  give-description: 将领地转让给玩家。
+  tp-description: 传送到领地。
+  switch-ui-description: 切换领地指令的界面类型。
+dominion-create-command-text:
+  create-description: 使用选定的点创建新领地。
+  create-sub-description: 在现有领地内创建子领地。
+  auto-create-description: 在你当前位置周围自动创建领地。
+  auto-create-sub-description: 在现有领地内自动创建子领地。
+dominion-flag-command-text:
+  set-env-description: 设置领地的环境配置。
+  set-guest-description: 设置领地的访客权限配置。
+group-command-text:
+  create-group-description: 在领地中创建新的权限组。
+  delete-group-description: 从领地中删除权限组。
+  rename-group-description: 重命名领地中的权限组。
+  set-group-flag-description: 设置权限组的权限配置。
+  add-member-description: 将成员添加到权限组。
+  remove-member-description: 从权限组中移除成员。
+member-command-text:
+  add-member-description: 将玩家添加为领地成员。
+  set-member-privilege-description: 设置领地成员的权限配置。
+  remove-member-description: 从领地中移除成员。
