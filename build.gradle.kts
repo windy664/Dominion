@@ -148,7 +148,7 @@ fun getAndIncrementVersion(): String {
     }
 
     val currentBranch = getCurrentGitBranch()
-    val versionType = if (currentBranch == "master") "beta" else "alpha"
+    val versionType = if (currentBranch.startsWith("dev/")) "alpha" else "beta"
 
     val currentSuffix = props.getProperty("suffixes", if (versionType == "beta") "beta" else "${versionType}.24")
 
