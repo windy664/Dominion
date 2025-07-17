@@ -25,7 +25,6 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.*;
-import static cn.lunadeer.dominion.utils.Misc.getDirection;
 
 public class DominionOperateCommand {
 
@@ -61,7 +60,7 @@ public class DominionOperateCommand {
     ), Language.dominionOperateCommandText.easyExpandDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
-            easyResize(sender, DominionReSizeEvent.TYPE.EXPAND.name(), getArgumentValue(0));
+            easyResize(sender, DominionReSizeEvent.TYPE.EXPAND.name(), getArgumentValue(0), getArgumentValue(1));
         }
     }.needPermission(defaultPermission).register();
 
@@ -71,7 +70,7 @@ public class DominionOperateCommand {
     ), Language.dominionOperateCommandText.easyContractDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
-            easyResize(sender, DominionReSizeEvent.TYPE.CONTRACT.name(), getArgumentValue(0));
+            easyResize(sender, DominionReSizeEvent.TYPE.CONTRACT.name(), getArgumentValue(0), getArgumentValue(1));
         }
     }.needPermission(defaultPermission).register();
 
@@ -227,7 +226,7 @@ public class DominionOperateCommand {
      * @param operation The type of resize operation to perform (e.g., "expand" or "contract").
      * @param sizeStr   The size value to adjust by.
      */
-    public static void easyResize(CommandSender sender, String operation, String sizeStr) {
+    public static void easyResize(CommandSender sender, String operation, String sizeStr, String faceStr) {
         try {
             Player player = toPlayer(sender);
             Location location = player.getLocation();
@@ -237,7 +236,7 @@ public class DominionOperateCommand {
             }
             DominionReSizeEvent.TYPE type = toResizeType(operation);
             int size = toIntegrity(sizeStr);
-            DominionReSizeEvent.DIRECTION dir = getDirection(player);
+            DominionReSizeEvent.DIRECTION dir = faceStr.isEmpty() ? toDirection(player) : toDirection(faceStr);
             new DominionReSizeEvent(
                     sender,
                     dominion,

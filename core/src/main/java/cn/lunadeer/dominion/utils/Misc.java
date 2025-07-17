@@ -1,11 +1,9 @@
 package cn.lunadeer.dominion.utils;
 
-import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
 import cn.lunadeer.dominion.managers.PlaceHolderApi;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -171,36 +169,6 @@ public class Misc {
         } else {
             return message;
         }
-    }
-
-
-    /**
-     * Determines the direction based on the player's yaw and pitch.
-     * <p>
-     * The yaw is used to determine vertical directions (UP or DOWN),
-     * while the pitch is used to determine horizontal directions (NORTH, EAST, SOUTH, or WEST).
-     *
-     * @param player the player whose direction is to be determined
-     * @return the direction as a {@link DominionReSizeEvent.DIRECTION} enum value
-     */
-    public static DominionReSizeEvent.@NotNull DIRECTION getDirection(Player player) {
-        DominionReSizeEvent.DIRECTION dir;
-        if (player.getYaw() < -45) {
-            dir = DominionReSizeEvent.DIRECTION.UP;
-        } else if (player.getYaw() > 45) {
-            dir = DominionReSizeEvent.DIRECTION.DOWN;
-        } else {
-            if (player.getPitch() > -45 && player.getPitch() <= 45) {
-                dir = DominionReSizeEvent.DIRECTION.NORTH;
-            } else if (player.getPitch() <= 45 && player.getPitch() > -135) {
-                dir = DominionReSizeEvent.DIRECTION.EAST;
-            } else if (player.getPitch() <= -135 || player.getPitch() > 135) {
-                dir = DominionReSizeEvent.DIRECTION.SOUTH;
-            } else {
-                dir = DominionReSizeEvent.DIRECTION.WEST;
-            }
-        }
-        return dir;
     }
 
 }
