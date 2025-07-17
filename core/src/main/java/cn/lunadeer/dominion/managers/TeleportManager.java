@@ -145,7 +145,7 @@ public class TeleportManager implements Listener {
                     );
                     MultiServerManager.instance.connectToServer(player, MultiServerManager.instance.getServerName(dominion.getServerId()));
                 } catch (Exception e) {
-                    Notification.error(player, e.getMessage());
+                    Notification.error(player, e);
                 }
             }
         }, delaySec * 20L);

@@ -311,6 +311,7 @@ public class DatabaseTables {
         public String fileNotFound = "Database table file path {0} not found.";
         public String importingDatabase = "Importing database...";
         public String fileCorrupted = "Some database table file is missing, please re-export the database tables.";
+        public String convertWorldFailed = "The old world {0}({1}) is unable to find in current save, please make sure the world name is exist in current save.";
         public String importDatabaseFail = "Import database failed, reason: {0}";
         public String importDatabaseSuccess = "Import database successfully.";
     }
@@ -373,7 +374,7 @@ public class DatabaseTables {
                         String old_uid = world_uid.getString(key);
                         String new_uid = world_uid_map.get(key);
                         if (new_uid == null) {
-                            Notification.warn(sender, "The old world {0}({1}) is unable to find in current save, please make sure the world name is exist in current save.", key, old_uid);
+                            Notification.warn(sender, Language.databaseManagerText.convertWorldFailed, key, old_uid);
                             continue;
                         }
                         String sql = String.format("UPDATE dominion SET world_uid = '%s' WHERE world_uid = '%s';", new_uid, old_uid);
