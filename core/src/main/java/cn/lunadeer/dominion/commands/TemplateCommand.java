@@ -47,6 +47,12 @@ public class TemplateCommand {
 
         public String renameTemplateSuccess = "Successfully renamed template to {0}";
         public String renameTemplateFail = "Failed to rename template, reason: {0}";
+
+        public String createTemplateDescription = "Create a new privilege template.";
+        public String deleteTemplateDescription = "Delete an existing privilege template.";
+        public String setTemplateFlagDescription = "Set a privilege flag in a template.";
+        public String memberApplyTemplateDescription = "Apply a privilege template to a member.";
+        public String renameTemplateDescription = "Rename an existing privilege template.";
     }
 
     /**
@@ -55,7 +61,7 @@ public class TemplateCommand {
      */
     public static SecondaryCommand createTemplate = new SecondaryCommand("template_create", List.of(
             new Argument("template_name", true)
-    )) {
+    ), Language.templateCommandText.createTemplateDescription) {
         /**
          * Executes the create template command.
          *
@@ -98,7 +104,7 @@ public class TemplateCommand {
     public static SecondaryCommand deleteTemplate = new SecondaryCommand("template_delete", List.of(
             new CommandArguments.RequiredTemplateArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.templateCommandText.deleteTemplateDescription) {
         /**
          * Executes the delete template command.
          *
@@ -137,7 +143,7 @@ public class TemplateCommand {
             new CommandArguments.PriFlagArgument(),
             new CommandArguments.BollenOption(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.templateCommandText.setTemplateFlagDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             setTemplateFlag(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2), getArgumentValue(3));
@@ -165,7 +171,7 @@ public class TemplateCommand {
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredMemberArgument(0),
             new CommandArguments.RequiredTemplateArgument()
-    )) {
+    ), Language.templateCommandText.memberApplyTemplateDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             memberApplyTemplate(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
@@ -197,7 +203,7 @@ public class TemplateCommand {
             new CommandArguments.RequiredTemplateArgument(),
             new Argument("new_name", true),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.templateCommandText.renameTemplateDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             renameTemplate(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));

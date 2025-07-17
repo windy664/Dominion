@@ -4,6 +4,7 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.member.MemberAddedEvent;
 import cn.lunadeer.dominion.events.member.MemberRemovedEvent;
 import cn.lunadeer.dominion.events.member.MemberSetFlagEvent;
@@ -13,6 +14,7 @@ import cn.lunadeer.dominion.uis.dominion.manage.member.MemberSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
+import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -22,13 +24,19 @@ import static cn.lunadeer.dominion.misc.Converts.*;
 
 public class MemberCommand {
 
+    public static class MemberCommandText extends ConfigurationPart {
+        public String addMemberDescription = "Add a player as member to a dominion.";
+        public String setMemberPrivilegeDescription = "Set privilege flag for a member in a dominion.";
+        public String removeMemberDescription = "Remove a member from a dominion.";
+    }
+
     /**
      * Command to add a member to a dominion.
      */
     public static SecondaryCommand addMember = new SecondaryCommand("member_add", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new Argument("player_name", true)
-    )) {
+    ), Language.memberCommandText.addMemberDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             addMember(sender, getArgumentValue(0), getArgumentValue(1));
@@ -62,7 +70,7 @@ public class MemberCommand {
             new CommandArguments.PriFlagArgument(),
             new CommandArguments.BollenOption(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.memberCommandText.setMemberPrivilegeDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             setMemberPrivilege(
@@ -106,7 +114,7 @@ public class MemberCommand {
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredMemberArgument(0),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.memberCommandText.removeMemberDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             removeMember(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));

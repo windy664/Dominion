@@ -28,12 +28,13 @@ public class GroupTitleCommand {
         public String groupNotBelonging = "Don't belong to group {0}.";
         public String usingTitleSuccess = "Using title {0} successfully.";
         public String usingTitleFail = "Failed to use title, reason: {0}";
+        public String useTitleDescription = "Use a group title or disable current title.";
     }
 
     public static SecondaryCommand useTitle = new SecondaryCommand("title_use", List.of(
             new CommandArguments.PlayerTitleIdArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.groupTitleCommandText.useTitleDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             useTitle(sender, getArgumentValue(0), getArgumentValue(1));

@@ -1,11 +1,13 @@
 package cn.lunadeer.dominion.commands;
 
 import cn.lunadeer.dominion.api.dtos.CuboidDTO;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.dominion.DominionCreateEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
+import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandSender;
@@ -19,9 +21,16 @@ import static cn.lunadeer.dominion.misc.Others.autoPoints;
 
 public class DominionCreateCommand {
 
+    public static class DominionCreateCommandText extends ConfigurationPart {
+        public String createDescription = "Create a new dominion using selected points.";
+        public String createSubDescription = "Create a sub-dominion within an existing dominion.";
+        public String autoCreateDescription = "Automatically create a dominion around your current position.";
+        public String autoCreateSubDescription = "Automatically create a sub-dominion within an existing dominion.";
+    }
+
     public static SecondaryCommand create = new SecondaryCommand("create", List.of(
             new Argument("name", true)
-    )) {
+    ), Language.dominionCreateCommandText.createDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {
@@ -45,7 +54,7 @@ public class DominionCreateCommand {
     public static SecondaryCommand createSub = new SecondaryCommand("create_sub", List.of(
             new Argument("name", true),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.dominionCreateCommandText.createSubDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {
@@ -68,7 +77,7 @@ public class DominionCreateCommand {
 
     public static SecondaryCommand autoCreate = new SecondaryCommand("auto_create", List.of(
             new Argument("name", true)
-    )) {
+    ), Language.dominionCreateCommandText.autoCreateDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             autoCreate(sender, getArgumentValue(0));
@@ -96,7 +105,7 @@ public class DominionCreateCommand {
     public static SecondaryCommand autoCreateSub = new SecondaryCommand("auto_create_sub", List.of(
             new Argument("name", true),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.dominionCreateCommandText.autoCreateSubDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {

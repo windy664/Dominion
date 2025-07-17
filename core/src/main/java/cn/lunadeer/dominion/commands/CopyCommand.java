@@ -34,6 +34,10 @@ public class CopyCommand {
         public String copyGuestSuccess = "Copied guest privilege flag from {0} to {1} success.";
         public String copyMemberSuccess = "Copied members from {0} to {1} success.";
         public String copyGroupSuccess = "Copied groups from {0} to {1} success.";
+        public String copyEnvironmentDescription = "Copy environment flags from one dominion to another.";
+        public String copyGuestDescription = "Copy guest privilege flags from one dominion to another.";
+        public String copyMemberDescription = "Copy members from one dominion to another.";
+        public String copyGroupDescription = "Copy groups from one dominion to another.";
     }
 
     public static void copyEnvironment(CommandSender sender, String from, String to) {
@@ -54,7 +58,7 @@ public class CopyCommand {
     public static SecondaryCommand copyEnvironmentCommand = new SecondaryCommand("copy_env", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.copyCommandText.copyEnvironmentDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             copyEnvironment(sender, getArgumentValue(0), getArgumentValue(1));
@@ -79,7 +83,7 @@ public class CopyCommand {
     public static SecondaryCommand copyGuestCommand = new SecondaryCommand("copy_guest", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.copyCommandText.copyGuestDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             copyGuest(sender, getArgumentValue(0), getArgumentValue(1));
@@ -122,7 +126,7 @@ public class CopyCommand {
     public static SecondaryCommand copyMemberCommand = new SecondaryCommand("copy_member", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.copyCommandText.copyMemberDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             copyMember(sender, getArgumentValue(0), getArgumentValue(1));
@@ -178,7 +182,7 @@ public class CopyCommand {
     public static SecondaryCommand copyGroupCommand = new SecondaryCommand("copy_group", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredDominionArgument()
-    )) {
+    ), Language.copyCommandText.copyGroupDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             copyGroup(sender, getArgumentValue(0), getArgumentValue(1));

@@ -35,6 +35,9 @@ public class AdministratorCommand {
         public String reloadCacheDescription = "Reload the cache (dont do this frequently).";
         public String reloadConfigButton = "RELOAD CONFIG";
         public String reloadConfigDescription = "Reload the configuration.";
+        public String reloadDescription = "Reload cache, configuration, or both.";
+        public String exportDescription = "Export data (MCA list or database).";
+        public String importDescription = "Import database data.";
 
         public String reloadingDominionCache = "Reloading dominion cache...";
         public String reloadedDominionCache = "Reload dominion cache success!";
@@ -65,7 +68,7 @@ public class AdministratorCommand {
 
     public static SecondaryCommand reloadCache = new SecondaryCommand("reload", List.of(
             new Option(Arrays.stream(RELOAD_TYPE.values()).map(Enum::name).map(String::toLowerCase).toList(), "all")
-    )) {
+    ), Language.administratorCommandText.reloadDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             RELOAD_TYPE type;
@@ -138,7 +141,7 @@ public class AdministratorCommand {
 
     public static SecondaryCommand exportData = new SecondaryCommand("export", List.of(
             new Option(List.of("mca", "db"), "db")
-    )) {
+    ), Language.administratorCommandText.exportDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             if (getArgumentValue(0).toUpperCase().startsWith("M")) {
@@ -211,7 +214,7 @@ public class AdministratorCommand {
     public static SecondaryCommand importData = new SecondaryCommand("import", List.of(
             new Option(List.of("db")),
             new Option(List.of("confirm"), "")
-    )) {
+    ), Language.administratorCommandText.importDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             if (!getArgumentValue(1).equals("confirm")) {

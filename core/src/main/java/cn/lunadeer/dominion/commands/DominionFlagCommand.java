@@ -3,6 +3,7 @@ package cn.lunadeer.dominion.commands;
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.flag.EnvFlag;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.dominion.modify.DominionSetEnvFlagEvent;
 import cn.lunadeer.dominion.events.dominion.modify.DominionSetGuestFlagEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
@@ -10,6 +11,7 @@ import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
 import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
+import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -19,6 +21,12 @@ import static cn.lunadeer.dominion.misc.Converts.*;
 
 
 public class DominionFlagCommand {
+
+    public static class DominionFlagCommandText extends ConfigurationPart {
+        public String setEnvDescription = "Set environment flag for a dominion.";
+        public String setGuestDescription = "Set guest privilege flag for a dominion.";
+    }
+
     /**
      * Secondary command for setting an environment flag on a dominion.
      * Requires the following arguments:
@@ -32,7 +40,7 @@ public class DominionFlagCommand {
             new CommandArguments.EnvFlagArgument(),
             new CommandArguments.BollenOption(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.dominionFlagCommandText.setEnvDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             setEnv(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2), getArgumentValue(3));
@@ -73,7 +81,7 @@ public class DominionFlagCommand {
             new CommandArguments.GuestFlagArgument(),
             new CommandArguments.BollenOption(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.dominionFlagCommandText.setGuestDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             setGuest(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2), getArgumentValue(3));

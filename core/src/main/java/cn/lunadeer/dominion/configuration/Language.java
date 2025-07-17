@@ -116,6 +116,10 @@ public class Language extends ConfigurationFile {
     public static GroupTitleCommand.GroupTitleCommandText groupTitleCommandText = new GroupTitleCommand.GroupTitleCommandText();
     public static CopyCommand.CopyCommandText copyCommandText = new CopyCommand.CopyCommandText();
     public static DominionOperateCommand.DominionOperateCommandText dominionOperateCommandText = new DominionOperateCommand.DominionOperateCommandText();
+    public static DominionCreateCommand.DominionCreateCommandText dominionCreateCommandText = new DominionCreateCommand.DominionCreateCommandText();
+    public static DominionFlagCommand.DominionFlagCommandText dominionFlagCommandText = new DominionFlagCommand.DominionFlagCommandText();
+    public static GroupCommand.GroupCommandText groupCommandText = new GroupCommand.GroupCommandText();
+    public static MemberCommand.MemberCommandText memberCommandText = new MemberCommand.MemberCommandText();
 
     public static Configuration.ConfigurationText configurationText = new Configuration.ConfigurationText();
 

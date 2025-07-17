@@ -1,8 +1,7 @@
 package cn.lunadeer.dominion.utils.command;
 
-import cn.lunadeer.dominion.utils.Notification;
-import cn.lunadeer.dominion.utils.XLogger;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -46,7 +45,6 @@ public class CommandManager implements TabExecutor, Listener {
     public CommandManager(JavaPlugin plugin, String rootCommand, Consumer<CommandSender> rootCommandConsumer) {
         CommandManager.rootCommand = "/" + rootCommand;
         Objects.requireNonNull(Bukkit.getPluginCommand(rootCommand)).setExecutor(this);
-        XLogger.debug("Registered {0} commands.", commands.size());
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
         this.rootCommandConsumer = rootCommandConsumer;
@@ -71,7 +69,6 @@ public class CommandManager implements TabExecutor, Listener {
             for (String cmd : commands.keySet()) {
                 // Unregister all commands that are hidden
                 if (commands.get(cmd).isDynamic()) {
-                    XLogger.debug("Due to no one online, Unregistering command: {0}", cmd);
                     unregisterCommand(cmd);
                 }
             }
@@ -140,7 +137,7 @@ public class CommandManager implements TabExecutor, Listener {
                 try {
                     rootCommandConsumer.accept(commandSender);
                 } catch (Exception e) {
-                    Notification.error(commandSender, e.getMessage());
+                    commandSender.sendMessage(e.getMessage());
                 }
             }
             return true;
@@ -152,8 +149,8 @@ public class CommandManager implements TabExecutor, Listener {
         try {
             cmd.run(commandSender, strings);
         } catch (Exception e) {
-            Notification.error(commandSender, e.getMessage());
-            XLogger.error(e);
+            commandSender.sendMessage(e.getMessage());
+            plugin.getLogger().severe(e.getMessage());
         }
         return true;
     }
@@ -208,8 +205,8 @@ public class CommandManager implements TabExecutor, Listener {
             page = totalPages;
         }
 
-        String header = "------------ [" + pageStr + "/" + totalPages + "] ------------";
-        Notification.info(sender, header);
+        String header = "&a------------ [" + pageStr + "/" + totalPages + "] ------------";
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', header));
 
         int start = (page - 1) * pageSize;
         int end = Math.min(start + pageSize, commandsUsable.size());
@@ -218,9 +215,9 @@ public class CommandManager implements TabExecutor, Listener {
             if (index >= start && index < end) {
                 String line = commandsUsable.get(cmd).getUsage();
                 if (!commandsUsable.get(cmd).getDescription().isEmpty()) {
-                    line += " - " + commandsUsable.get(cmd).getDescription();
+                    line += "&8 - &b" + commandsUsable.get(cmd).getDescription();
                 }
-                Notification.info(sender, line);
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', line));
             }
             index++;
         }

@@ -37,6 +37,8 @@ public class MigrationCommand {
         public String migrateFailed = "Failed to migrate residence. Reason: {0}";
         public String missingResidence = "Residence {0} not found.";
         public String notYourResidence = "Residence {0} is not yours.";
+        public String migrateDescription = "Migrate a specific residence to dominion.";
+        public String migrateAllDescription = "Migrate all residences to dominions.";
     }
 
     /**
@@ -61,7 +63,7 @@ public class MigrationCommand {
     public static SecondaryCommand migrate = new SecondaryCommand("migrate", List.of(
             new Argument("residence_name", true),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.migrationCommandText.migrateDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             migrate(sender, getArgumentValue(0), getArgumentValue(1));
@@ -73,7 +75,7 @@ public class MigrationCommand {
      * This command will iterate through all residence data and migrate them.
      */
     public static SecondaryCommand migrateAll = new SecondaryCommand("migrate_all", List.of(
-    )) {
+    ), Language.migrationCommandText.migrateAllDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             migrateAll(sender);

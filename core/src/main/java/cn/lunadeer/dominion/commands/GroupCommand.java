@@ -4,6 +4,7 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.GroupDTO;
 import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.group.*;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
@@ -11,6 +12,7 @@ import cn.lunadeer.dominion.uis.dominion.manage.group.GroupSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
+import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -20,10 +22,19 @@ import static cn.lunadeer.dominion.misc.Converts.*;
 
 public class GroupCommand {
 
+    public static class GroupCommandText extends ConfigurationPart {
+        public String createGroupDescription = "Create a new group in a dominion.";
+        public String deleteGroupDescription = "Delete a group from a dominion.";
+        public String renameGroupDescription = "Rename a group in a dominion.";
+        public String setGroupFlagDescription = "Set privilege flag for a group.";
+        public String addMemberDescription = "Add a member to a group.";
+        public String removeMemberDescription = "Remove a member from a group.";
+    }
+
     public static SecondaryCommand createGroup = new SecondaryCommand("group_create", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new Argument("group_name", true)
-    )) {
+    ), Language.groupCommandText.createGroupDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             createGroup(sender, getArgumentValue(0), getArgumentValue(1));
@@ -44,7 +55,7 @@ public class GroupCommand {
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredGroupArgument(0),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.groupCommandText.deleteGroupDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             deleteGroup(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
@@ -66,7 +77,7 @@ public class GroupCommand {
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredGroupArgument(0),
             new Argument("new_group_name", true)
-    )) {
+    ), Language.groupCommandText.renameGroupDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             renameGroup(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
@@ -90,7 +101,7 @@ public class GroupCommand {
             new CommandArguments.PriFlagArgument(),
             new CommandArguments.BollenOption(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.groupCommandText.setGroupFlagDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             setGroupFlag(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2), getArgumentValue(3), getArgumentValue(4));
@@ -114,7 +125,7 @@ public class GroupCommand {
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.RequiredGroupArgument(0),
             new CommandArguments.RequiredMemberArgument(0)
-    )) {
+    ), Language.groupCommandText.addMemberDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             addMember(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
@@ -138,7 +149,7 @@ public class GroupCommand {
             new CommandArguments.RequiredGroupArgument(0),
             new CommandArguments.RequiredMemberArgument(0),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.groupCommandText.removeMemberDescription) {
         @Override
         public void executeHandler(CommandSender sender) {
             removeMember(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2), getArgumentValue(3));
