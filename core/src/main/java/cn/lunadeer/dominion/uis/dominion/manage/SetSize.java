@@ -323,6 +323,7 @@ public class SetSize extends AbstractUI {
                     @Override
                     public void onClick(ClickType type) {
                         ResizeDominionInputter.createExpandOn(player, dominion.getName(), direction);
+                        view.close();
                     }
                 }
         );
@@ -334,6 +335,7 @@ public class SetSize extends AbstractUI {
                     @Override
                     public void onClick(ClickType type) {
                         ResizeDominionInputter.createContractOn(player, dominion.getName(), direction);
+                        view.close();
                     }
                 }
         );
