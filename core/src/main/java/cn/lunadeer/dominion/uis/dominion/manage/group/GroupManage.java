@@ -4,7 +4,7 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.GroupDTO;
 import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.commands.GroupCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.inputters.RenameGroupInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
@@ -33,7 +33,7 @@ public class GroupManage extends AbstractUI {
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(Player player, String... args) {
         throw new UnsupportedOperationException("GroupManage does not support TUI.");
     }
 

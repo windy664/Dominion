@@ -16,7 +16,7 @@ public class Line {
     }
 
     public TextComponent build() {
-        TextComponent divider = Component.text(d, ViewStyles.sub_color);
+        TextComponent divider = Component.text(d, ViewStyles.SECONDARY);
         TextComponent.Builder builder = Component.text();
         for (int i = 0; i < elements.size(); i++) {
             builder.append(elements.get(i));

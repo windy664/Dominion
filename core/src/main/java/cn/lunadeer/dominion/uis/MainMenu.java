@@ -3,9 +3,10 @@ package cn.lunadeer.dominion.uis;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.AdministratorCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.inputters.CreateDominionInputter;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
@@ -35,7 +36,6 @@ import java.util.List;
 import static cn.lunadeer.dominion.Dominion.adminPermission;
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 
 
 public class MainMenu extends AbstractUI {
@@ -72,7 +72,7 @@ public class MainMenu extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender) {
-        return (ListViewButton) new ListViewButton(Language.menuTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.menuTuiText.button) {
             @Override
             public void function(String pageStr) {
                 MainMenu.show(sender, pageStr);
@@ -81,41 +81,40 @@ public class MainMenu extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
-        Player player = toPlayer(sender);
+    protected void showTUI(Player player, String... args) {
         int page = toIntegrity(args[0], 1);
 
         Line create = Line.create()
-                .append(CreateDominionInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build())
+                .append(CreateDominionInputter.createTuiButtonOn(player).needPermission(defaultPermission).build())
                 .append(Language.createDominionInputterText.description);
         Line list = Line.create()
-                .append(DominionList.button(sender).build())
-                .append(Language.dominionListTuiText.description);
+                .append(DominionList.button(player).build())
+                .append(TextUserInterface.dominionListTuiText.description);
         Line title = Line.create()
-                .append(TitleList.button(sender).build())
-                .append(Language.titleListTuiText.description);
+                .append(TitleList.button(player).build())
+                .append(TextUserInterface.titleListTuiText.description);
         Line template = Line.create()
-                .append(TemplateList.button(sender).build())
-                .append(Language.templateListTuiText.description);
+                .append(TemplateList.button(player).build())
+                .append(TextUserInterface.templateListTuiText.description);
         Line help = Line.create()
-                .append(new UrlButton(Language.menuTuiText.commandHelpButton, Configuration.externalLinks.commandHelp).build())
-                .append(Language.menuTuiText.commandHelpDescription);
+                .append(new UrlButton(TextUserInterface.menuTuiText.commandHelpButton, Configuration.externalLinks.commandHelp).build())
+                .append(TextUserInterface.menuTuiText.commandHelpDescription);
         Line link = Line.create()
-                .append(new UrlButton(Language.menuTuiText.documentButton, Configuration.externalLinks.documentation).build())
-                .append(Language.menuTuiText.documentDescription);
+                .append(new UrlButton(TextUserInterface.menuTuiText.documentButton, Configuration.externalLinks.documentation).build())
+                .append(TextUserInterface.menuTuiText.documentDescription);
         Line migrate = Line.create()
-                .append(MigrateList.button(sender).build())
-                .append(Language.migrateListText.description);
+                .append(MigrateList.button(player).build())
+                .append(TextUserInterface.migrateListTuiText.description);
         Line all = Line.create()
-                .append(AllDominion.button(sender).build())
-                .append(Language.allDominionTuiText.description);
+                .append(AllDominion.button(player).build())
+                .append(TextUserInterface.allDominionTuiText.description);
         Line reload_cache = Line.create()
-                .append(AdministratorCommand.reloadCacheButton(sender).build())
+                .append(AdministratorCommand.reloadCacheButton(player).build())
                 .append(Language.administratorCommandText.reloadCacheDescription);
         Line reload_config = Line.create()
-                .append(AdministratorCommand.reloadConfigButton(sender).build())
+                .append(AdministratorCommand.reloadConfigButton(player).build())
                 .append(Language.administratorCommandText.reloadConfigDescription);
-        PermissionButton switchToCui = new FunctionalButton(Language.menuTuiText.switchToCuiButton) {
+        PermissionButton switchToCui = new FunctionalButton(TextUserInterface.menuTuiText.switchToCuiButton) {
             @Override
             public void function() {
                 try {
@@ -126,13 +125,13 @@ public class MainMenu extends AbstractUI {
                     p.setUiPreference(PlayerDTO.UI_TYPE.CUI);
                     MainMenu.show(player, "1");
                 } catch (Exception e) {
-                    Notification.error(player, Language.menuTuiText.failToSwitchMessage, "CUI", e.getMessage());
+                    Notification.error(player, TextUserInterface.menuTuiText.failToSwitchMessage, "CUI", e.getMessage());
                 }
             }
         }.needPermission(defaultPermission);
-        ListView view = ListView.create(10, button(sender));
-        view.title(Language.menuTuiText.title);
-        view.navigator(Line.create().append(Language.menuTuiText.button).append(switchToCui.build()));
+        ListView view = ListView.create(10, button(player));
+        view.title(TextUserInterface.menuTuiText.title);
+        view.navigator(Line.create().append(TextUserInterface.menuTuiText.button).append(switchToCui.build()));
         view.add(create);
         view.add(list);
         if (Configuration.groupTitle.enable) view.add(title);
@@ -144,7 +143,7 @@ public class MainMenu extends AbstractUI {
         }
         if (player.hasPermission(adminPermission)) {
             view.add(Line.create().append(""));
-            view.add(Line.create().append(Component.text(Language.menuTuiText.adminOnlySection, ViewStyles.main_color)));
+            view.add(Line.create().append(Component.text(TextUserInterface.menuTuiText.adminOnlySection, ViewStyles.PRIMARY)));
             view.add(all);
             view.add(reload_cache);
             view.add(reload_config);
@@ -358,7 +357,7 @@ public class MainMenu extends AbstractUI {
                             view.close();
                             MainMenu.show(player, "1");
                         } catch (Exception e) {
-                            Notification.error(player, Language.menuTuiText.failToSwitchMessage, "TUI", e.getMessage());
+                            Notification.error(player, TextUserInterface.menuTuiText.failToSwitchMessage, "TUI", e.getMessage());
                         }
                     }
                 }

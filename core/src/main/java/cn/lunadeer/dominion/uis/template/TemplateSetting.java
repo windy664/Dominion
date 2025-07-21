@@ -3,8 +3,8 @@ package cn.lunadeer.dominion.uis.template;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.TemplateCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.doos.TemplateDOO;
 import cn.lunadeer.dominion.inputters.RenameTemplateInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
@@ -30,7 +30,6 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 import static cn.lunadeer.dominion.utils.Misc.*;
 
 public class TemplateSetting extends AbstractUI {
@@ -41,14 +40,14 @@ public class TemplateSetting extends AbstractUI {
 
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-    public static class TemplateSettingText extends ConfigurationPart {
+    public static class TemplateSettingTuiText extends ConfigurationPart {
         public String title = "Template Setting";
         public String button = "SETTING";
         public String notFound = "Template {0} not found.";
     }
 
     public static ListViewButton button(CommandSender sender, String templateName) {
-        return (ListViewButton) new ListViewButton(Language.templateSettingText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.templateSettingTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, templateName, pageStr);
@@ -57,39 +56,38 @@ public class TemplateSetting extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
-        String templateName = args[0];
+    protected void showTUI(Player player, String... args) throws Exception {
         String pageStr = args.length > 1 ? args[1] : "1";
+        String templateName = args[0];
 
-        Player player = toPlayer(sender);
         TemplateDOO template = TemplateDOO.select(player.getUniqueId(), templateName);
         if (template == null) {
-            Notification.error(sender, Language.templateSettingText.notFound, templateName);
+            Notification.error(player, TextUserInterface.templateSettingTuiText.notFound, templateName);
             return;
         }
 
-        ListView view = ListView.create(10, button(sender, templateName));
-        view.title(Language.templateSettingText.title);
+        ListView view = ListView.create(10, button(player, templateName));
+        view.title(TextUserInterface.templateSettingTuiText.title);
         view.navigator(Line.create()
-                .append(MainMenu.button(sender).build())
-                .append(TemplateList.button(sender).build())
-                .append(Language.templateSettingText.button)
+                .append(MainMenu.button(player).build())
+                .append(TemplateList.button(player).build())
+                .append(TextUserInterface.templateSettingTuiText.button)
         );
 
-        view.add(Line.create().append(RenameTemplateInputter.createTuiButtonOn(sender, templateName, pageStr).build()));
+        view.add(Line.create().append(RenameTemplateInputter.createTuiButtonOn(player, templateName, pageStr).build()));
         for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-            view.add(createOption(sender, flag, template.getFlagValue(flag), template.getName(), pageStr));
+            view.add(createOption(player, flag, template.getFlagValue(flag), template.getName(), pageStr));
         }
         view.showOn(player, toIntegrity(pageStr));
     }
 
-    private static Line createOption(CommandSender sender, PriFlag flag, boolean value, String templateName, String pageStr) {
+    private static Line createOption(Player player, PriFlag flag, boolean value, String templateName, String pageStr) {
         if (value) {
             return Line.create()
                     .append(new FunctionalButton("☑") {
                         @Override
                         public void function() {
-                            TemplateCommand.setTemplateFlag(sender, templateName, flag.getFlagName(), "false", pageStr);
+                            TemplateCommand.setTemplateFlag(player, templateName, flag.getFlagName(), "false", pageStr);
                         }
                     }.needPermission(defaultPermission).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
@@ -98,7 +96,7 @@ public class TemplateSetting extends AbstractUI {
                     .append(new FunctionalButton("☐") {
                         @Override
                         public void function() {
-                            TemplateCommand.setTemplateFlag(sender, templateName, flag.getFlagName(), "true", pageStr);
+                            TemplateCommand.setTemplateFlag(player, templateName, flag.getFlagName(), "true", pageStr);
                         }
                     }.needPermission(defaultPermission).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
@@ -176,7 +174,7 @@ public class TemplateSetting extends AbstractUI {
 
         TemplateDOO template = TemplateDOO.select(player.getUniqueId(), templateName);
         if (template == null) {
-            Notification.error(player, Language.templateSettingText.notFound, templateName);
+            Notification.error(player, TextUserInterface.templateSettingTuiText.notFound, templateName);
             return;
         }
 

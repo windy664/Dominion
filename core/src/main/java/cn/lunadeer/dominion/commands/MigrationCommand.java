@@ -6,6 +6,7 @@ import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.doos.DominionDOO;
 import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.events.dominion.DominionCreateEvent;
@@ -49,7 +50,7 @@ public class MigrationCommand {
      * @return the ListViewButton
      */
     public static ListViewButton button(CommandSender sender, String residenceName) {
-        return (ListViewButton) new ListViewButton(Language.migrateListText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.migrateListTuiText.button) {
             @Override
             public void function(String pageStr) {
                 migrate(sender, residenceName, pageStr);
@@ -92,12 +93,12 @@ public class MigrationCommand {
     public static void migrate(CommandSender sender, String resName, String pageStr) {
         try {
             if (!Configuration.residenceMigration) {
-                Notification.error(sender, Language.migrateListText.notEnabled);
+                Notification.error(sender, TextUserInterface.migrateListTuiText.notEnabled);
                 return;
             }
             List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
             if (res_data == null) {
-                throw new DominionException(Language.migrateListText.noData);
+                throw new DominionException(TextUserInterface.migrateListTuiText.noData);
             }
             ResMigration.ResidenceNode resNode = res_data.stream().filter(node -> node.name.equals(resName)).findFirst().orElse(null);
             if (resNode == null) {
@@ -153,7 +154,7 @@ public class MigrationCommand {
     public static void migrateAll(CommandSender sender) {
         List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
         if (res_data == null || res_data.isEmpty()) {
-            Notification.error(sender, Language.migrateListText.noData);
+            Notification.error(sender, TextUserInterface.migrateListTuiText.noData);
             return;
         }
         int successCount = 0;

@@ -2,6 +2,7 @@ dominion-text:
   loading-config: 正在加载配置...
   plugin-enabled: 启动完成！
   plugin-version: 插件版本：{0}
+  notification-prefix: '&6[&e领地&6]&f'
 multi-server-manager-text:
   get-id-by-name-error: 服务器名称（{0}）不存在。
   get-name-by-id-error: 服务器ID（{0}）不存在。
@@ -129,167 +130,6 @@ select-point-events-handler-text:
   no-dominion: 坐标 {0}, {1}, {2} 位置没有找到领地
   found-dominion: 坐标 {0}, {1}, {2} 所处的领地：{3}
   owner: 领地所有人：{0}
-menu-tui-text:
-  title: Dominion主菜单
-  button: 菜单
-  admin-only-section: 以下内容仅管理员可见
-  document-button: 文档链接
-  document-description: 在浏览器中打开插件文档页面。
-  command-help-button: 指令帮助
-  command-help-description: 在浏览器中打开插件指令帮助页面。
-  switch-to-cui-button: ' 切换到CUI 🆕 '
-  fail-to-switch-message: 切换到 {0} 失败：{1}
-dominion-list-tui-text:
-  title: 你的领地列表
-  button: 领地列表
-  description: 列出你的所有领地（含可管理领地）。
-  delete-button: 删除
-  admin-section: 以下为你拥有管理权限的领地列表
-  server-section: 以下为你在服务器 {0} 的领地列表
-dominion-manage-tui-text:
-  title: 管理领地 {0}
-  button: 管理领地
-  set-tp-button: 设置传送
-  set-tp-description: 将你当前所在位置设置为领地传送点。
-set-size-tui-text:
-  title: 修改领地 {0} 大小
-  button: 修改大小
-  north: 北(z-)
-  south: 南(z+)
-  west: 西(x-)
-  east: 东(x+)
-  up: 上(y+)
-  down: 下(y-)
-  expand: 扩张
-  contract: 缩小
-env-setting-tui-text:
-  title: 领地 {0} 环境行为
-  button: 环境行为
-  description: 设置领地环境行为。
-guest-setting-tui-text:
-  title: 领地 {0} 访客权限
-  button: 访客权限
-  description: 设置领地访客权限。
-size-info-tui-text:
-  title: 领地 {0} 尺寸信息
-  button: 领地尺寸
-  description: 查看领地尺寸信息
-  owner-name: 该领地所有人为：{0}
-  info-lwh: 尺寸：{0} x {1} x {2}
-  info-height: 高度范围：{0} ~ {1}
-  square: 面积：{0}
-  volume: 体积：{0}
-migrate-list-text:
-  title: 从 Residence 迁移
-  description: 将 residence 的领地数据迁移到 dominion
-  button: 迁移
-  not-enabled: 服务器管理员未启用迁移功能
-  no-data: 没有可迁移的领地数据
-  cant-migrate: 子领地只能随同父领地一起迁移
-  migrate-all: 一键迁移
-member-list-tui-text:
-  title: 领地 {0} 成员列表
-  description: 列出该领地的所有成员
-  button: 成员列表
-  remove: 移除
-  remove-description: 将此玩家从领地成员列表中移除
-  owner-only: 只有领地所有者有权管理领地管理员
-  group-only: 该成员属于领地权限组 {0}，无法单独管理
-  tag-admin: 领地管理员
-  tag-normal: 普通成员
-  tag-ban: 黑名单成员（没有 MOVE 权限）
-  tag-group: 该成员属于权限组
-select-player-tui-text:
-  title: 选择玩家
-  button: 添加成员
-  description: 选择一个登陆过的玩家添加为领地成员
-  back: 返回
-member-setting-tui-text:
-  title: 成员 {0} 权限设置
-  description: 设置成员在此领地的权限
-  button: 权限设置
-template-list-tui-text:
-  title: 权限模板列表
-  button: 权限模板
-  description: 通过预先设置的权限模板快速设置领地成员的权限
-  delete-button: 删除
-select-template-tui-text:
-  title: 选择模板
-  description: 选择一个权限模板套用在成员上
-  button: 套用模板
-  back: 返回
-  apply: 套用
-group-list-tui-text:
-  title: 领地 {0} 权限组列表
-  description: 列出该领地的所有权限组
-  button: 权限组
-  delete-button: 删除
-  delete-description: 删除权限组 {0}，成员将变为普通成员
-  remove-member-description: 将成员 {0} 移出权限组 {1} 变为普通成员
-group-setting-tui-text:
-  title: 权限组 {0} 设置
-  description: 管理权限组 {0} 的权限配置
-  button: 设置
-select-member-tui-text:
-  title: 选择成员
-  description: 选择成员加入权限组
-  back: 返回
-title-list-tui-text:
-  title: 权限组称号
-  description: 可使用的权限组称号列表
-  button: 称号列表
-  use-button: 使用
-  disuse-button: 卸下
-  from-dominion: 来自领地 {0}
-all-dominion-tui-text:
-  title: 服务器所有领地
-  description: 列出服务器上的所有领地
-  button: 所有领地
-template-setting-text:
-  title: 模板设置
-  button: 设置
-  not-found: 找不到模板 {0}
-resize-dominion-cui-text:
-  title: 把 {1} 向 {2} {0}
-  placeholder: 输入数值
-edit-enter-message-cui-text:
-  title: 编辑 {0} 进入消息
-  button: 进入提示
-  description: 当玩家进入领地时显示的消息
-edit-leave-message-cui-text:
-  title: 编辑 {0} 离开消息
-  button: 离开提示
-  description: 当玩家离开领地时显示的消息
-rename-dominion-cui-text:
-  title: 重命名 {0}
-  description: 重命名领地
-  button: 修改名称
-create-dominion-cui-text:
-  title: 自动创建领地
-  input: 输入新领地名称
-  description: 在你周围的一定范围自动创建一个领地
-  button: 创建领地
-set-map-color-cui-text:
-  title: 设置 {0} 地图颜色
-  button: 地图颜色
-  description: 设置在卫星地图上领地的颜色
-search-player-cui-text:
-  title: 搜索玩家
-  input: 准确的玩家游戏ID
-  button: 搜索
-create-template-cui-text:
-  title: 创建模板
-  input: 新模板名称
-  button: 创建
-create-group-cui-text:
-  title: 创建权限组
-  input: 新权限组名称
-  description: 创建一个新的权限组
-  button: 创建
-rename-group-cui-text:
-  title: 重命名权限组
-  button: 重命名
-  description: 重命名此权限组
 administrator-command-text:
   reload-cache-button: 重载缓存
   reload-cache-description: 重新加载并构建数据缓存（不要频繁执行）
@@ -379,6 +219,7 @@ database-manager-text:
   file-corrupted: 部分数据库表缺失，请重新导出备份文件。
   import-database-fail: 导入数据库备份失败，原因：{0}
   import-database-success: 数据库备份导入成功！
+  convert-world-failed: 备份文件中的世界 {0}({1}) 无法在新存档中找到，请检查新存档的世界名称是否正确。
 teleport-manager-text:
   cooling-down: 请等待 {0} 秒后再尝试传送。
   disabled: 你所在的权限组禁止使用传送功能，请联系服务器管理员。
@@ -618,34 +459,9 @@ flags:
   snow_melt:
     display-name: 积雪融化
     description: 是否允许积雪融化
-copy-menu-tui-text:
-  button: 复制配置
-  description: 从其他领地复制配置到当前领地。
-  title: 选择要复制的配置类型
-env-copy-tui-text:
-  title: 选择从哪个领地复制环境配置
-  button: 环境配置
-  copy: 选择
-  description: 从其他领地复制环境配置。
-  back: 返回
-guest-copy-tui-text:
-  title: 选择从哪个领地复制访客权限
-  button: 访客权限
-  copy: 选择
-  description: 从其他领地复制访客权限。
-  back: 返回
-member-copy-tui-text:
-  title: 选择从哪个领地复制成员配置
-  button: 成员配置
-  copy: 选择
-  description: 从其他领地复制成员配置。
-  back: 返回
-group-copy-tui-text:
-  title: 选择从哪个领地复制权限组
-  button: 权限组
-  copy: 选择
-  description: 从其他领地复制权限组。
-  back: 返回
+  lead:
+    display-name: 拴绳
+    description: 是否可以使用拴绳/牵引（包括：动物、盔甲架、船等）
 create-dominion-inputter-text:
   button: 创建领地
   description: 在你的周围创建一个新的领地。
@@ -696,18 +512,6 @@ inputter-text:
   only-player: 只有玩家可以使用输入器。
   cancel: ' 【发送大写 C 取消输入】'
   inputter-cancelled: 输入已取消。
-dominion-copy-tui-text:
-  back: 返回
-  copy: 选择
-  title: 选择要从哪个领地复制
-  env-button: 环境配置
-  env-description: 从其他领地复制环境配置。
-  group-button: 权限组配置
-  group-description: 从其他领地复制权限组配置（包括权限组成员）。
-  guest-button: 访客配置
-  guest-description: 从其他领地复制访客权限配置。
-  member-button: 成员配置
-  member-description: 从其他领地复制成员配置（包括成员权限）。
 rename-template-inputter-text:
   button: 重命名模板
   hint: 请输入新的模板名称

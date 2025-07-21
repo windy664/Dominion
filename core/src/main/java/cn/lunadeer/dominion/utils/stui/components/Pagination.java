@@ -9,8 +9,8 @@ import net.kyori.adventure.text.TextComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-import static cn.lunadeer.dominion.utils.stui.ViewStyles.main_color;
-import static cn.lunadeer.dominion.utils.stui.ViewStyles.sub_color;
+import static cn.lunadeer.dominion.utils.stui.ViewStyles.PRIMARY;
+import static cn.lunadeer.dominion.utils.stui.ViewStyles.SECONDARY;
 
 
 public class Pagination {
@@ -20,11 +20,11 @@ public class Pagination {
             page_count = 1;
         }
         List<Component> componentList = new ArrayList<>();
-        componentList.add(Component.text("[", main_color));
-        componentList.add(Component.text(page, sub_color));
-        componentList.add(Component.text("/", main_color));
-        componentList.add(Component.text(page_count, sub_color));
-        componentList.add(Component.text("]", main_color));
+        componentList.add(Component.text("[", PRIMARY));
+        componentList.add(Component.text(page, SECONDARY));
+        componentList.add(Component.text("/", PRIMARY));
+        componentList.add(Component.text(page_count, SECONDARY));
+        componentList.add(Component.text("]", PRIMARY));
         if (page > 1) {
             componentList.add(new FunctionalButton("◀") {
                 @Override
@@ -33,7 +33,7 @@ public class Pagination {
                 }
             }.build());
         } else {
-            componentList.add(new Button("◀").setColor(sub_color).build());
+            componentList.add(new Button("◀").setColor(SECONDARY).build());
         }
         if (page < page_count) {
             componentList.add(new FunctionalButton("▶") {
@@ -43,7 +43,7 @@ public class Pagination {
                 }
             }.build());
         } else {
-            componentList.add(new Button("▶").setColor(sub_color).build());
+            componentList.add(new Button("▶").setColor(SECONDARY).build());
         }
         TextComponent.Builder builder = Component.text();
         for (Component component : componentList) {

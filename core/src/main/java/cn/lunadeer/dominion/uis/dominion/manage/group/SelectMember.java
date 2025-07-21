@@ -4,8 +4,8 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.commands.GroupCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -51,26 +51,26 @@ public class SelectMember extends AbstractUI {
             public void function(String page) {
                 show(sender, dominionName, groupName, backPageStr, page);
             }
-        }.needPermission(defaultPermission).green().setHoverText(Language.selectMemberTuiText.description);
+        }.needPermission(defaultPermission).green().setHoverText(TextUserInterface.selectMemberTuiText.description);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String dominionName = args[0];
         String groupName = args[1];
         String backPageStr = args[2];
         String pageStr = args[3];
 
         DominionDTO dominion = toDominionDTO(dominionName);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         int page = toIntegrity(pageStr);
 
-        ListView view = ListView.create(10, button(sender, dominionName, groupName, backPageStr));
-        view.title(Language.selectMemberTuiText.title);
-        Line sub = Line.create().append(new FunctionalButton(Language.selectMemberTuiText.back) {
+        ListView view = ListView.create(10, button(player, dominionName, groupName, backPageStr));
+        view.title(TextUserInterface.selectMemberTuiText.title);
+        Line sub = Line.create().append(new FunctionalButton(TextUserInterface.selectMemberTuiText.back) {
             @Override
             public void function() {
-                GroupList.show(sender, dominionName, backPageStr);
+                GroupList.show(player, dominionName, backPageStr);
             }
         }.needPermission(defaultPermission).build());
         view.subtitle(sub);
@@ -86,11 +86,11 @@ public class SelectMember extends AbstractUI {
                     .append(new FunctionalButton(p.getLastKnownName()) {
                         @Override
                         public void function() {
-                            GroupCommand.addMember(sender, dominionName, groupName, p.getLastKnownName());
+                            GroupCommand.addMember(player, dominionName, groupName, p.getLastKnownName());
                         }
                     }.needPermission(defaultPermission).build()));
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

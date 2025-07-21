@@ -1,8 +1,11 @@
 package cn.lunadeer.dominion.utils;
 
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
-import net.kyori.adventure.text.format.TextColor;
+import cn.lunadeer.dominion.utils.scheduler.Scheduler;
+import org.bukkit.ChatColor;
+import org.bukkit.NamespacedKey;
+import org.bukkit.boss.BarColor;
+import org.bukkit.boss.BarStyle;
+import org.bukkit.boss.BossBar;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,160 +13,205 @@ import org.bukkit.plugin.java.JavaPlugin;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 import static cn.lunadeer.dominion.utils.XLogger.isDebug;
 
+/**
+ * Utility class for sending various types of notifications to players and all online users.
+ * Supports chat messages, action bars, titles, subtitles, and boss bars.
+ */
 public class Notification {
     public static Notification instance;
-
-    public final SendMessageAbstract sender;
 
     public Notification(JavaPlugin plugin) {
         instance = this;
         this.plugin = plugin;
-        this.prefix = "[" + plugin.getName() + "]";
-        this.sender = new SendMessageAbstract(plugin);
+        this.prefix = "&6[&e" + plugin.getName() + "&6]&f";
     }
-
-    private static final Style i_style = Style.style(TextColor.color(139, 255, 123));
-    private static final Style w_style = Style.style(TextColor.color(255, 185, 69));
-    private static final Style e_style = Style.style(TextColor.color(255, 96, 72));
-    private static final Style d_style = Style.style(TextColor.color(0, 255, 255));
 
     private String prefix;
     private JavaPlugin plugin;
 
+    /**
+     * Sets the prefix for all messages sent by this Notification instance.
+     *
+     * @param prefix The prefix to set, which will be prepended to all messages.
+     */
     public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 
-    public static void info(Player player, String msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + msg, i_style));
-    }
-
-    public static void info(Player player, String msg, Object... args) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + formatString(msg, args), i_style));
-    }
-
-    public static void warn(Player player, String msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + msg, w_style));
-    }
-
-    public static void warn(Player player, String msg, Object... args) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + formatString(msg, args), w_style));
-    }
-
-
-    public static void error(Player player, String msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + msg, e_style));
-    }
-
-    public static void error(Player player, String msg, Object... args) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix + " " + formatString(msg, args), e_style));
-    }
-
+    /**
+     * Sends an info message to a command sender.
+     *
+     * @param sender The command sender to send the message to.
+     * @param msg    The message to send.
+     */
     public static void info(CommandSender sender, String msg) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + msg, i_style));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.prefix + " &2" + msg));
     }
 
-    public static void info(CommandSender sender, String msg, Object... args) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + formatString(msg, args), i_style));
+    /**
+     * Sends a formatted info message to a command sender.
+     *
+     * @param player The command sender to send the message to.
+     * @param msg    The message template.
+     * @param args   The arguments to format the message.
+     */
+    public static void info(CommandSender player, String msg, Object... args) {
+        info(player, formatString(msg, args));
     }
 
+    /**
+     * Sends a warning message to a command sender.
+     *
+     * @param sender The command sender to send the message to.
+     * @param msg    The message to send.
+     */
     public static void warn(CommandSender sender, String msg) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + msg, w_style));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.prefix + " &e" + msg));
     }
 
+    /**
+     * Sends a formatted warning message to a command sender.
+     *
+     * @param sender The command sender to send the message to.
+     * @param msg    The message template.
+     * @param args   The arguments to format the message.
+     */
     public static void warn(CommandSender sender, String msg, Object... args) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + formatString(msg, args), w_style));
+        warn(sender, formatString(msg, args));
     }
 
+    /**
+     * Sends an error message to a command sender.
+     *
+     * @param sender The command sender to send the message to.
+     * @param msg    The message to send.
+     */
     public static void error(CommandSender sender, String msg) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + msg, e_style));
+        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', instance.prefix + " &c" + msg));
     }
 
-    public static void error(CommandSender sender, String msg, Object... args) {
-        instance.sender.sendMessage(sender, Component.text(instance.prefix + " " + formatString(msg, args), e_style));
+    /**
+     * Sends a formatted error message to a command sender.
+     *
+     * @param player The command sender to send the message to.
+     * @param msg    The message template.
+     * @param args   The arguments to format the message.
+     */
+    public static void error(CommandSender player, String msg, Object... args) {
+        error(player, formatString(msg, args));
     }
 
-    public static void info(Player player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, i_style).append(Component.text(" ")).append(msg));
-    }
-
-    public static void warn(Player player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, w_style).append(Component.text(" ")).append(msg));
-    }
-
-    public static void error(Player player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, e_style).append(Component.text(" ")).append(msg));
-    }
-
-    public static void info(CommandSender player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, i_style).append(Component.text(" ")).append(msg));
-    }
-
-    public static void warn(CommandSender player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, w_style).append(Component.text(" ")).append(msg));
-    }
-
-    public static void error(CommandSender player, Component msg) {
-        instance.sender.sendMessage(player, Component.text(instance.prefix, e_style).append(Component.text(" ")).append(msg));
-    }
-
+    /**
+     * Sends an error message to a command sender with an associated throwable.
+     *
+     * @param player The command sender to send the message to.
+     * @param e      The throwable associated with the error.
+     */
     public static void error(CommandSender player, Throwable e) {
-        Notification.error(player, e.getMessage());
+        error(player, e.getMessage());
         if (isDebug()) {
             XLogger.error(e);
         }
     }
 
+    /**
+     * Broadcasts a message to all online players.
+     *
+     * @param msg The message to broadcast.
+     */
     public static void all(String msg) {
-        instance.sender.broadcast(Component.text(instance.prefix + " " + msg, i_style));
+        instance.plugin.getServer().broadcast(ChatColor.translateAlternateColorCodes('&', instance.prefix + " &2" + msg), "bukkit.broadcast.user");
     }
 
-    public static void all(Component msg) {
-        instance.sender.broadcast(Component.text(instance.prefix, i_style).append(Component.text(" ")).append(msg));
-    }
-
+    /**
+     * Broadcasts a formatted message to all online players.
+     *
+     * @param msg  The message template to broadcast.
+     * @param args Arguments to format the message.
+     */
     public static void all(String msg, Object... args) {
-        instance.sender.broadcast(Component.text(instance.prefix + " " + formatString(msg, args), i_style));
+        all(formatString(msg, args));
     }
 
+    /**
+     * Sends an action bar message to a specific player.
+     *
+     * @param player The player to send the message to.
+     * @param msg    The message to display.
+     */
     public static void actionBar(Player player, String msg) {
-        instance.sender.sendActionBar(player, Component.text(msg));
+        player.sendActionBar(ChatColor.translateAlternateColorCodes('&', formatString(msg)));
     }
 
+    /**
+     * Sends a formatted action bar message to a specific player.
+     *
+     * @param player The player to send the message to.
+     * @param msg    The message template to display.
+     * @param args   Arguments to format the message.
+     */
     public static void actionBar(Player player, String msg, Object... args) {
-        instance.sender.sendActionBar(player, Component.text(formatString(msg, args)));
+        actionBar(player, formatString(msg, args));
     }
 
-    public static void actionBar(Player player, Component msg) {
-        instance.sender.sendActionBar(player, msg);
-    }
-
+    /**
+     * Sends a title to a specific player.
+     *
+     * @param player The player to send the title to.
+     * @param title  The title text.
+     */
     public static void title(Player player, String title) {
-        instance.sender.sendTitle(player, Component.text(title), Component.empty());
+        title(player, title, "");
     }
 
-    public static void title(Player player, String title, String subtitle) {
-        instance.sender.sendTitle(player, Component.text(title), Component.text(subtitle));
-    }
-
-    public static void title(Player player, Component title) {
-        instance.sender.sendTitle(player, title, Component.empty());
-    }
-
-    public static void subTitle(Player player, Component subtitle) {
-        instance.sender.sendTitle(player, Component.empty(), subtitle);
-    }
-
+    /**
+     * Sends a subtitle to a specific player.
+     *
+     * @param player   The player to send the subtitle to.
+     * @param subtitle The subtitle text.
+     */
     public static void subTitle(Player player, String subtitle) {
-        instance.sender.sendTitle(player, Component.empty(), Component.text(subtitle));
+        title(player, "", subtitle);
     }
 
+    /**
+     * Sends a title and subtitle to a specific player.
+     *
+     * @param player   The player to send the title and subtitle to.
+     * @param title    The title text.
+     * @param subtitle The subtitle text.
+     */
+    public static void title(Player player, String title, String subtitle) {
+        player.sendTitle(
+                ChatColor.translateAlternateColorCodes('&', title),
+                ChatColor.translateAlternateColorCodes('&', subtitle)
+        );
+    }
+
+    /**
+     * Sends a boss bar message to a specific player.
+     *
+     * @param player  The player to send the boss bar to.
+     * @param message The message to display on the boss bar.
+     */
     public static void bossBar(Player player, String message) {
-        instance.sender.sendBossBar(player, Component.text(message));
-    }
-
-    public static void bossBar(Player player, Component message) {
-        instance.sender.sendBossBar(player, message);
+        NamespacedKey key = new NamespacedKey(instance.plugin, "dominion_bossbar_" + player.getUniqueId());
+        BossBar bossBar = player.getServer().createBossBar(
+                key,
+                ChatColor.translateAlternateColorCodes('&', message),
+                BarColor.GREEN,
+                BarStyle.SOLID
+        );
+        bossBar.setProgress(1);
+        bossBar.addPlayer(player);
+        bossBar.setVisible(true);
+        Scheduler.runTaskLater(() -> {
+            if (player.isOnline()) {
+                bossBar.removePlayer(player);
+            }
+            bossBar.setVisible(false);
+            player.getServer().removeBossBar(key);
+        }, 60);
     }
 
 }

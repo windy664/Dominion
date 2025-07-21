@@ -11,6 +11,11 @@ import java.util.*;
 
 import static cn.lunadeer.dominion.misc.Converts.toWorld;
 
+@Headers({
+        "This file controls how player can using the dominion feature.",
+        "For more information, please visit:",
+        "https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/limitations/"
+})
 public class Limitation extends ConfigurationFile {
     public static class LimitationText extends ConfigurationPart {
         public String loadingWorldSettings = "Loading world-settings...";

@@ -15,27 +15,6 @@ import cn.lunadeer.dominion.managers.TeleportManager;
 import cn.lunadeer.dominion.misc.Asserts;
 import cn.lunadeer.dominion.misc.Converts;
 import cn.lunadeer.dominion.misc.Others;
-import cn.lunadeer.dominion.uis.AllDominion;
-import cn.lunadeer.dominion.uis.MainMenu;
-import cn.lunadeer.dominion.uis.MigrateList;
-import cn.lunadeer.dominion.uis.TitleList;
-import cn.lunadeer.dominion.uis.dominion.DominionList;
-import cn.lunadeer.dominion.uis.dominion.DominionManage;
-import cn.lunadeer.dominion.uis.dominion.copy.CopyMenu;
-import cn.lunadeer.dominion.uis.dominion.copy.DominionCopy;
-import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.Info;
-import cn.lunadeer.dominion.uis.dominion.manage.SetSize;
-import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
-import cn.lunadeer.dominion.uis.dominion.manage.group.GroupSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.group.SelectMember;
-import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
-import cn.lunadeer.dominion.uis.dominion.manage.member.MemberSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.member.SelectPlayer;
-import cn.lunadeer.dominion.uis.dominion.manage.member.SelectTemplate;
-import cn.lunadeer.dominion.uis.template.TemplateList;
-import cn.lunadeer.dominion.uis.template.TemplateSetting;
 import cn.lunadeer.dominion.utils.VaultConnect.VaultConnect;
 import cn.lunadeer.dominion.utils.command.InvalidArgumentException;
 import cn.lunadeer.dominion.utils.command.NoPermissionException;
@@ -44,6 +23,16 @@ import cn.lunadeer.dominion.utils.stui.inputter.InputterRunner;
 import cn.lunadeer.dominion.utils.webMap.BlueMapConnect;
 import cn.lunadeer.dominion.utils.webMap.DynmapConnect;
 
+@Headers({
+        "Language file for Dominion plugin",
+        "If you want to help translate this file, please refer to:",
+        "https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages",
+        "for more instructions.",
+        "",
+        "Most of the text support color codes,",
+        "you can use §0-§9 for colors, §l for bold, §o for italic, §n for underline, §m for strikethrough, and §k for magic.",
+        "Also support '&' as an alternative for '§'.",
+})
 public class Language extends ConfigurationFile {
 
     // languages file name list here will be saved to plugin data folder
@@ -51,11 +40,6 @@ public class Language extends ConfigurationFile {
     public enum LanguageCode {
         en_us,
         zh_cn,
-        ja_jp,
-        ru_ru,
-        de_de,
-        fi_fi,
-        lzh,
     }
 
     public static Dominion.DominionText dominionText = new Dominion.DominionText();
@@ -73,29 +57,6 @@ public class Language extends ConfigurationFile {
     public static MemberEventHandler.MemberEventHandlerText memberEventHandlerText = new MemberEventHandler.MemberEventHandlerText();
     public static GroupEventHandler.GroupEventHandlerText groupEventHandlerText = new GroupEventHandler.GroupEventHandlerText();
     public static SelectPointEventsHandler.SelectPointEventsHandlerText selectPointEventsHandlerText = new SelectPointEventsHandler.SelectPointEventsHandlerText();
-
-    // TUI
-    public static MainMenu.MenuTuiText menuTuiText = new MainMenu.MenuTuiText();
-    public static DominionList.DominionListTuiText dominionListTuiText = new DominionList.DominionListTuiText();
-    public static DominionManage.DominionManageTuiText dominionManageTuiText = new DominionManage.DominionManageTuiText();
-    public static SetSize.SetSizeTuiText setSizeTuiText = new SetSize.SetSizeTuiText();
-    public static EnvSetting.EnvSettingTuiText envSettingTuiText = new EnvSetting.EnvSettingTuiText();
-    public static GuestSetting.GuestSettingTuiText guestSettingTuiText = new GuestSetting.GuestSettingTuiText();
-    public static Info.SizeInfoTuiText sizeInfoTuiText = new Info.SizeInfoTuiText();
-    public static MigrateList.MigrateListText migrateListText = new MigrateList.MigrateListText();
-    public static MemberList.MemberListTuiText memberListTuiText = new MemberList.MemberListTuiText();
-    public static SelectPlayer.SelectPlayerTuiText selectPlayerTuiText = new SelectPlayer.SelectPlayerTuiText();
-    public static MemberSetting.MemberSettingTuiText memberSettingTuiText = new MemberSetting.MemberSettingTuiText();
-    public static TemplateList.TemplateListTuiText templateListTuiText = new TemplateList.TemplateListTuiText();
-    public static SelectTemplate.SelectTemplateTuiText selectTemplateTuiText = new SelectTemplate.SelectTemplateTuiText();
-    public static GroupList.GroupListTuiText groupListTuiText = new GroupList.GroupListTuiText();
-    public static GroupSetting.GroupSettingTuiText groupSettingTuiText = new GroupSetting.GroupSettingTuiText();
-    public static SelectMember.SelectMemberTuiText selectMemberTuiText = new SelectMember.SelectMemberTuiText();
-    public static TitleList.TitleListTuiText titleListTuiText = new TitleList.TitleListTuiText();
-    public static AllDominion.AllDominionTuiText allDominionTuiText = new AllDominion.AllDominionTuiText();
-    public static TemplateSetting.TemplateSettingText templateSettingText = new TemplateSetting.TemplateSettingText();
-    public static CopyMenu.CopyMenuTuiText copyMenuTuiText = new CopyMenu.CopyMenuTuiText();
-    public static DominionCopy.DominionCopyTuiText dominionCopyTuiText = new DominionCopy.DominionCopyTuiText();
 
     // Inputter
     public static CreateDominionInputter.CreateDominionInputterText createDominionInputterText = new CreateDominionInputter.CreateDominionInputterText();

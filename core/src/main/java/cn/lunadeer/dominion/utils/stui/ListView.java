@@ -5,7 +5,7 @@ import cn.lunadeer.dominion.utils.stui.components.Pagination;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
-import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,7 +68,7 @@ public class ListView {
         return this;
     }
 
-    public void showOn(CommandSender player, Integer page) {
+    public void showOn(Player player, Integer page) {
         int offset = (page - 1) * page_size;
         if (lines.isEmpty()) {
             lines.add(Line.create().append("..."));
@@ -91,7 +91,7 @@ public class ListView {
     }
 
     public ListView navigator(Line line) {
-        Line nav = Line.create().setDivider("->").append(Component.text("\uD83E\uDDED", ViewStyles.main_color));
+        Line nav = Line.create().setDivider("->").append(Component.text("\uD83E\uDDED", ViewStyles.PRIMARY));
         for (Component component : line.getElements()) {
             nav.append(component);
         }

@@ -3,8 +3,8 @@ package cn.lunadeer.dominion.uis.dominion.copy;
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.CopyCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -26,7 +26,8 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
-import static cn.lunadeer.dominion.misc.Converts.*;
+import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
+import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 /**
@@ -70,52 +71,51 @@ public class DominionCopy extends AbstractUI {
     /**
      * Creates a button for the specified copy type
      */
-    public static ListViewButton button(CommandSender sender, String toDominionName, CopyType copyType) {
+    public static ListViewButton button(Player player, String toDominionName, CopyType copyType) {
         String buttonText;
         switch (copyType) {
-            case ENVIRONMENT -> buttonText = Language.dominionCopyTuiText.envButton;
-            case GUEST -> buttonText = Language.dominionCopyTuiText.guestButton;
-            case MEMBER -> buttonText = Language.dominionCopyTuiText.memberButton;
-            case GROUP -> buttonText = Language.dominionCopyTuiText.groupButton;
+            case ENVIRONMENT -> buttonText = TextUserInterface.dominionCopyTuiText.envButton;
+            case GUEST -> buttonText = TextUserInterface.dominionCopyTuiText.guestButton;
+            case MEMBER -> buttonText = TextUserInterface.dominionCopyTuiText.memberButton;
+            case GROUP -> buttonText = TextUserInterface.dominionCopyTuiText.groupButton;
             default -> throw new IllegalArgumentException("Unknown copy type: " + copyType);
         }
         return (ListViewButton) new ListViewButton(buttonText) {
             @Override
             public void function(String pageStr) {
-                show(sender, toDominionName, copyType, pageStr);
+                show(player, toDominionName, copyType, pageStr);
             }
         }.needPermission(defaultPermission);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String toDominionName = args[0];
         CopyType copyType = CopyType.valueOf(args[1]);
         int page = toIntegrity(args[2]);
 
         DominionDTO dominion = toDominionDTO(toDominionName);
-        Player player = toPlayer(sender);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
 
-        ListView view = ListView.create(10, button(sender, toDominionName, copyType));
+        ListView view = ListView.create(10, button(player, toDominionName, copyType));
 
-        view.title(Language.dominionCopyTuiText.title)
+        view.title(TextUserInterface.dominionCopyTuiText.title)
                 .navigator(Line.create()
-                        .append(CopyMenu.button(sender, toDominionName)
-                                .setText(Language.dominionCopyTuiText.back).build()));
+                        .append(CopyMenu.button(player, toDominionName)
+                                .setText(TextUserInterface.dominionCopyTuiText.back).build()));
 
         List<DominionDTO> dominions = CacheManager.instance.getPlayerOwnDominionDTOs(player.getUniqueId());
         for (DominionDTO fromDominion : dominions) {
             if (fromDominion.getId().equals(dominion.getId())) continue;
             String fromDominionName = fromDominion.getName();
-            FunctionalButton item = (FunctionalButton) new FunctionalButton(Language.dominionCopyTuiText.copy) {
+            FunctionalButton item = (FunctionalButton) new FunctionalButton(TextUserInterface.dominionCopyTuiText.copy) {
                 @Override
                 public void function() {
                     switch (copyType) {
-                        case ENVIRONMENT -> CopyCommand.copyEnvironment(sender, fromDominionName, toDominionName);
-                        case GUEST -> CopyCommand.copyGuest(sender, fromDominionName, toDominionName);
-                        case MEMBER -> CopyCommand.copyMember(sender, fromDominionName, toDominionName);
-                        case GROUP -> CopyCommand.copyGroup(sender, fromDominionName, toDominionName);
+                        case ENVIRONMENT -> CopyCommand.copyEnvironment(player, fromDominionName, toDominionName);
+                        case GUEST -> CopyCommand.copyGuest(player, fromDominionName, toDominionName);
+                        case MEMBER -> CopyCommand.copyMember(player, fromDominionName, toDominionName);
+                        case GROUP -> CopyCommand.copyGroup(player, fromDominionName, toDominionName);
                     }
                 }
             }.needPermission(defaultPermission);
@@ -125,7 +125,7 @@ public class DominionCopy extends AbstractUI {
                     .append(Component.text(fromDominionName))
             );
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

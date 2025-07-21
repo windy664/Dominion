@@ -2,8 +2,8 @@ package cn.lunadeer.dominion.uis;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -52,7 +52,7 @@ public class AllDominion extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender) {
-        return (ListViewButton) new ListViewButton(Language.allDominionTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.allDominionTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, pageStr);
@@ -61,14 +61,14 @@ public class AllDominion extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(Player sender, String... args) {
         int page = toIntegrity(args[0], 1);
         ListView view = ListView.create(10, button(sender));
 
-        view.title(Language.allDominionTuiText.title);
+        view.title(TextUserInterface.allDominionTuiText.title);
         view.navigator(Line.create()
                 .append(MainMenu.button(sender).build())
-                .append(Language.allDominionTuiText.button));
+                .append(TextUserInterface.allDominionTuiText.button));
         view.addLines(BuildTreeLines(sender, CacheManager.instance.getCache().getDominionCache().getAllDominionNodes(), 0));
         view.showOn(sender, page);
     }

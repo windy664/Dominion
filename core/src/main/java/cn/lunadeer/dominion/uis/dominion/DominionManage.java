@@ -2,9 +2,10 @@ package cn.lunadeer.dominion.uis.dominion;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.commands.DominionOperateCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.inputters.EditMessageInputter;
 import cn.lunadeer.dominion.inputters.RenameDominionInputter;
 import cn.lunadeer.dominion.inputters.SetMapColorInputter;
@@ -40,7 +41,8 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
-import static cn.lunadeer.dominion.misc.Converts.*;
+import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
+import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 public class DominionManage extends AbstractUI {
@@ -69,7 +71,7 @@ public class DominionManage extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.dominionManageTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.dominionManageTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, pageStr);
@@ -78,57 +80,56 @@ public class DominionManage extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
-        Player player = toPlayer(sender);
+    protected void showTUI(Player player, String... args) {
         DominionDTO dominion = toDominionDTO(args[0]);
         assertDominionAdmin(player, dominion);
         int page = toIntegrity(args[1], 1);
 
         Line size_info = Line.create()
-                .append(Info.button(sender, dominion.getName()).build())
-                .append(Language.sizeInfoTuiText.description);
+                .append(Info.button(player, dominion.getName()).build())
+                .append(TextUserInterface.sizeInfoTuiText.description);
         Line env_info = Line.create()
-                .append(EnvSetting.button(sender, dominion.getName()).build())
-                .append(Language.envSettingTuiText.description);
+                .append(EnvSetting.button(player, dominion.getName()).build())
+                .append(TextUserInterface.envSettingTuiText.description);
         Line flag_info = Line.create()
-                .append(GuestSetting.button(sender, dominion.getName()).build())
-                .append(Language.guestSettingTuiText.description);
+                .append(GuestSetting.button(player, dominion.getName()).build())
+                .append(TextUserInterface.guestSettingTuiText.description);
         Line member_list = Line.create()
-                .append(MemberList.button(sender, dominion.getName()).build())
-                .append(Language.memberListTuiText.description);
+                .append(MemberList.button(player, dominion.getName()).build())
+                .append(TextUserInterface.memberListTuiText.description);
         Line group_list = Line.create()
-                .append(GroupList.button(sender, dominion.getName()).build())
-                .append(Language.groupListTuiText.description);
+                .append(GroupList.button(player, dominion.getName()).build())
+                .append(TextUserInterface.groupListTuiText.description);
         Line set_tp = Line.create()
-                .append(new FunctionalButton(Language.dominionManageTuiText.setTpButton) {
+                .append(new FunctionalButton(TextUserInterface.dominionManageTuiText.setTpButton) {
                     @Override
                     public void function() {
-                        DominionOperateCommand.setTp(sender, dominion.getName());
+                        DominionOperateCommand.setTp(player, dominion.getName());
                     }
                 }.build())
-                .append(Language.dominionManageTuiText.setTpDescription);
+                .append(TextUserInterface.dominionManageTuiText.setTpDescription);
         Line rename = Line.create()
-                .append(RenameDominionInputter.createTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
+                .append(RenameDominionInputter.createTuiButtonOn(player, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.renameDominionInputterText.description);
         Line enter_msg = Line.create()
-                .append(EditMessageInputter.createEnterTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
+                .append(EditMessageInputter.createEnterTuiButtonOn(player, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.editMessageInputterText.enterDescription);
         Line leave_msg = Line.create()
-                .append(EditMessageInputter.createLeaveTuiButtonOn(sender, dominion.getName()).needPermission(defaultPermission).build())
+                .append(EditMessageInputter.createLeaveTuiButtonOn(player, dominion.getName()).needPermission(defaultPermission).build())
                 .append(Language.editMessageInputterText.leaveDescription);
         Line map_color = Line.create()
-                .append(SetMapColorInputter.createTuiButtonOn(sender, dominion.getName()).build())
+                .append(SetMapColorInputter.createTuiButtonOn(player, dominion.getName()).build())
                 .append(Component.text(Language.setMapColorInputterText.description)
                         .append(Component.text(dominion.getColor(),
                                 TextColor.color(dominion.getColorR(), dominion.getColorG(), dominion.getColorB()))));
         Line copy_menu = Line.create()
-                .append(CopyMenu.button(sender, dominion.getName()).build())
-                .append(Language.copyMenuTuiText.description);
-        ListView view = ListView.create(10, button(sender, dominion.getName()));
-        view.title(formatString(Language.dominionManageTuiText.title, dominion.getName()))
+                .append(CopyMenu.button(player, dominion.getName()).build())
+                .append(TextUserInterface.copyMenuTuiText.description);
+        ListView view = ListView.create(10, button(player, dominion.getName()));
+        view.title(formatString(TextUserInterface.dominionManageTuiText.title, dominion.getName()))
                 .navigator(Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
                         .append(dominion.getName()))
                 .add(size_info)
                 .add(env_info)

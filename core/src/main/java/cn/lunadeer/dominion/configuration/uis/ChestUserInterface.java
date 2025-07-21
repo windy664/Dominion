@@ -1,4 +1,4 @@
-package cn.lunadeer.dominion.configuration;
+package cn.lunadeer.dominion.configuration.uis;
 
 import cn.lunadeer.dominion.uis.AllDominion;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -22,9 +22,9 @@ import cn.lunadeer.dominion.uis.dominion.manage.member.SelectTemplate;
 import cn.lunadeer.dominion.uis.template.TemplateList;
 import cn.lunadeer.dominion.uis.template.TemplateSetting;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationFile;
-import cn.lunadeer.dominion.utils.configuration.Heads;
+import cn.lunadeer.dominion.utils.configuration.Headers;
 
-@Heads({
+@Headers({
         "Brief Description:",
         "    This file defines the user interface for the chest GUI in Dominion.",
         "    Both name and lore support PlaceholderAPI and color codes.",

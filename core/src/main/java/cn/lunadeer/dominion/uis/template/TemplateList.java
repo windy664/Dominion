@@ -1,7 +1,7 @@
 package cn.lunadeer.dominion.uis.template;
 
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.doos.TemplateDOO;
 import cn.lunadeer.dominion.inputters.CreateTemplateInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
@@ -26,7 +26,6 @@ import java.util.List;
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.commands.TemplateCommand.deleteTemplate;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 
 public class TemplateList extends AbstractUI {
 
@@ -44,7 +43,7 @@ public class TemplateList extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender) {
-        return (ListViewButton) new ListViewButton(Language.templateListTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.templateListTuiText.button) {
             @Override
             public void function(String pageStr) {
                 TemplateList.show(sender, pageStr);
@@ -53,26 +52,25 @@ public class TemplateList extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
-        Player player = toPlayer(sender);
+    protected void showTUI(Player player, String... args) throws Exception {
         int page = toIntegrity(args[0], 1);
         List<TemplateDOO> templates = TemplateDOO.selectAll(player.getUniqueId());
 
-        ListView view = ListView.create(10, button(sender));
-        view.title(Language.templateListTuiText.title);
+        ListView view = ListView.create(10, button(player));
+        view.title(TextUserInterface.templateListTuiText.title);
         view.navigator(Line.create()
-                .append(MainMenu.button(sender).build())
-                .append(Language.templateListTuiText.button));
+                .append(MainMenu.button(player).build())
+                .append(TextUserInterface.templateListTuiText.button));
 
         view.add(Line.create()
-                .append(CreateTemplateInputter.createTuiButtonOn(sender).needPermission(defaultPermission).build()));
+                .append(CreateTemplateInputter.createTuiButtonOn(player).needPermission(defaultPermission).build()));
 
         for (TemplateDOO template : templates) {
-            Button setting = TemplateSetting.button(sender, template.getName()).green();
-            Button delete = new ListViewButton(Language.templateListTuiText.deleteButton) {
+            Button setting = TemplateSetting.button(player, template.getName()).green();
+            Button delete = new ListViewButton(TextUserInterface.templateListTuiText.deleteButton) {
                 @Override
                 public void function(String pageStr) {
-                    deleteTemplate(sender, template.getName(), pageStr);
+                    deleteTemplate(player, template.getName(), pageStr);
                 }
             }.needPermission(defaultPermission).red();
             Line line = Line.create()

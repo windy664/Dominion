@@ -16,7 +16,7 @@ public class Button {
     protected ClickEvent.Action action = null;
     private String hoverText = "";
     protected String clickExecute = "";
-    TextColor color = ViewStyles.action_color;
+    TextColor color = ViewStyles.ACTION;
     TextColor disabledColor = TextColor.color(0x666666);
 
     private String disabledText = null;
@@ -71,12 +71,12 @@ public class Button {
     }
 
     public Button red() {
-        this.color = ViewStyles.error_color;
+        this.color = ViewStyles.SEVERE;
         return this;
     }
 
     public Button green() {
-        this.color = ViewStyles.success_color;
+        this.color = ViewStyles.NORMAL;
         return this;
     }
 }

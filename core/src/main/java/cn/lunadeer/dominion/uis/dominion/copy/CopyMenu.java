@@ -1,8 +1,8 @@
 package cn.lunadeer.dominion.uis.dominion.copy;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
@@ -43,7 +43,7 @@ public class CopyMenu extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String toDominionName) {
-        return (ListViewButton) new ListViewButton(Language.copyMenuTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.copyMenuTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, toDominionName, pageStr);
@@ -52,34 +52,34 @@ public class CopyMenu extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String toDominionName = args[0];
         DominionDTO dominion = toDominionDTO(toDominionName);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         int page = toIntegrity(args[1]);
 
-        ListView view = ListView.create(10, button(sender, toDominionName));
-        view.title(formatString(Language.copyMenuTuiText.title));
+        ListView view = ListView.create(10, button(player, toDominionName));
+        view.title(formatString(TextUserInterface.copyMenuTuiText.title));
         view.navigator(
                 Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, toDominionName).build())
-                        .append(Language.copyMenuTuiText.button)
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, toDominionName).build())
+                        .append(TextUserInterface.copyMenuTuiText.button)
         );
         view.add(Line.create()
-                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.ENVIRONMENT).build())
-                .append(Language.dominionCopyTuiText.envDescription));
+                .append(DominionCopy.button(player, toDominionName, DominionCopy.CopyType.ENVIRONMENT).build())
+                .append(TextUserInterface.dominionCopyTuiText.envDescription));
         view.add(Line.create()
-                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.GUEST).build())
-                .append(Language.dominionCopyTuiText.guestDescription));
+                .append(DominionCopy.button(player, toDominionName, DominionCopy.CopyType.GUEST).build())
+                .append(TextUserInterface.dominionCopyTuiText.guestDescription));
         view.add(Line.create()
-                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.MEMBER).build())
-                .append(Language.dominionCopyTuiText.memberDescription));
+                .append(DominionCopy.button(player, toDominionName, DominionCopy.CopyType.MEMBER).build())
+                .append(TextUserInterface.dominionCopyTuiText.memberDescription));
         view.add(Line.create()
-                .append(DominionCopy.button(sender, toDominionName, DominionCopy.CopyType.GROUP).build())
-                .append(Language.dominionCopyTuiText.groupDescription));
-        view.showOn(sender, page);
+                .append(DominionCopy.button(player, toDominionName, DominionCopy.CopyType.GROUP).build())
+                .append(TextUserInterface.dominionCopyTuiText.groupDescription));
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

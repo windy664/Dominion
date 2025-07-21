@@ -3,6 +3,8 @@ package cn.lunadeer.dominion.configuration;
 import cn.lunadeer.dominion.Dominion;
 import cn.lunadeer.dominion.api.dtos.flag.Flag;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.managers.DatabaseTables;
 import cn.lunadeer.dominion.utils.MessageDisplay;
 import cn.lunadeer.dominion.utils.Notification;
@@ -22,6 +24,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
+@Headers({
+        "This is the configuration file of Dominion.",
+        "For more information, please refer to the documentation.",
+        "https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/overview/",
+        "",
+        "If you want to control player's privilege, please refer to the limitations configuration.",
+})
 public class Configuration extends ConfigurationFile {
 
     public static class ConfigurationText extends ConfigurationPart {
@@ -399,15 +408,38 @@ public class Configuration extends ConfigurationFile {
             if (!languagesFolder.exists()) {
                 languagesFolder.mkdir();
             }
+            File cuiFolder = new File(languagesFolder, "cui");
+            if (!cuiFolder.exists()) {
+                cuiFolder.mkdir();
+            }
+            File tuiFolder = new File(languagesFolder, "tui");
+            if (!tuiFolder.exists()) {
+                tuiFolder.mkdir();
+            }
             for (Language.LanguageCode code : Language.LanguageCode.values()) {
-                if (!new File(languagesFolder, code.name() + ".yml").exists())
+                if (!new File(languagesFolder, code.name() + ".yml").exists()) try {
                     Dominion.instance.saveResource("languages/" + code.name() + ".yml", false);
-                if (!new File(languagesFolder, code.name() + "_cui.yml").exists())
-                    Dominion.instance.saveResource("languages/" + code.name() + "_cui.yml", false);
+                } catch (Exception e) {
+                    XLogger.warn("Failed to save language file for {0}, This language may not in official repo : {1}.", code.name(), e.getMessage());
+                    XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
+                }
+            }
+            if (!new File(cuiFolder, language + ".yml").exists()) try {
+                Dominion.instance.saveResource("languages/cui/" + language + ".yml", false);
+            } catch (Exception e) {
+                XLogger.warn("Failed to save CUI language file for {0}, This language may not in official repo : {1}.", language, e.getMessage());
+                XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
+            }
+            if (!new File(tuiFolder, language + ".yml").exists()) try {
+                Dominion.instance.saveResource("languages/tui/" + language + ".yml", false);
+            } catch (Exception e) {
+                XLogger.warn("Failed to save TUI language file for {0}, This language may not in official repo : {1}.", language, e.getMessage());
+                XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
             }
             Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadingLanguage, language);
-            ConfigurationManager.load(Language.class, new File(Dominion.instance.getDataFolder(), "languages/" + language + ".yml"));
-            ConfigurationManager.load(ChestUserInterface.class, new File(Dominion.instance.getDataFolder(), "languages/" + language + "_cui.yml"));
+            ConfigurationManager.load(Language.class, new File(languagesFolder, language + ".yml"));
+            ConfigurationManager.load(ChestUserInterface.class, new File(cuiFolder, language + ".yml"));
+            ConfigurationManager.load(TextUserInterface.class, new File(tuiFolder, language + ".yml"));
             Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageSuccess, language);
         } catch (Exception e) {
             Notification.error(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageFail, language, e.getMessage());

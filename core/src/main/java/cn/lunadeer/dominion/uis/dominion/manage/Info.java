@@ -3,7 +3,7 @@ package cn.lunadeer.dominion.uis.dominion.manage;
 import cn.lunadeer.dominion.api.dtos.CuboidDTO;
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
@@ -13,7 +13,6 @@ import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
@@ -33,48 +32,47 @@ public class Info {
         public String volume = "Volume: {0}";
     }
 
-    public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.sizeInfoTuiText.button) {
+    public static ListViewButton button(Player player, String dominionName) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.sizeInfoTuiText.button) {
             @Override
             public void function(String pageStr) {
-                show(sender, dominionName);
+                show(player, dominionName);
             }
         }.needPermission(defaultPermission);
     }
 
-    public static void show(CommandSender sender, String dominionName) {
+    public static void show(Player player, String dominionName) {
         try {
             DominionDTO dominion = toDominionDTO(dominionName);
             String ownerName = CacheManager.instance.getPlayerName(dominion.getOwner());
-            ListView view = ListView.create(10, button(sender, dominionName));
-            view.title(formatString(Language.sizeInfoTuiText.title, dominion.getName()));
+            ListView view = ListView.create(10, button(player, dominionName));
+            view.title(formatString(TextUserInterface.sizeInfoTuiText.title, dominion.getName()));
 
             boolean isOwner = false;
-            if (sender instanceof Player player) {
-                if (player.getUniqueId().equals(dominion.getOwner())) {
-                    isOwner = true;
-                    ParticleUtil.showBorder(player, dominion);
-                }
+            if (player.getUniqueId().equals(dominion.getOwner())) {
+                isOwner = true;
+                ParticleUtil.showBorder(player, dominion);
             }
+
             if (!isOwner) {
-                view.subtitle(Line.create().append(formatString(Language.sizeInfoTuiText.ownerName, ownerName)));
+                view.subtitle(Line.create().append(formatString(TextUserInterface.sizeInfoTuiText.ownerName, ownerName)));
             } else {
                 view.subtitle(Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, dominionName).build())
-                        .append(Language.sizeInfoTuiText.button).build()
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, dominionName).build())
+                        .append(TextUserInterface.sizeInfoTuiText.button).build()
                 );
             }
             CuboidDTO cuboid = dominion.getCuboid();
-            view.add(Line.create().append(SetSize.button(sender, dominionName).build()))
-                    .add(Line.create().append(formatString(Language.sizeInfoTuiText.infoLWH, cuboid.xLength(), cuboid.yLength(), cuboid.zLength())))
-                    .add(Line.create().append(formatString(Language.sizeInfoTuiText.infoHeight, cuboid.y1(), cuboid.y2())))
-                    .add(Line.create().append(formatString(Language.sizeInfoTuiText.square, cuboid.getSquare())))
-                    .add(Line.create().append(formatString(Language.sizeInfoTuiText.volume, cuboid.getVolume())))
-                    .showOn(sender, 1);
+            view.add(Line.create().append(SetSize.button(player, dominionName).build()))
+                    .add(Line.create().append(formatString(TextUserInterface.sizeInfoTuiText.infoLWH, cuboid.xLength(), cuboid.yLength(), cuboid.zLength())))
+                    .add(Line.create().append(formatString(TextUserInterface.sizeInfoTuiText.infoHeight, cuboid.y1(), cuboid.y2())))
+                    .add(Line.create().append(formatString(TextUserInterface.sizeInfoTuiText.square, cuboid.getSquare())))
+                    .add(Line.create().append(formatString(TextUserInterface.sizeInfoTuiText.volume, cuboid.getVolume())))
+                    .showOn(player, 1);
         } catch (Exception e) {
-            Notification.error(sender, e.getMessage());
+            Notification.error(player, e.getMessage());
         }
     }
 }

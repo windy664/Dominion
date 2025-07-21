@@ -5,8 +5,8 @@ import cn.lunadeer.dominion.api.dtos.GroupDTO;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.GroupTitleCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -30,7 +30,6 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 public class TitleList extends AbstractUI {
@@ -64,7 +63,7 @@ public class TitleList extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender) {
-        return (ListViewButton) new ListViewButton(Language.titleListTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.titleListTuiText.button) {
             @Override
             public void function(String pageStr) {
                 TitleList.show(sender, pageStr);
@@ -73,16 +72,15 @@ public class TitleList extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
-        Player player = toPlayer(sender);
+    protected void showTUI(Player player, String... args) throws Exception {
         int page = toIntegrity(args[0], 1);
 
-        ListView view = ListView.create(10, button(sender));
+        ListView view = ListView.create(10, button(player));
 
-        view.title(Language.titleListTuiText.title);
+        view.title(TextUserInterface.titleListTuiText.title);
         view.navigator(Line.create()
-                .append(MainMenu.button(sender).build())
-                .append(Language.titleListTuiText.button));
+                .append(MainMenu.button(player).build())
+                .append(TextUserInterface.titleListTuiText.button));
 
         List<GroupDTO> groups = CacheManager.instance.getPlayerCache().getPlayerGroupTitleList(player.getUniqueId());
         List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getPlayerOwnDominionDTOs(player.getUniqueId());
@@ -104,21 +102,21 @@ public class TitleList extends AbstractUI {
             Line line = Line.create();
             line.append(Component.text(group.getId() + ". "));
             if (using != null && using.getId().equals(group.getId())) {
-                line.append(new FunctionalButton(Language.titleListTuiText.disuseButton) {
+                line.append(new FunctionalButton(TextUserInterface.titleListTuiText.disuseButton) {
                     @Override
                     public void function() {
-                        GroupTitleCommand.useTitle(sender, "-1", args[0]);
+                        GroupTitleCommand.useTitle(player, "-1", args[0]);
                     }
                 }.needPermission(defaultPermission).red().build());
             } else {
-                line.append(new FunctionalButton(Language.titleListTuiText.useButton) {
+                line.append(new FunctionalButton(TextUserInterface.titleListTuiText.useButton) {
                     @Override
                     public void function() {
-                        GroupTitleCommand.useTitle(sender, group.getId().toString(), args[0]);
+                        GroupTitleCommand.useTitle(player, group.getId().toString(), args[0]);
                     }
                 }.needPermission(defaultPermission).green().build());
             }
-            line.append(group.getNameColoredComponent().hoverEvent(Component.text(formatString(Language.titleListTuiText.fromDominion, dominion.getName()))));
+            line.append(group.getNameColoredComponent().hoverEvent(Component.text(formatString(TextUserInterface.titleListTuiText.fromDominion, dominion.getName()))));
             view.add(line);
         }
 
@@ -204,8 +202,8 @@ public class TitleList extends AbstractUI {
             }
 
             boolean isActive = using != null && using.getId().equals(group.getId());
-            ChestButton btn = new ChestButton(isActive ? 
-                    ChestUserInterface.titleListCui.activeTitleItemButton : 
+            ChestButton btn = new ChestButton(isActive ?
+                    ChestUserInterface.titleListCui.activeTitleItemButton :
                     ChestUserInterface.titleListCui.titleItemButton) {
                 @Override
                 public void onClick(ClickType type) {

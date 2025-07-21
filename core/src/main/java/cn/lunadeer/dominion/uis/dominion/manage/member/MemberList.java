@@ -7,8 +7,8 @@ import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.MemberCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -81,7 +81,7 @@ public class MemberList extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.memberListTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.memberListTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, pageStr);
@@ -90,22 +90,22 @@ public class MemberList extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         DominionDTO dominion = toDominionDTO(args[0]);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         int page = toIntegrity(args[1], 1);
 
-        ListView view = ListView.create(10, button(sender, dominion.getName()));
-        view.title(formatString(Language.memberListTuiText.title, dominion.getName()));
+        ListView view = ListView.create(10, button(player, dominion.getName()));
+        view.title(formatString(TextUserInterface.memberListTuiText.title, dominion.getName()));
         view.navigator(
                 Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, dominion.getName()).build())
-                        .append(Language.memberListTuiText.button)
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, dominion.getName()).build())
+                        .append(TextUserInterface.memberListTuiText.button)
         );
         view.add(Line.create()
-                .append(SelectPlayer.button(sender, dominion.getName()).build())
+                .append(SelectPlayer.button(player, dominion.getName()).build())
         );
 
         // get data from database directly because cache update may not be in time
@@ -127,27 +127,27 @@ public class MemberList extends AbstractUI {
                 }
             }
 
-            Button prev = MemberSetting.button(sender, dominion.getName(), p_player.getLastKnownName()).green();
-            Button remove = new FunctionalButton(Language.memberListTuiText.remove) {
+            Button prev = MemberSetting.button(player, dominion.getName(), p_player.getLastKnownName()).green();
+            Button remove = new FunctionalButton(TextUserInterface.memberListTuiText.remove) {
                 @Override
                 public void function() {
-                    MemberCommand.removeMember(sender, dominion.getName(), p_player.getLastKnownName(), String.valueOf(page));
+                    MemberCommand.removeMember(player, dominion.getName(), p_player.getLastKnownName(), String.valueOf(page));
                 }
-            }.setHoverText(Language.memberListTuiText.removeDescription).red();
+            }.setHoverText(TextUserInterface.memberListTuiText.removeDescription).red();
 
             boolean disable = false;
             try {
-                assertDominionOwner(sender, dominion);
+                assertDominionOwner(player, dominion);
             } catch (Exception e) {
-                // not owner then the sender is admin so he should not remove other admin
+                // not owner then the player is admin so he should not remove other admin
                 disable = member.getFlagValue(Flags.ADMIN);
             }
             if (disable) {
-                prev.setDisabled(Language.memberListTuiText.ownerOnly);
-                remove.setDisabled(Language.memberListTuiText.ownerOnly);
+                prev.setDisabled(TextUserInterface.memberListTuiText.ownerOnly);
+                remove.setDisabled(TextUserInterface.memberListTuiText.ownerOnly);
             }
             if (group != null) {
-                prev.setDisabled(formatString(Language.memberListTuiText.groupOnly, group.getNamePlain()));
+                prev.setDisabled(formatString(TextUserInterface.memberListTuiText.groupOnly, group.getNamePlain()));
             }
 
             line.append(remove.build());
@@ -155,17 +155,17 @@ public class MemberList extends AbstractUI {
             line.append(p_player.getLastKnownName());
             view.add(line);
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
     private static final TextComponent adminTag = Component.text("[A]", Style.style(TextColor.color(97, 97, 210)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagAdmin));
+            .hoverEvent(Component.text(TextUserInterface.memberListTuiText.tagAdmin));
     private static final TextComponent normalTag = Component.text("[N]", Style.style(TextColor.color(255, 255, 255)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagNormal));
+            .hoverEvent(Component.text(TextUserInterface.memberListTuiText.tagNormal));
     private static final TextComponent banTag = Component.text("[B]", Style.style(TextColor.color(255, 67, 0)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagBan));
+            .hoverEvent(Component.text(TextUserInterface.memberListTuiText.tagBan));
     private static final TextComponent groupTag = Component.text("[G]", Style.style(TextColor.color(0, 185, 153)))
-            .hoverEvent(Component.text(Language.memberListTuiText.tagGroup));
+            .hoverEvent(Component.text(TextUserInterface.memberListTuiText.tagGroup));
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓

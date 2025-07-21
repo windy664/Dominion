@@ -33,45 +33,44 @@ public class XLogger {
     private boolean _debug = false;
 
     public static void info(String message) {
-        instance._logger.info(" I | " + message);
-    }
-
-    public static void info(String message, Object... args) {
-        instance._logger.info(" I | " + formatString(message, args));
+        instance._logger.info("§a I | " + message);
     }
 
     public static void warn(String message) {
-        instance._logger.warning(" W | " + message);
-    }
-
-    public static void warn(String message, Object... args) {
-        instance._logger.warning(" W | " + formatString(message, args));
+        instance._logger.warning("§e W | " + message);
     }
 
     public static void error(String message) {
-        instance._logger.severe(" E | " + message);
-    }
-
-    public static void error(String message, Object... args) {
-        instance._logger.severe(" E | " + formatString(message, args));
-    }
-
-    public static void error(Throwable e) {
-        instance._logger.severe(" E | " + e.getMessage());
-        if (isDebug()) {
-            for (StackTraceElement element : e.getStackTrace()) {
-                instance._logger.severe("StackTrace | " + element.toString());
-            }
-        }
+        instance._logger.severe("§c E | " + message);
     }
 
     public static void debug(String message) {
         if (!instance._debug) return;
-        instance._logger.info(" D | " + message);
+        instance._logger.info("§9 D | " + message);
+    }
+
+    public static void info(String message, Object... args) {
+        info(String.format(message, args));
+    }
+
+    public static void warn(String message, Object... args) {
+        warn(formatString(message, args));
+    }
+
+    public static void error(String message, Object... args) {
+        error(formatString(message, args));
+    }
+
+    public static void error(Throwable e) {
+        error(e.getMessage());
+        if (isDebug()) {
+            for (StackTraceElement element : e.getStackTrace()) {
+                error("StackTrace | " + element.toString());
+            }
+        }
     }
 
     public static void debug(String message, Object... args) {
-        if (!instance._debug) return;
-        instance._logger.info(" D | " + formatString(message, args));
+        debug(formatString(message, args));
     }
 }

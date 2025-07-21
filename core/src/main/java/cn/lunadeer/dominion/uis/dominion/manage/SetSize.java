@@ -1,8 +1,8 @@
 package cn.lunadeer.dominion.uis.dominion.manage;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
 import cn.lunadeer.dominion.inputters.ResizeDominionInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
@@ -34,12 +34,12 @@ public class SetSize extends AbstractUI {
 
     // Direction data structure for better organization
     private static final List<DirectionInfo> DIRECTIONS = Arrays.asList(
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.NORTH, () -> Language.setSizeTuiText.north),
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.SOUTH, () -> Language.setSizeTuiText.south),
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.WEST, () -> Language.setSizeTuiText.west),
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.EAST, () -> Language.setSizeTuiText.east),
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.UP, () -> Language.setSizeTuiText.up),
-            new DirectionInfo(DominionReSizeEvent.DIRECTION.DOWN, () -> Language.setSizeTuiText.down)
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.NORTH, () -> TextUserInterface.setSizeTuiText.north),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.SOUTH, () -> TextUserInterface.setSizeTuiText.south),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.WEST, () -> TextUserInterface.setSizeTuiText.west),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.EAST, () -> TextUserInterface.setSizeTuiText.east),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.UP, () -> TextUserInterface.setSizeTuiText.up),
+            new DirectionInfo(DominionReSizeEvent.DIRECTION.DOWN, () -> TextUserInterface.setSizeTuiText.down)
     );
 
     public static void show(CommandSender sender, String dominionName) {
@@ -60,7 +60,7 @@ public class SetSize extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.setSizeTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.setSizeTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName);
@@ -69,43 +69,43 @@ public class SetSize extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(Player player, String... args) {
         String dominionName = args[0];
         DominionDTO dominion = toDominionDTO(dominionName);
-        assertDominionOwner(sender, dominion);
+        assertDominionOwner(player, dominion);
 
-        ListView view = createTUIView(sender, dominion);
-        addDirectionButtons(view, sender, dominion.getName());
-        view.showOn(sender, 1);
+        ListView view = createTUIView(player, dominion);
+        addDirectionButtons(view, player, dominion.getName());
+        view.showOn(player, 1);
     }
 
-    private ListView createTUIView(CommandSender sender, DominionDTO dominion) {
-        ListView view = ListView.create(10, button(sender, dominion.getName()));
-        view.title(formatString(Language.setSizeTuiText.title, dominion.getName()));
-        view.navigator(createNavigationLine(sender, dominion.getName()));
+    private ListView createTUIView(Player player, DominionDTO dominion) {
+        ListView view = ListView.create(10, button(player, dominion.getName()));
+        view.title(formatString(TextUserInterface.setSizeTuiText.title, dominion.getName()));
+        view.navigator(createNavigationLine(player, dominion.getName()));
         return view;
     }
 
-    private Line createNavigationLine(CommandSender sender, String dominionName) {
+    private Line createNavigationLine(Player player, String dominionName) {
         return Line.create()
-                .append(MainMenu.button(sender).build())
-                .append(DominionList.button(sender).build())
-                .append(DominionManage.button(sender, dominionName).build())
-                .append(Info.button(sender, dominionName).build())
-                .append(Language.setSizeTuiText.button);
+                .append(MainMenu.button(player).build())
+                .append(DominionList.button(player).build())
+                .append(DominionManage.button(player, dominionName).build())
+                .append(Info.button(player, dominionName).build())
+                .append(TextUserInterface.setSizeTuiText.button);
     }
 
-    private void addDirectionButtons(ListView view, CommandSender sender, String dominionName) {
+    private void addDirectionButtons(ListView view, Player player, String dominionName) {
         for (DirectionInfo directionInfo : DIRECTIONS) {
-            view.add(createDirectionLine(sender, dominionName, directionInfo));
+            view.add(createDirectionLine(player, dominionName, directionInfo));
         }
     }
 
-    private Line createDirectionLine(CommandSender sender, String dominionName, DirectionInfo directionInfo) {
+    private Line createDirectionLine(Player player, String dominionName, DirectionInfo directionInfo) {
         return Line.create()
                 .append(directionInfo.getDisplayName())
-                .append(ResizeDominionInputter.createExpandTuiButtonOn(sender, dominionName, directionInfo.getDirection()).build())
-                .append(ResizeDominionInputter.createContractTuiButtonOn(sender, dominionName, directionInfo.getDirection()).build());
+                .append(ResizeDominionInputter.createExpandTuiButtonOn(player, dominionName, directionInfo.getDirection()).build())
+                .append(ResizeDominionInputter.createContractTuiButtonOn(player, dominionName, directionInfo.getDirection()).build());
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

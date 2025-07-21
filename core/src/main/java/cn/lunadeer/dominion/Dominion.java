@@ -20,6 +20,7 @@ import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.databse.DatabaseManager;
 import cn.lunadeer.dominion.utils.scheduler.Scheduler;
 import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
+import cn.lunadeer.dominion.utils.stui.TextUserInterfaceManager;
 import cn.lunadeer.dominion.utils.stui.inputter.Inputter;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -37,6 +38,7 @@ public final class Dominion extends JavaPlugin {
         public String loadingConfig = "Loading Configurations...";
         public String pluginEnabled = "Plugin Enabled!";
         public String pluginVersion = "Plugin Version: {0}";
+        public String notificationPrefix = "&6[&eDominion&6]&f";
     }
 
     @Override
@@ -63,6 +65,7 @@ public final class Dominion extends JavaPlugin {
         } catch (Exception e) {
             XLogger.error(e);
         }
+        Notification.instance.setPrefix(Language.dominionText.notificationPrefix);
         XVersionManager.VERSION = XVersionManager.GetVersion(this);
 
         new VaultConnect(this);
@@ -70,6 +73,7 @@ public final class Dominion extends JavaPlugin {
         new TeleportManager(this);
         new CacheManager();
         new Inputter(this);
+        new TextUserInterfaceManager(this);
         new ChestUserInterfaceManager(this);
         new DominionInterface();
 

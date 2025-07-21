@@ -1,8 +1,8 @@
 package cn.lunadeer.dominion.uis.dominion.manage.member;
 
 import cn.lunadeer.dominion.commands.TemplateCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.doos.TemplateDOO;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
@@ -25,7 +25,6 @@ import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 public class SelectTemplate extends AbstractUI {
@@ -45,36 +44,35 @@ public class SelectTemplate extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName, String playerName) {
-        return (ListViewButton) new ListViewButton(Language.selectTemplateTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.selectTemplateTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, playerName, pageStr);
             }
-        }.needPermission(defaultPermission).setHoverText(Language.selectTemplateTuiText.description);
+        }.needPermission(defaultPermission).setHoverText(TextUserInterface.selectTemplateTuiText.description);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String dominionName = args[0];
         String playerName = args[1];
         String pageStr = args[2];
 
-        Player player = toPlayer(sender);
         int page = toIntegrity(pageStr);
         List<TemplateDOO> templates = TemplateDOO.selectAll(player.getUniqueId());
 
-        ListView view = ListView.create(10, button(sender, dominionName, playerName));
-        view.title(Language.selectTemplateTuiText.title);
+        ListView view = ListView.create(10, button(player, dominionName, playerName));
+        view.title(TextUserInterface.selectTemplateTuiText.title);
         Line sub = Line.create()
-                .append(MemberSetting.button(sender, dominionName, playerName).setText(Language.selectTemplateTuiText.back).build());
+                .append(MemberSetting.button(player, dominionName, playerName).setText(TextUserInterface.selectTemplateTuiText.back).build());
         view.subtitle(sub);
 
         for (TemplateDOO template : templates) {
             view.add(Line.create()
-                    .append(new FunctionalButton(Language.selectTemplateTuiText.apply) {
+                    .append(new FunctionalButton(TextUserInterface.selectTemplateTuiText.apply) {
                         @Override
                         public void function() {
-                            TemplateCommand.memberApplyTemplate(sender, dominionName, playerName, template.getName());
+                            TemplateCommand.memberApplyTemplate(player, dominionName, playerName, template.getName());
                         }
                     }.build())
                     .append(Component.text(template.getName())));

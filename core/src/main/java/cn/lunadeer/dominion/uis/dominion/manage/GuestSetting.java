@@ -4,8 +4,8 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.DominionFlagCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
@@ -49,7 +49,7 @@ public class GuestSetting extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.guestSettingTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.guestSettingTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, pageStr);
@@ -58,19 +58,19 @@ public class GuestSetting extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(Player player, String... args) {
         String dominionName = args[0];
         DominionDTO dominion = toDominionDTO(dominionName);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         int page = toIntegrity(args[1]);
 
-        ListView view = ListView.create(10, button(sender, dominionName));
-        view.title(formatString(Language.guestSettingTuiText.title, dominion.getName()))
+        ListView view = ListView.create(10, button(player, dominionName));
+        view.title(formatString(TextUserInterface.guestSettingTuiText.title, dominion.getName()))
                 .navigator(Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, dominionName).build())
-                        .append(Language.guestSettingTuiText.button));
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, dominionName).build())
+                        .append(TextUserInterface.guestSettingTuiText.button));
         for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
             if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
             if (dominion.getGuestFlagValue(flag)) {
@@ -78,7 +78,7 @@ public class GuestSetting extends AbstractUI {
                         .append(new FunctionalButton("☑") {
                             @Override
                             public void function() {
-                                DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "false", String.valueOf(page));
+                                DominionFlagCommand.setGuest(player, dominionName, flag.getFlagName(), "false", String.valueOf(page));
                             }
                         }.green().build())
                         .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
@@ -88,14 +88,14 @@ public class GuestSetting extends AbstractUI {
                         .append(new FunctionalButton("☐") {
                             @Override
                             public void function() {
-                                DominionFlagCommand.setGuest(sender, dominionName, flag.getFlagName(), "true", String.valueOf(page));
+                                DominionFlagCommand.setGuest(player, dominionName, flag.getFlagName(), "true", String.valueOf(page));
                             }
                         }.red().build())
                         .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
                 );
             }
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

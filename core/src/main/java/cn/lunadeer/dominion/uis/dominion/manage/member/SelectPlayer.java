@@ -4,8 +4,8 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.commands.MemberCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.inputters.SearchPlayerInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
@@ -48,29 +48,29 @@ public class SelectPlayer extends AbstractUI {
         public String back = "BACK";
     }
 
-    public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(Language.selectPlayerTuiText.button) {
+    public static ListViewButton button(Player player, String dominionName) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.selectPlayerTuiText.button) {
             @Override
             public void function(String pageStr) {
-                show(sender, dominionName, pageStr);
+                show(player, dominionName, pageStr);
             }
-        }.needPermission(defaultPermission).setHoverText(Language.selectPlayerTuiText.description);
+        }.needPermission(defaultPermission).setHoverText(TextUserInterface.selectPlayerTuiText.description);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String dominionName = args[0];
         String pageStr = args[1];
 
         DominionDTO dominion = toDominionDTO(dominionName);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         int page = toIntegrity(pageStr);
 
-        ListView view = ListView.create(10, button(sender, dominionName));
+        ListView view = ListView.create(10, button(player, dominionName));
         Line sub = Line.create()
-                .append(SearchPlayerInputter.createTuiButtonOn(sender, dominionName).build())
-                .append(MemberList.button(sender, dominionName).setText(Language.selectPlayerTuiText.back).build());
-        view.title(Language.selectPlayerTuiText.title).subtitle(sub);
+                .append(SearchPlayerInputter.createTuiButtonOn(player, dominionName).build())
+                .append(MemberList.button(player, dominionName).setText(TextUserInterface.selectPlayerTuiText.back).build());
+        view.title(TextUserInterface.selectPlayerTuiText.title).subtitle(sub);
 
         List<PlayerDTO> players = PlayerDOO.all();
         for (PlayerDTO p : players) {
@@ -78,11 +78,11 @@ public class SelectPlayer extends AbstractUI {
                     append(new FunctionalButton(p.getLastKnownName()) {
                         @Override
                         public void function() {
-                            MemberCommand.addMember(sender, dominionName, p.getLastKnownName());
+                            MemberCommand.addMember(player, dominionName, p.getLastKnownName());
                         }
                     }.needPermission(defaultPermission).build()));
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑

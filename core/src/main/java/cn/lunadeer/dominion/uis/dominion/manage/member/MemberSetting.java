@@ -5,8 +5,8 @@ import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.MemberCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -61,51 +61,51 @@ public class MemberSetting extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName, String playerName) {
-        return (ListViewButton) new ListViewButton(Language.memberSettingTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.memberSettingTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, playerName, pageStr);
             }
-        }.needPermission(defaultPermission).setHoverText(Language.memberSettingTuiText.description);
+        }.needPermission(defaultPermission).setHoverText(TextUserInterface.memberSettingTuiText.description);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
+    protected void showTUI(Player player, String... args) throws Exception {
         String dominionName = args[0];
         String playerName = args[1];
         String pageStr = args.length > 2 ? args[2] : "1";
         DominionDTO dominion = toDominionDTO(dominionName);
         MemberDTO member = toMemberDTO(dominion, playerName);
         int page = toIntegrity(pageStr);
-        ListView view = ListView.create(10, button(sender, dominionName, playerName));
-        view.title(formatString(Language.memberSettingTuiText.title, playerName));
+        ListView view = ListView.create(10, button(player, dominionName, playerName));
+        view.title(formatString(TextUserInterface.memberSettingTuiText.title, playerName));
         view.navigator(
                 Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, dominionName).build())
-                        .append(MemberList.button(sender, dominionName).build())
-                        .append(Language.memberSettingTuiText.button)
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, dominionName).build())
+                        .append(MemberList.button(player, dominionName).build())
+                        .append(TextUserInterface.memberSettingTuiText.button)
         );
-        view.add(Line.create().append(SelectTemplate.button(sender, dominionName, playerName).build()));
+        view.add(Line.create().append(SelectTemplate.button(player, dominionName, playerName).build()));
         if (member.getFlagValue(Flags.ADMIN)) {
-            view.add(createOption(sender, Flags.ADMIN, true, playerName, dominion.getName(), page));
-            view.add(createOption(sender, Flags.GLOW, member.getFlagValue(Flags.GLOW), playerName, dominion.getName(), page));
+            view.add(createOption(player, Flags.ADMIN, true, playerName, dominion.getName(), page));
+            view.add(createOption(player, Flags.GLOW, member.getFlagValue(Flags.GLOW), playerName, dominion.getName(), page));
         } else {
             for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-                view.add(createOption(sender, flag, member.getFlagValue(flag), playerName, dominion.getName(), page));
+                view.add(createOption(player, flag, member.getFlagValue(flag), playerName, dominion.getName(), page));
             }
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
-    private static Line createOption(CommandSender sender, PriFlag flag, boolean value, String player_name, String dominion_name, int page) {
+    private static Line createOption(Player player, PriFlag flag, boolean value, String player_name, String dominion_name, int page) {
         if (value) {
             return Line.create()
                     .append(new FunctionalButton("☑") {
                         @Override
                         public void function() {
-                            MemberCommand.setMemberPrivilege(sender, dominion_name, player_name, flag.getFlagName(), "false", String.valueOf(page));
+                            MemberCommand.setMemberPrivilege(player, dominion_name, player_name, flag.getFlagName(), "false", String.valueOf(page));
                         }
                     }.needPermission(defaultPermission).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))
@@ -115,7 +115,7 @@ public class MemberSetting extends AbstractUI {
                     .append(new FunctionalButton("☐") {
                         @Override
                         public void function() {
-                            MemberCommand.setMemberPrivilege(sender, dominion_name, player_name, flag.getFlagName(), "true", String.valueOf(page));
+                            MemberCommand.setMemberPrivilege(player, dominion_name, player_name, flag.getFlagName(), "true", String.valueOf(page));
                         }
                     }.needPermission(defaultPermission).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))

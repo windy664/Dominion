@@ -4,8 +4,8 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.cache.DominionNode;
 import cn.lunadeer.dominion.commands.DominionOperateCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -35,7 +35,6 @@ import java.util.List;
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.managers.TeleportManager.teleportToDominion;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
-import static cn.lunadeer.dominion.misc.Converts.toPlayer;
 
 public class DominionList extends AbstractUI {
 
@@ -68,7 +67,7 @@ public class DominionList extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender) {
-        return (ListViewButton) new ListViewButton(Language.dominionListTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.dominionListTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, pageStr);
@@ -82,7 +81,7 @@ public class DominionList extends AbstractUI {
         prefix.append(" | ".repeat(Math.max(0, depth)));
         for (DominionNode node : dominionTree) {
             TextComponent manage = DominionManage.button(sender, node.getDominion().getName()).green().build();
-            TextComponent delete = new FunctionalButton(Language.dominionListTuiText.deleteButton) {
+            TextComponent delete = new FunctionalButton(TextUserInterface.dominionListTuiText.deleteButton) {
                 @Override
                 public void function() {
                     DominionOperateCommand.delete(sender, node.getDominion().getName(), "");
@@ -103,25 +102,24 @@ public class DominionList extends AbstractUI {
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) throws Exception {
-        Player player = toPlayer(sender);
+    protected void showTUI(Player player, String... args) throws Exception {
         int page = toIntegrity(args[0], 1);
-        ListView view = ListView.create(10, button(sender));
+        ListView view = ListView.create(10, button(player));
 
-        view.title(Language.dominionListTuiText.title);
+        view.title(TextUserInterface.dominionListTuiText.title);
         view.navigator(Line.create()
-                .append(MainMenu.button(sender).build())
-                .append(Language.dominionListTuiText.button));
+                .append(MainMenu.button(player).build())
+                .append(TextUserInterface.dominionListTuiText.button));
         List<DominionNode> dominionNodes = CacheManager.instance.getCache().getDominionCache().getPlayerDominionNodes(player.getUniqueId());
         // Show dominions on current server
-        view.addLines(BuildTreeLines(sender, dominionNodes, 0));
+        view.addLines(BuildTreeLines(player, dominionNodes, 0));
         // Show admin dominions on this server
         List<DominionDTO> admin_dominions = CacheManager.instance.getCache().getDominionCache().getPlayerAdminDominionDTOs(player.getUniqueId());
         if (!admin_dominions.isEmpty()) {
             view.add(Line.create().append(""));
-            view.add(Line.create().append(Component.text(Language.dominionListTuiText.adminSection, ViewStyles.main_color)));
+            view.add(Line.create().append(Component.text(TextUserInterface.dominionListTuiText.adminSection, ViewStyles.PRIMARY)));
             for (DominionDTO dominion : admin_dominions) {
-                TextComponent manage = DominionManage.button(sender, dominion.getName()).build();
+                TextComponent manage = DominionManage.button(player, dominion.getName()).build();
                 view.add(Line.create().append(manage).append(dominion.getName()));
             }
         }

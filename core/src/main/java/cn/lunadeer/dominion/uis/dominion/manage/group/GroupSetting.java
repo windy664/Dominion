@@ -5,8 +5,8 @@ import cn.lunadeer.dominion.api.dtos.GroupDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.GroupCommand;
-import cn.lunadeer.dominion.configuration.ChestUserInterface;
-import cn.lunadeer.dominion.configuration.Language;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.inputters.RenameGroupInputter;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -50,51 +50,51 @@ public class GroupSetting extends AbstractUI {
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName, String groupName) {
-        return (ListViewButton) new ListViewButton(Language.groupSettingTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.groupSettingTuiText.button) {
             @Override
             public void function(String page) {
                 show(sender, dominionName, groupName, page);
             }
-        }.needPermission(defaultPermission).setHoverText(Language.groupSettingTuiText.description);
+        }.needPermission(defaultPermission).setHoverText(TextUserInterface.groupSettingTuiText.description);
     }
 
     @Override
-    protected void showTUI(CommandSender sender, String... args) {
+    protected void showTUI(Player player, String... args) {
         DominionDTO dominion = toDominionDTO(args[0]);
-        assertDominionAdmin(sender, dominion);
+        assertDominionAdmin(player, dominion);
         GroupDTO group = toGroupDTO(dominion, args[1]);
         int page = toIntegrity(args[2], 1);
 
-        ListView view = ListView.create(10, button(sender, dominion.getName(), group.getNamePlain()));
-        view.title(formatString(Language.groupSettingTuiText.title, group.getNameColoredBukkit()));
+        ListView view = ListView.create(10, button(player, dominion.getName(), group.getNamePlain()));
+        view.title(formatString(TextUserInterface.groupSettingTuiText.title, group.getNameColoredBukkit()));
         view.navigator(
                 Line.create()
-                        .append(MainMenu.button(sender).build())
-                        .append(DominionList.button(sender).build())
-                        .append(DominionManage.button(sender, dominion.getName()).build())
-                        .append(GroupList.button(sender, dominion.getName()).build())
-                        .append(Language.groupSettingTuiText.button)
+                        .append(MainMenu.button(player).build())
+                        .append(DominionList.button(player).build())
+                        .append(DominionManage.button(player, dominion.getName()).build())
+                        .append(GroupList.button(player, dominion.getName()).build())
+                        .append(TextUserInterface.groupSettingTuiText.button)
         );
-        view.add(Line.create().append(RenameGroupInputter.createTuiButtonOn(sender, dominion.getName(), group.getNamePlain()).build()));
+        view.add(Line.create().append(RenameGroupInputter.createTuiButtonOn(player, dominion.getName(), group.getNamePlain()).build()));
 
         if (group.getFlagValue(Flags.ADMIN)) {
-            view.add(createOption(sender, Flags.ADMIN, true, dominion.getName(), group.getNamePlain(), args[2]));
-            view.add(createOption(sender, Flags.GLOW, group.getFlagValue(Flags.GLOW), dominion.getName(), group.getNamePlain(), args[2]));
+            view.add(createOption(player, Flags.ADMIN, true, dominion.getName(), group.getNamePlain(), args[2]));
+            view.add(createOption(player, Flags.GLOW, group.getFlagValue(Flags.GLOW), dominion.getName(), group.getNamePlain(), args[2]));
         } else {
             for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-                view.add(createOption(sender, flag, group.getFlagValue(flag), dominion.getName(), group.getNamePlain(), args[2]));
+                view.add(createOption(player, flag, group.getFlagValue(flag), dominion.getName(), group.getNamePlain(), args[2]));
             }
         }
-        view.showOn(sender, page);
+        view.showOn(player, page);
     }
 
-    private static Line createOption(CommandSender sender, PriFlag flag, boolean value, String DominionName, String groupName, String pageStr) {
+    private static Line createOption(Player player, PriFlag flag, boolean value, String DominionName, String groupName, String pageStr) {
         if (value) {
             return Line.create()
                     .append(new FunctionalButton("☑") {
                         @Override
                         public void function() {
-                            GroupCommand.setGroupFlag(sender, DominionName, groupName, flag.getFlagName(), "false", pageStr);
+                            GroupCommand.setGroupFlag(player, DominionName, groupName, flag.getFlagName(), "false", pageStr);
                         }
                     }.needPermission(defaultPermission).green().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
@@ -103,7 +103,7 @@ public class GroupSetting extends AbstractUI {
                     .append(new FunctionalButton("☐") {
                         @Override
                         public void function() {
-                            GroupCommand.setGroupFlag(sender, DominionName, groupName, flag.getFlagName(), "true", pageStr);
+                            GroupCommand.setGroupFlag(player, DominionName, groupName, flag.getFlagName(), "true", pageStr);
                         }
                     }.needPermission(defaultPermission).red().build())
                     .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 public abstract class AbstractUI {
 
-    protected abstract void showTUI(CommandSender sender, String... args) throws Exception;
+    protected abstract void showTUI(Player player, String... args) throws Exception;
 
     protected abstract void showCUI(Player player, String... args) throws Exception;
 
@@ -20,17 +20,17 @@ public abstract class AbstractUI {
             if (sender instanceof Player player) {
                 PlayerDTO playerDTO = CacheManager.instance.getPlayer(player.getUniqueId());
                 if (playerDTO == null) {
-                    showTUI(sender, args);
+                    showTUI(player, args);
                     XLogger.warn("PlayerDTO not found for player: " + player.getName() + ". Showing TUI instead.");
                     return;
                 }
                 if (Objects.requireNonNull(playerDTO.getUiPreference()) == PlayerDTO.UI_TYPE.CUI) {
                     showCUI(player, args);
                 } else {
-                    showTUI(sender, args);
+                    showTUI(player, args);
                 }
             } else {
-                showTUI(sender, args);
+                // todo handle console case
             }
         } catch (Exception e) {
             Notification.error(sender, e);
