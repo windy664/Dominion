@@ -114,11 +114,11 @@ public class SetSize extends AbstractUI {
     public static class SetSizeCui extends ConfigurationPart {
         public String title = "§6✦ §2§lResize {0} §6✦";
         public List<String> layout = List.of(
-                "<########",
-                "##Nn##Uu#",
-                "#Ww#Ee###",
-                "##Ss##Dd#",
-                "#########"
+                "<##N###U#",
+                "###n###u#",
+                "#Ww#eE###",
+                "###s###d#",
+                "###S###D#"
         );
 
         public ButtonConfiguration backButton = ButtonConfiguration.createMaterial(
@@ -133,7 +133,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addNorthButton = ButtonConfiguration.createMaterial(
-                'N', Material.OAK_SIGN,
+                'N', Material.LIME_DYE,
                 "§6🧭 §eExpand North (Z-)",
                 List.of(
                         "§7Expand the dominion to the north",
@@ -144,7 +144,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addSouthButton = ButtonConfiguration.createMaterial(
-                'S', Material.OAK_SIGN,
+                'S', Material.LIME_DYE,
                 "§6🧭 §eExpand South (Z+)",
                 List.of(
                         "§7Expand the dominion to the south",
@@ -155,7 +155,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addWestButton = ButtonConfiguration.createMaterial(
-                'W', Material.OAK_SIGN,
+                'W', Material.LIME_DYE,
                 "§6🧭 §eExpand West (X-)",
                 List.of(
                         "§7Expand the dominion to the west",
@@ -166,7 +166,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addEastButton = ButtonConfiguration.createMaterial(
-                'E', Material.OAK_SIGN,
+                'E', Material.LIME_DYE,
                 "§6🧭 §eExpand East (X+)",
                 List.of(
                         "§7Expand the dominion to the east",
@@ -177,7 +177,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addUpButton = ButtonConfiguration.createMaterial(
-                'U', Material.OAK_SIGN,
+                'U', Material.LIME_DYE,
                 "§6🧭 §eExpand Up (Y+)",
                 List.of(
                         "§7Expand the dominion upwards",
@@ -188,7 +188,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration addDownButton = ButtonConfiguration.createMaterial(
-                'D', Material.OAK_SIGN,
+                'D', Material.LIME_DYE,
                 "§6🧭 §eExpand Down (Y-)",
                 List.of(
                         "§7Expand the dominion downwards",
@@ -199,7 +199,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractNorthButton = ButtonConfiguration.createMaterial(
-                'n', Material.BARRIER,
+                'n', Material.RED_DYE,
                 "§6🧭 §cContract North (Z-)",
                 List.of(
                         "§7Contract the dominion from the north",
@@ -210,7 +210,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractSouthButton = ButtonConfiguration.createMaterial(
-                's', Material.BARRIER,
+                's', Material.RED_DYE,
                 "§6🧭 §cContract South (Z+)",
                 List.of(
                         "§7Contract the dominion from the south",
@@ -221,7 +221,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractWestButton = ButtonConfiguration.createMaterial(
-                'w', Material.BARRIER,
+                'w', Material.RED_DYE,
                 "§6🧭 §cContract West (X-)",
                 List.of(
                         "§7Contract the dominion from the west",
@@ -232,7 +232,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractEastButton = ButtonConfiguration.createMaterial(
-                'e', Material.BARRIER,
+                'e', Material.RED_DYE,
                 "§6🧭 §cContract East (X+)",
                 List.of(
                         "§7Contract the dominion from the east",
@@ -243,7 +243,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractUpButton = ButtonConfiguration.createMaterial(
-                'u', Material.BARRIER,
+                'u', Material.RED_DYE,
                 "§6🧭 §cContract Up (Y+)",
                 List.of(
                         "§7Contract the dominion upwards",
@@ -254,7 +254,7 @@ public class SetSize extends AbstractUI {
         );
 
         public ButtonConfiguration contractDownButton = ButtonConfiguration.createMaterial(
-                'd', Material.BARRIER,
+                'd', Material.RED_DYE,
                 "§6🧭 §cContract Down (Y-)",
                 List.of(
                         "§7Contract the dominion downwards",

@@ -33,20 +33,20 @@ public class XLogger {
     private boolean _debug = false;
 
     public static void info(String message) {
-        instance._logger.info("§a I | " + message);
+        instance._logger.info(" I | " + message);
     }
 
     public static void warn(String message) {
-        instance._logger.warning("§e W | " + message);
+        instance._logger.warning(" W | " + message);
     }
 
     public static void error(String message) {
-        instance._logger.severe("§c E | " + message);
+        instance._logger.severe(" E | " + message);
     }
 
     public static void debug(String message) {
         if (!instance._debug) return;
-        instance._logger.info("§9 D | " + message);
+        instance._logger.info(" D | " + message);
     }
 
     public static void info(String message, Object... args) {
