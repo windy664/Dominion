@@ -54,7 +54,7 @@ public class DominionInterface extends DominionAPI {
     }
 
     @Override
-    public @NotNull DominionDTO getDominion(String name) {
+    public @Nullable DominionDTO getDominion(String name) {
         return CacheManager.instance.getDominion(name);
     }
 

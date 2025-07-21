@@ -10,7 +10,6 @@ import cn.lunadeer.dominion.cache.server.PlayerCache;
 import cn.lunadeer.dominion.cache.server.ResidenceDataCache;
 import cn.lunadeer.dominion.cache.server.ServerCache;
 import cn.lunadeer.dominion.configuration.Configuration;
-import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.doos.PlayerDOO;
 import cn.lunadeer.dominion.events.PlayerCrossDominionBorderEvent;
 import cn.lunadeer.dominion.events.PlayerMoveInDominionEvent;
@@ -350,7 +349,7 @@ public class CacheManager {
      * @return the DominionDTO associated with the given name
      * @throws DominionException if the dominion name is not found
      */
-    public @NotNull DominionDTO getDominion(String name) {
+    public @Nullable DominionDTO getDominion(String name) {
         DominionDTO dominion = thisServerCache.getDominionCache().getDominion(name);
         if (dominion != null) {
             return dominion;
@@ -362,7 +361,7 @@ public class CacheManager {
                 }
             }
         }
-        throw new DominionException(Language.convertsText.unknownDominion, name);
+        return null;
     }
 
     /**

@@ -173,7 +173,11 @@ public class Converts {
      * @throws DominionException If the dominion is unknown.
      */
     public static @NotNull DominionDTO toDominionDTO(@NotNull String name) throws DominionException {
-        return CacheManager.instance.getDominion(name);
+        DominionDTO dominion = CacheManager.instance.getDominion(name);
+        if (dominion != null)
+            return dominion;
+        else
+            throw new DominionException(Language.convertsText.unknownDominion, name);
     }
 
     public static @NotNull DominionDTO toDominionDTO(@NotNull Integer id) throws DominionException {
