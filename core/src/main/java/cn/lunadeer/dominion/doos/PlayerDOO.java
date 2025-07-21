@@ -143,8 +143,12 @@ public class PlayerDOO implements PlayerDTO {
     }
 
     @Override
-    public PlayerDTO updateLastKnownName(String name, URL skinUrl) throws SQLException {
+    public PlayerDTO updateLastKnownName(@NotNull String name, @Nullable URL skinUrl) throws SQLException, MalformedURLException {
         this.setLastKnownName(name);
+        if (skinUrl == null) {
+            // Default skin URL if none provided
+            skinUrl = new URL("http://textures.minecraft.net/texture/613ba1403f98221fab6f4ae0f9e5298068262258966e8f9e53cdedd97aa45ef1");
+        }
         this.setSkinUrl(skinUrl);
         this.setLastJoinAt(LocalDateTime.now());
         Update.update("player_name")

@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -178,14 +177,14 @@ public class CacheManager {
      *
      * @param bukkitPlayer the Player object representing the player
      */
-    public void updatePlayerName(@NotNull Player bukkitPlayer) throws SQLException {
+    public void updatePlayerName(@NotNull Player bukkitPlayer) throws Exception {
         PlayerDTO player = playerCache.getPlayer(bukkitPlayer.getUniqueId());
         URL skin = null;
         try{
             skin = bukkitPlayer.getPlayerProfile().getTextures().getSkin();
         }catch (NoSuchMethodError ignored){}
         if (player != null) {
-            player.updateLastKnownName(bukkitPlayer.getName(), skin);
+            player = player.updateLastKnownName(bukkitPlayer.getName(), skin);
         } else {
             PlayerDOO.create(bukkitPlayer);
         }
