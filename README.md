@@ -55,6 +55,16 @@ For detailed contribution guidelines (such as **translation** etc.), please see 
   <img src="https://contrib.rocks/image?repo=LunaDeerMC/Dominion" />
 </a>
 
+## Special Thanks
+
+[<img src="https://user-images.githubusercontent.com/21148213/121807008-8ffc6700-cc52-11eb-96a7-2f6f260f8fda.png" alt="" width="150">](https://www.jetbrains.com)
+
+[JetBrains](https://www.jetbrains.com/), creators of the IntelliJ IDEA, supports this project with one of
+their [Open Source Licenses](https://www.jetbrains.com/opensource/). IntelliJ IDEA is the recommended IDE for developing
+Dominion, as it provides powerful features such as code completion, refactoring, and debugging tools that can greatly
+enhance your development experience. If you are a developer, we highly recommend you to use IntelliJ IDEA for your
+Dominion development.
+
 ## bStats Statics
 
 <div align="center">

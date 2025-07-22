@@ -51,6 +51,14 @@ Dominion 是一个完全开源、免费，专为高版本开发，面向未来�
 Dominion 提供了一些简单（只是暂时，后续会逐步增强api）的 API 供开发者基于 Dominion
 构建一些更有趣的东西。您可以查看 [API 参考](https://dominion.lunadeer.cn/notes/api/) 了解更多细节。
 
+## Special Thanks
+
+[<img src="https://user-images.githubusercontent.com/21148213/121807008-8ffc6700-cc52-11eb-96a7-2f6f260f8fda.png" alt="" width="150">](https://www.jetbrains.com)
+
+[JetBrains](https://www.jetbrains.com/)，IntelliJ IDEA 的开发者，通过其[开源许可证](https://www.jetbrains.com/opensource/)
+支持了本项目。IntelliJ IDEA 是开发 Dominion 的推荐 IDE，它提供了强大的代码补全、重构和调试工具，可以极大提升您的开发体验。如果您是开发者，我们强烈推荐您使用
+IntelliJ IDEA 进行 Dominion 的开发。
+
 ## 整个烂活儿
 
 |         | Dominion | R插件 | G插件 |
