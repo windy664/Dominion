@@ -251,7 +251,9 @@ public class MemberList extends AbstractUI {
                 }
         );
 
-        for (MemberDTO m : dominion.getMembers()) {
+        // get data from database directly because cache update may not be in time
+        List<MemberDTO> members = new ArrayList<>(selectByDominionId(dominion.getId()));
+        for (MemberDTO m : members) {
             ButtonConfiguration item = ButtonConfiguration.createHeadByName(
                     ChestUserInterface.memberListCui.listConfiguration.itemSymbol.charAt(0),
                     m.getPlayer().getLastKnownName(),

@@ -45,10 +45,9 @@ public class PlaceHolderApi extends PlaceholderExpansion {
             }
             return dominion.getName();
         }
-        if (params.startsWith("tp_loc_")) { // %dominion_tp_loc_<dominion_name>_x%
-            String parm = params.substring(8); // Remove "tp_loc_"
-            String coordinate = parm.substring(parm.lastIndexOf('_') + 1); // Get the last part after the last '_'
-            String dominionName = parm.substring(0, parm.lastIndexOf('_')); // Get the dominion name part
+        if (params.startsWith("tp_loc_")) { // %dominion_tp_loc_x_<dominion_name>%
+            String coordinate = params.substring(8, 9); // x, y, or z
+            String dominionName = params.substring(10); // Get the dominion name after the coordinate
 
             DominionDTO dominion = CacheManager.instance.getDominion(dominionName);
             if (dominion == null) {

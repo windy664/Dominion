@@ -40,6 +40,7 @@ public class Language extends ConfigurationFile {
     public enum LanguageCode {
         en_us,
         zh_cn,
+        jp_jp,
     }
 
     public static Dominion.DominionText dominionText = new Dominion.DominionText();

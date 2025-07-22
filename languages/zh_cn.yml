@@ -462,6 +462,9 @@ flags:
   lead:
     display-name: 拴绳
     description: 是否可以使用拴绳/牵引（包括：动物、盔甲架、船等）
+  sowing:
+    display-name: 播种
+    description: 是否可以播种（放置种子）各种作物
 create-dominion-inputter-text:
   button: 创建领地
   description: 在你的周围创建一个新的领地。

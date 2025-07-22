@@ -408,7 +408,7 @@ flags:
     display-name: Pressure Plate (Mob)
     description: Whether mob (player not included) can trigger pressure plate.
   creeper_explode:
-    display-name: Entity Explode
+    display-name: Entity Explode (No-TNT)
     description: Creeper/Wither Skull/Ender Crystal/Fireball/Bed/Respawn Anchor.
   mob_drop_item:
     display-name: Mob Drop Item
@@ -496,22 +496,25 @@ flags:
     description: Whether farmland can be trampled (false means protect farmland).
   ice_melt:
     display-name: Ice Melt
-    description: Whether to allow ice to melt
+    description: Whether to allow ice to melt.
   ice_form:
     display-name: Ice Form
-    description: Whether to allow ice to form (prevents Frost Walker)
+    description: Whether to allow ice to form (prevents Frost Walker).
   snow_accumulation:
     display-name: Snow Accumulation
-    description: Whether to allow snow accumulation
+    description: Whether to allow snow accumulation.
   snow_melt:
     display-name: Snow Melt
-    description: Whether to allow snow to melt
+    description: Whether to allow snow to melt.
   pvp:
     display-name: PVP
-    description: Damage between players
+    description: Damage between players.
   lead:
     display-name: Leash
-    description: Whether to allow leashing animals/mobs/entities
+    description: Whether to allow leashing animals/mobs/entities.
+  sowing:
+    display-name: Sowing
+    description: Whether to allow sowing crops (wheat, carrot etc.).
 rename-template-inputter-text:
   button: RENAME
   hint: Enter new template name.
