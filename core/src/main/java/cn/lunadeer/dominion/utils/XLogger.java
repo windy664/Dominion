@@ -1,56 +1,50 @@
 package cn.lunadeer.dominion.utils;
 
+import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.logging.Logger;
+import org.jetbrains.annotations.NotNull;
 
 import static cn.lunadeer.dominion.utils.Misc.formatString;
 
 public class XLogger {
     public static XLogger instance;
 
-    public XLogger() {
+    public XLogger(@NotNull JavaPlugin plugin) {
         instance = this;
-        this._logger = Logger.getLogger("Lunadeer");
-    }
-
-    public XLogger(@Nullable JavaPlugin plugin) {
-        instance = this;
-        this._logger = plugin != null ? plugin.getLogger() : Logger.getLogger("Lunadeer");
+        this.sender = plugin.getServer().getConsoleSender();
     }
 
     public static XLogger setDebug(boolean debug) {
-        instance._debug = debug;
+        instance.debug = debug;
         return instance;
     }
 
     public static boolean isDebug() {
-        return instance._debug;
+        return instance.debug;
     }
 
-    private final Logger _logger;
-    private boolean _debug = false;
+    private final ConsoleCommandSender sender;
+    private boolean debug = false;
 
     public static void info(String message) {
-        instance._logger.info(" I | " + message);
+        Notification.info(instance.sender, "&a I | " + message);
     }
 
     public static void warn(String message) {
-        instance._logger.warning(" W | " + message);
+        Notification.warn(instance.sender, "&e W | " + message);
     }
 
     public static void error(String message) {
-        instance._logger.severe(" E | " + message);
+        Notification.error(instance.sender, "&c E | " + message);
     }
 
     public static void debug(String message) {
-        if (!instance._debug) return;
-        instance._logger.info(" D | " + message);
+        if (!instance.debug) return;
+        Notification.info(instance.sender, "&9 D | " + message);
     }
 
     public static void info(String message, Object... args) {
-        info(String.format(message, args));
+        info(formatString(message, args));
     }
 
     public static void warn(String message, Object... args) {
