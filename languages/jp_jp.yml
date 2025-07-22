@@ -509,7 +509,7 @@ flags:
   pvp:
     display-name: PVP
     description: プレイヤー間のダメージ。
-  lead:
+  leash:
     display-name: リード
     description: 動物/モブ/エンティティをリードできるかどうか。
   sowing:

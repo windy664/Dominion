@@ -459,7 +459,7 @@ flags:
   snow_melt:
     display-name: 积雪融化
     description: 是否允许积雪融化
-  lead:
+  leash:
     display-name: 拴绳
     description: 是否可以使用拴绳/牵引（包括：动物、盔甲架、船等）
   sowing:

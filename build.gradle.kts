@@ -20,7 +20,7 @@ libraries += "com.zaxxer:HikariCP:6.2.1"
 var suffixes = getAndIncrementVersion()
 
 group = "cn.lunadeer"
-version = "4.4.2-$suffixes"
+version = "4.4.3-$suffixes"
 
 java {
     toolchain.languageVersion.set(JavaLanguageVersion.of(17))

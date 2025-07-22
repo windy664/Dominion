@@ -509,7 +509,7 @@ flags:
   pvp:
     display-name: PVP
     description: Damage between players.
-  lead:
+  leash:
     display-name: Leash
     description: Whether to allow leashing animals/mobs/entities.
   sowing:
