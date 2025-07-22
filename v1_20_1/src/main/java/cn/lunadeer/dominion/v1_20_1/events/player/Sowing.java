@@ -1,4 +1,4 @@
-package cn.lunadeer.dominion.v1_20_1.events.player.Place;
+package cn.lunadeer.dominion.v1_20_1.events.player;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
@@ -12,12 +12,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import static cn.lunadeer.dominion.misc.Others.checkPrivilegeFlag;
 import static cn.lunadeer.dominion.misc.Others.isCrop;
 
-public class NormalBlock implements Listener {
+public class Sowing implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void handler(BlockPlaceEvent event) {
-        if (isCrop(event.getBlock().getType())) return;
+        if (!isCrop(event.getBlock().getType())) return;
         DominionDTO dominion = CacheManager.instance.getDominion(event.getBlock().getLocation());
         Player player = event.getPlayer();
-        checkPrivilegeFlag(dominion, Flags.PLACE, player, event);
+        checkPrivilegeFlag(dominion, Flags.SOWING, player, event);
     }
 }
