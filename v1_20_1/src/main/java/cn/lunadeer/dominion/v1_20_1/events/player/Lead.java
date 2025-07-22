@@ -16,6 +16,6 @@ public class Lead implements Listener {
     public void handler(PlayerLeashEntityEvent event) {
         Player player = event.getPlayer();
         DominionDTO dom = CacheManager.instance.getDominion(event.getEntity().getLocation());
-        checkPrivilegeFlag(dom, Flags.LEAD, player, event);
+        checkPrivilegeFlag(dom, Flags.LEASH, player, event);
     }
 }
