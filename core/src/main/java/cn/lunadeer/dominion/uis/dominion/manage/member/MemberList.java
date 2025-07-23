@@ -7,6 +7,7 @@ import cn.lunadeer.dominion.api.dtos.PlayerDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.MemberCommand;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
@@ -14,6 +15,7 @@ import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -30,6 +32,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextColor;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -45,6 +48,7 @@ import static cn.lunadeer.dominion.misc.Asserts.assertDominionOwner;
 import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.utils.Misc.formatString;
+import static cn.lunadeer.dominion.utils.Misc.pageUtil;
 
 public class MemberList extends AbstractUI {
 
@@ -278,5 +282,45 @@ public class MemberList extends AbstractUI {
         }
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.info(sender, ChestUserInterface.memberListCui.title, args[0]);
+        // command
+        Notification.info(sender, MemberCommand.addMember.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.addMember.getDescription());
+        Notification.info(sender, MemberCommand.removeMember.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.removeMember.getDescription());
+        Notification.info(sender, MemberSetting.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberSetting.flags.getDescription());
+        // item
+        DominionDTO dominion = toDominionDTO(args[0]);
+        int page = toIntegrity(args[1], 1);
+        List<MemberDTO> members = new ArrayList<>(selectByDominionId(dominion.getId()));
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 10, members.size());
+        for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
+            MemberDTO member = members.get(i);
+            PlayerDTO p_player = member.getPlayer();
+            StringBuilder line = new StringBuilder();
+            if (member.getGroupId() == -1) {
+                line.append("§6▶ &a[G] &7");
+            } else if (member.getFlagValue(Flags.ADMIN)) {
+                line.append("§6▶ &9[A] &f");
+            } else {
+                if (!member.getFlagValue(Flags.MOVE)) {
+                    line.append("§6▶ &c[B] &f");
+                } else {
+                    line.append("§6▶ &f[N] &f");
+                }
+            }
+            line.append(p_player.getLastKnownName());
+            Notification.info(sender, line.toString());
+        }
+        // page info
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), members.size());
     }
 }

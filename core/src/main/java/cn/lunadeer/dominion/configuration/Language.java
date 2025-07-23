@@ -15,6 +15,7 @@ import cn.lunadeer.dominion.managers.TeleportManager;
 import cn.lunadeer.dominion.misc.Asserts;
 import cn.lunadeer.dominion.misc.Converts;
 import cn.lunadeer.dominion.misc.Others;
+import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.utils.VaultConnect.VaultConnect;
 import cn.lunadeer.dominion.utils.command.InvalidArgumentException;
 import cn.lunadeer.dominion.utils.command.NoPermissionException;
@@ -44,6 +45,7 @@ public class Language extends ConfigurationFile {
     }
 
     public static Dominion.DominionText dominionText = new Dominion.DominionText();
+    public static AbstractUI.ConsoleText consoleText = new AbstractUI.ConsoleText();
 
     public static MultiServerManager.MultiServerManagerText multiServerManagerText = new MultiServerManager.MultiServerManagerText();
 

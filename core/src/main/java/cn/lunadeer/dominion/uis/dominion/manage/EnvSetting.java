@@ -4,12 +4,16 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.flag.EnvFlag;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.commands.DominionFlagCommand;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
+import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.utils.Notification;
+import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestListView;
@@ -21,6 +25,7 @@ import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.FunctionalButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import net.kyori.adventure.text.Component;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -39,6 +44,16 @@ public class EnvSetting extends AbstractUI {
     public static void show(CommandSender sender, String dominionName, String pageStr) {
         new EnvSetting().displayByPreference(sender, dominionName, pageStr);
     }
+
+    public static SecondaryCommand flags = new SecondaryCommand("env_flags", List.of(
+            new CommandArguments.RequiredDominionArgument(),
+            new CommandArguments.OptionalPageArgument()
+    )) {
+        @Override
+        public void executeHandler(CommandSender sender) {
+            show(sender, getArgumentValue(0), getArgumentValue(1));
+        }
+    }.needPermission(defaultPermission).register();
 
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
@@ -181,6 +196,30 @@ public class EnvSetting extends AbstractUI {
         }
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.info(sender, ChestUserInterface.envSettingCui.title, args[0]);
+
+        Notification.info(sender, DominionFlagCommand.SetEnvFlag.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionFlagCommand.SetEnvFlag.getDescription());
+
+        DominionDTO dominion = toDominionDTO(args[0]);
+        int page = toIntegrity(args[2], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllEnvFlagsEnable().size());
+        for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
+            EnvFlag flag = Flags.getAllEnvFlagsEnable().get(i);
+            String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
+            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
+            Notification.info(sender, item);
+        }
+
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
     }
 
 }

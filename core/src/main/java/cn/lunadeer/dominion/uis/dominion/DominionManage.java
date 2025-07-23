@@ -1,6 +1,7 @@
 package cn.lunadeer.dominion.uis.dominion;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
+import cn.lunadeer.dominion.commands.CopyCommand;
 import cn.lunadeer.dominion.commands.DominionOperateCommand;
 import cn.lunadeer.dominion.configuration.Configuration;
 import cn.lunadeer.dominion.configuration.Language;
@@ -19,6 +20,7 @@ import cn.lunadeer.dominion.uis.dominion.manage.Info;
 import cn.lunadeer.dominion.uis.dominion.manage.SetSize;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -455,5 +457,38 @@ public class DominionManage extends AbstractUI {
         });
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        DominionDTO dominion = toDominionDTO(args[0]);
+
+        Notification.info(sender, ChestUserInterface.dominionManageCui.title, dominion.getName());
+
+        Notification.info(sender, EnvSetting.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, EnvSetting.flags.getDescription());
+        Notification.info(sender, GuestSetting.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, GuestSetting.flags.getDescription());
+        Notification.info(sender, MemberList.list.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberList.list.getDescription());
+        Notification.info(sender, GroupList.list.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, GroupList.list.getDescription());
+        Notification.info(sender, DominionOperateCommand.rename.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionOperateCommand.rename.getDescription());
+        Notification.info(sender, DominionOperateCommand.resize.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionOperateCommand.resize.getDescription());
+        Notification.info(sender, DominionOperateCommand.setMessage.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionOperateCommand.setMessage.getDescription());
+        Notification.info(sender, CopyCommand.copyEnvironmentCommand.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, CopyCommand.copyEnvironmentCommand.getDescription());
+        Notification.info(sender, CopyCommand.copyGuestCommand.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, CopyCommand.copyGuestCommand.getDescription());
+        Notification.info(sender, CopyCommand.copyMemberCommand.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, CopyCommand.copyMemberCommand.getDescription());
+        Notification.info(sender, CopyCommand.copyGroupCommand.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, CopyCommand.copyGroupCommand.getDescription());
     }
 }

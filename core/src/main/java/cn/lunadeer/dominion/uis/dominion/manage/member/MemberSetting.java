@@ -5,6 +5,7 @@ import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.MemberCommand;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
@@ -12,6 +13,7 @@ import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -24,6 +26,7 @@ import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.FunctionalButton;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
 import net.kyori.adventure.text.Component;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -42,13 +45,14 @@ public class MemberSetting extends AbstractUI {
         new MemberSetting().displayByPreference(sender, dominionName, playerName, pageStr);
     }
 
-    public static SecondaryCommand setting = new SecondaryCommand("member_setting", List.of(
+    public static SecondaryCommand flags = new SecondaryCommand("member_flags", List.of(
             new CommandArguments.RequiredDominionArgument(),
-            new CommandArguments.RequiredPlayerArgument()
+            new CommandArguments.RequiredPlayerArgument(),
+            new CommandArguments.OptionalPageArgument()
     )) {
         @Override
         public void executeHandler(CommandSender sender) {
-            show(sender, getArgumentValue(0), getArgumentValue(1), "1");
+            show(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
         }
     }.needPermission(defaultPermission).register();
 
@@ -220,5 +224,30 @@ public class MemberSetting extends AbstractUI {
         }
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.info(sender, ChestUserInterface.memberSettingCui.title);
+        // command
+        Notification.info(sender, MemberCommand.setMemberPrivilege.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.setMemberPrivilege.getDescription());
+        // items
+        DominionDTO dominion = toDominionDTO(args[0]);
+        MemberDTO member = toMemberDTO(dominion, args[1]);
+        int page = toIntegrity(args[2], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
+        for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
+            PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
+            String flagState = member.getFlagValue(flag) ? ChestUserInterface.memberSettingCui.flagItemStateTrue : ChestUserInterface.memberSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.memberSettingCui.flagItemName, flag.getDisplayName());
+            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
+            Notification.info(sender, item);
+        }
+        // page info
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
     }
 }

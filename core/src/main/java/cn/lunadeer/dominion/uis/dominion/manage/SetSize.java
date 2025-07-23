@@ -1,6 +1,7 @@
 package cn.lunadeer.dominion.uis.dominion.manage;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.events.dominion.modify.DominionReSizeEvent;
@@ -9,6 +10,7 @@ import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
 import cn.lunadeer.dominion.utils.scui.ChestUserInterfaceManager;
@@ -104,8 +106,8 @@ public class SetSize extends AbstractUI {
     private Line createDirectionLine(Player player, String dominionName, DirectionInfo directionInfo) {
         return Line.create()
                 .append(directionInfo.getDisplayName())
-                .append(ResizeDominionInputter.createExpandTuiButtonOn(player, dominionName, directionInfo.getDirection()).build())
-                .append(ResizeDominionInputter.createContractTuiButtonOn(player, dominionName, directionInfo.getDirection()).build());
+                .append(ResizeDominionInputter.createExpandTuiButtonOn(player, dominionName, directionInfo.direction()).build())
+                .append(ResizeDominionInputter.createContractTuiButtonOn(player, dominionName, directionInfo.direction()).build());
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
@@ -342,21 +344,20 @@ public class SetSize extends AbstractUI {
     }
 
     // Helper class to organize direction information
-    private static class DirectionInfo {
-        private final DominionReSizeEvent.DIRECTION direction;
-        private final java.util.function.Supplier<String> displayNameSupplier;
-
-        public DirectionInfo(DominionReSizeEvent.DIRECTION direction, java.util.function.Supplier<String> displayNameSupplier) {
-            this.direction = direction;
-            this.displayNameSupplier = displayNameSupplier;
-        }
-
-        public DominionReSizeEvent.DIRECTION getDirection() {
-            return direction;
-        }
+    private record DirectionInfo(DominionReSizeEvent.DIRECTION direction,
+                                 java.util.function.Supplier<String> displayNameSupplier) {
 
         public String getDisplayName() {
             return displayNameSupplier.get();
         }
+    }
+
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.warn(sender, Language.consoleText.inGameOnly);
     }
 }

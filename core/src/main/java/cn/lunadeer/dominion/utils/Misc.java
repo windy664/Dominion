@@ -1,6 +1,7 @@
 package cn.lunadeer.dominion.utils;
 
 import cn.lunadeer.dominion.managers.PlaceHolderApi;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -169,6 +170,34 @@ public class Misc {
         } else {
             return message;
         }
+    }
+
+
+    /**
+     * Calculates pagination information based on the current page, page size, and total items.
+     * <p>
+     * Returns a Triple containing the start index (inclusive), end index (exclusive), and total number of pages.
+     * Ensures that page and pageSize are at least 1, and that the page does not exceed the total number of pages.
+     *
+     * @param page      the current page number (1-based)
+     * @param pageSize  the number of items per page
+     * @param totalItem the total number of items
+     * @return a Triple of (start index, end index, total pages)
+     */
+    public static Triple<Integer, Integer, Integer> pageUtil(int page, int pageSize, int totalItem) {
+        if (page < 1) {
+            page = 1;
+        }
+        if (pageSize < 1) {
+            pageSize = 1;
+        }
+        int totalPage = (int) Math.ceil((double) totalItem / pageSize);
+        if (page > totalPage) {
+            page = totalPage;
+        }
+        int start = (page - 1) * pageSize;
+        int end = Math.min(start + pageSize, totalItem);
+        return Triple.of(start, end, totalPage);
     }
 
 }

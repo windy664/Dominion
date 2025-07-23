@@ -365,4 +365,18 @@ public class MainMenu extends AbstractUI {
 
         view.open();
     }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.info(sender, ChestUserInterface.mainMenuCui.title);
+        Notification.info(sender, AllDominion.listAll.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, AllDominion.listAll.getDescription());
+        Notification.info(sender, MigrateList.migrateList.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MigrateList.migrateList.getDescription());
+        Notification.info(sender, AdministratorCommand.reloadCache.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, AdministratorCommand.reloadCache.getDescription());
+    }
 }

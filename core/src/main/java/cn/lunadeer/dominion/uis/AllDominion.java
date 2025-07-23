@@ -2,10 +2,12 @@ package cn.lunadeer.dominion.uis;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.DominionManage;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -16,6 +18,7 @@ import cn.lunadeer.dominion.utils.scui.configuration.ListViewConfiguration;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -27,6 +30,7 @@ import static cn.lunadeer.dominion.Dominion.adminPermission;
 import static cn.lunadeer.dominion.managers.TeleportManager.teleportToDominion;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.uis.dominion.DominionList.BuildTreeLines;
+import static cn.lunadeer.dominion.utils.Misc.pageUtil;
 
 public class AllDominion extends AbstractUI {
 
@@ -148,5 +152,27 @@ public class AllDominion extends AbstractUI {
         );
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        Notification.info(sender, ChestUserInterface.allDominionCui.title);
+        // command
+        Notification.info(sender, DominionManage.manage.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionManage.manage.getDescription());
+        // item
+        List<DominionDTO> dominions = CacheManager.instance.getCache().getDominionCache().getAllDominions();
+        int page = toIntegrity(args[0], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, dominions.size());
+        for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
+            DominionDTO dominion = dominions.get(i);
+            String ownerName = dominion.getOwnerDTO().getLastKnownName();
+            Notification.info(sender, "§6▶ §e{0} §7(§b{1}§7) ", dominion.getName(), ownerName);
+        }
+        // page info
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), dominions.size());
     }
 }

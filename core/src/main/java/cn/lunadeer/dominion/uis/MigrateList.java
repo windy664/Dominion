@@ -3,6 +3,7 @@ package cn.lunadeer.dominion.uis;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.commands.MigrationCommand;
 import cn.lunadeer.dominion.configuration.Configuration;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
@@ -18,6 +19,7 @@ import cn.lunadeer.dominion.utils.scui.configuration.ListViewConfiguration;
 import cn.lunadeer.dominion.utils.stui.ListView;
 import cn.lunadeer.dominion.utils.stui.components.Line;
 import cn.lunadeer.dominion.utils.stui.components.buttons.ListViewButton;
+import org.apache.commons.lang3.tuple.Triple;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -29,6 +31,7 @@ import java.util.List;
 import static cn.lunadeer.dominion.Dominion.adminPermission;
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
+import static cn.lunadeer.dominion.utils.Misc.pageUtil;
 
 
 public class MigrateList extends AbstractUI {
@@ -230,5 +233,33 @@ public class MigrateList extends AbstractUI {
         );
 
         view.open();
+    }
+
+    // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+    // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+
+    @Override
+    protected void showConsole(CommandSender sender, String... args) throws Exception {
+        if (!Configuration.residenceMigration) {
+            Notification.error(sender, TextUserInterface.migrateListTuiText.notEnabled);
+            return;
+        }
+
+        Notification.info(sender, ChestUserInterface.migrateListCui.title);
+
+        Notification.info(sender, MigrationCommand.migrateAll.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MigrationCommand.migrateAll.getDescription());
+        Notification.info(sender, MigrationCommand.migrate.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MigrationCommand.migrate.getDescription());
+
+        List<ResMigration.ResidenceNode> res_data = CacheManager.instance.getResidenceCache().getResidenceData();
+        int page = toIntegrity(args[0], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, res_data.size());
+        for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
+            ResMigration.ResidenceNode node = res_data.get(i);
+            Notification.info(sender, "§6📋 §f{0} §7(§b{1}§7) ", node.name, node.ownerName);
+        }
+
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), res_data.size());
     }
 }
