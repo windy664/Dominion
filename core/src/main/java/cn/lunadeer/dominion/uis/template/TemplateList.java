@@ -68,7 +68,7 @@ public class TemplateList extends AbstractUI {
                 .append(CreateTemplateInputter.createTuiButtonOn(player).needPermission(defaultPermission).build()));
 
         for (TemplateDOO template : templates) {
-            Button setting = TemplateSetting.button(player, template.getName()).green();
+            Button setting = TemplateFlags.button(player, template.getName()).green();
             Button delete = new ListViewButton(TextUserInterface.templateListTuiText.deleteButton) {
                 @Override
                 public void function(String pageStr) {
@@ -156,7 +156,7 @@ public class TemplateList extends AbstractUI {
             ChestButton btn = new ChestButton(ChestUserInterface.templateListCui.templateItemButton) {
                 @Override
                 public void onClick(ClickType type) {
-                    TemplateSetting.show(player, template.getName(), "1");
+                    TemplateFlags.show(player, template.getName(), "1");
                 }
             };
             btn = btn.setDisplayNameArgs(template.getName());

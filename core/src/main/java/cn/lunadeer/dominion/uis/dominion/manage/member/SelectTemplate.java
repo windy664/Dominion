@@ -64,7 +64,7 @@ public class SelectTemplate extends AbstractUI {
         ListView view = ListView.create(10, button(player, dominionName, playerName));
         view.title(TextUserInterface.selectTemplateTuiText.title);
         Line sub = Line.create()
-                .append(MemberSetting.button(player, dominionName, playerName).setText(TextUserInterface.selectTemplateTuiText.back).build());
+                .append(MemberFlags.button(player, dominionName, playerName).setText(TextUserInterface.selectTemplateTuiText.back).build());
         view.subtitle(sub);
 
         for (TemplateDOO template : templates) {
@@ -137,7 +137,7 @@ public class SelectTemplate extends AbstractUI {
                 new ChestButton(ChestUserInterface.selectTemplateCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        MemberSetting.show(player, dominionName, playerName, "1");
+                        MemberFlags.show(player, dominionName, playerName, "1");
                     }
                 }
         );
@@ -148,7 +148,7 @@ public class SelectTemplate extends AbstractUI {
                 @Override
                 public void onClick(ClickType type) {
                     TemplateCommand.memberApplyTemplate(player, dominionName, playerName, template.getName());
-                    MemberSetting.show(player, dominionName, playerName, "1");
+                    MemberFlags.show(player, dominionName, playerName, "1");
                 }
             }.setDisplayNameArgs(template.getName()).setLoreArgs(playerName, template.getName());
             view.addItem(templateChest);

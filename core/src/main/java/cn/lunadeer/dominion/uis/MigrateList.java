@@ -42,7 +42,7 @@ public class MigrateList extends AbstractUI {
 
     public static SecondaryCommand migrateList = new SecondaryCommand("migrate_list", List.of(
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.migrateList) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {

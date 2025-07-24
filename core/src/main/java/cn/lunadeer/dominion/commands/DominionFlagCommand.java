@@ -7,8 +7,8 @@ import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.dominion.modify.DominionSetEnvFlagEvent;
 import cn.lunadeer.dominion.events.dominion.modify.DominionSetGuestFlagEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
-import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.EnvFlags;
+import cn.lunadeer.dominion.uis.dominion.manage.GuestFlags;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
@@ -62,7 +62,7 @@ public class DominionFlagCommand {
             EnvFlag flag = toEnvFlag(flagName);
             boolean value = toBoolean(valueStr);
             new DominionSetEnvFlagEvent(sender, dominion, flag, value).call();
-            EnvSetting.show(sender, dominionName, pageStr);
+            EnvFlags.show(sender, dominionName, pageStr);
         } catch (Exception e) {
             Notification.error(sender, e);
         }
@@ -103,7 +103,7 @@ public class DominionFlagCommand {
             PriFlag flag = toPriFlag(flagName);
             boolean value = toBoolean(valueStr);
             new DominionSetGuestFlagEvent(sender, dominion, flag, value).call();
-            GuestSetting.show(sender, dominionName, pageStr);
+            GuestFlags.show(sender, dominionName, pageStr);
         } catch (Exception e) {
             Notification.error(sender, e);
         }

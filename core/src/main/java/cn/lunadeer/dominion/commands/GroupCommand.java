@@ -7,8 +7,8 @@ import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.group.*;
 import cn.lunadeer.dominion.misc.CommandArguments;
+import cn.lunadeer.dominion.uis.dominion.manage.group.GroupFlags;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
-import cn.lunadeer.dominion.uis.dominion.manage.group.GroupSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -89,7 +89,7 @@ public class GroupCommand {
             DominionDTO dominion = toDominionDTO(dominionName);
             GroupDTO group = toGroupDTO(dominion, oldGroupName);
             new GroupRenamedEvent(sender, dominion, group, newGroupName).call();
-            GroupSetting.show(sender, dominion.getName(), newGroupName, "1");
+            GroupFlags.show(sender, dominion.getName(), newGroupName, "1");
         } catch (Exception e) {
             Notification.error(sender, e);
         }
@@ -115,7 +115,7 @@ public class GroupCommand {
             PriFlag flag = toPriFlag(flagName);
             boolean value = toBoolean(valueStr);
             new GroupSetFlagEvent(sender, dominion, group, flag, value).call();
-            GroupSetting.show(sender, dominionName, groupName, pageStr);
+            GroupFlags.show(sender, dominionName, groupName, pageStr);
         } catch (Exception e) {
             Notification.error(sender, e);
         }

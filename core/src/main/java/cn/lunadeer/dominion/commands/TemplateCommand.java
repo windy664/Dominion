@@ -9,8 +9,8 @@ import cn.lunadeer.dominion.doos.MemberDOO;
 import cn.lunadeer.dominion.doos.TemplateDOO;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.misc.DominionException;
+import cn.lunadeer.dominion.uis.template.TemplateFlags;
 import cn.lunadeer.dominion.uis.template.TemplateList;
-import cn.lunadeer.dominion.uis.template.TemplateSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -161,7 +161,7 @@ public class TemplateCommand {
             }
             template.setFlagValue(flag, value);
             Notification.info(sender, Language.templateCommandText.setFlagSuccess, flagName, templateName, valueStr);
-            TemplateSetting.show(sender, templateName, pageStr);
+            TemplateFlags.show(sender, templateName, pageStr);
         } catch (Exception e) {
             Notification.error(sender, Language.templateCommandText.setFlagFail, e.getMessage());
         }

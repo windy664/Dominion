@@ -1,8 +1,8 @@
 package cn.lunadeer.dominion.uis.dominion.manage;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
+import cn.lunadeer.dominion.api.dtos.flag.EnvFlag;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
-import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
 import cn.lunadeer.dominion.commands.DominionFlagCommand;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
@@ -39,16 +39,16 @@ import static cn.lunadeer.dominion.misc.Converts.toDominionDTO;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.utils.Misc.*;
 
-public class GuestSetting extends AbstractUI {
+public class EnvFlags extends AbstractUI {
 
     public static void show(CommandSender sender, String dominionName, String pageStr) {
-        new GuestSetting().displayByPreference(sender, dominionName, pageStr);
+        new EnvFlags().displayByPreference(sender, dominionName, pageStr);
     }
 
-    public static SecondaryCommand flags = new SecondaryCommand("guest_flags", List.of(
+    public static SecondaryCommand flags = new SecondaryCommand("env_flags", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.environmentFlags) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0), getArgumentValue(1));
@@ -57,14 +57,14 @@ public class GuestSetting extends AbstractUI {
 
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-    public static class GuestSettingTuiText extends ConfigurationPart {
-        public String title = "{0} Guest Setting";
-        public String button = "GUEST SET";
-        public String description = "Set guest behavior of dominion.";
+    public static class EnvSettingTuiText extends ConfigurationPart {
+        public String title = "{0} Env Setting";
+        public String button = "ENV SET";
+        public String description = "Set environment of dominion.";
     }
 
     public static ListViewButton button(CommandSender sender, String dominionName) {
-        return (ListViewButton) new ListViewButton(TextUserInterface.guestSettingTuiText.button) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.envSettingTuiText.button) {
             @Override
             public void function(String pageStr) {
                 show(sender, dominionName, pageStr);
@@ -75,27 +75,27 @@ public class GuestSetting extends AbstractUI {
     @Override
     protected void showTUI(Player player, String... args) {
         String dominionName = args[0];
+        String pageStr = args.length > 1 ? args[1] : "1";
         DominionDTO dominion = toDominionDTO(dominionName);
         assertDominionAdmin(player, dominion);
-        int page = toIntegrity(args[1]);
+        int page = toIntegrity(pageStr);
 
         ListView view = ListView.create(10, button(player, dominionName));
-        view.title(formatString(TextUserInterface.guestSettingTuiText.title, dominion.getName()))
+        view.title(formatString(TextUserInterface.envSettingTuiText.title, dominion.getName()))
                 .navigator(Line.create()
                         .append(MainMenu.button(player).build())
                         .append(DominionList.button(player).build())
                         .append(DominionManage.button(player, dominionName).build())
-                        .append(TextUserInterface.guestSettingTuiText.button));
-        for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-            if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
-            if (dominion.getGuestFlagValue(flag)) {
+                        .append(TextUserInterface.envSettingTuiText.button));
+        for (EnvFlag flag : Flags.getAllEnvFlagsEnable()) {
+            if (dominion.getEnvFlagValue(flag)) {
                 view.add(Line.create()
                         .append(new FunctionalButton("☑") {
                             @Override
                             public void function() {
-                                DominionFlagCommand.setGuest(player, dominionName, flag.getFlagName(), "false", String.valueOf(page));
+                                DominionFlagCommand.setEnv(player, dominionName, flag.getFlagName(), "false", pageStr);
                             }
-                        }.green().build())
+                        }.needPermission(defaultPermission).green().build())
                         .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
                 );
             } else {
@@ -103,21 +103,22 @@ public class GuestSetting extends AbstractUI {
                         .append(new FunctionalButton("☐") {
                             @Override
                             public void function() {
-                                DominionFlagCommand.setGuest(player, dominionName, flag.getFlagName(), "true", String.valueOf(page));
+                                DominionFlagCommand.setEnv(player, dominionName, flag.getFlagName(), "true", pageStr);
                             }
-                        }.red().build())
+                        }.needPermission(defaultPermission).red().build())
                         .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())))
                 );
             }
         }
         view.showOn(player, page);
+
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-    public static class GuestSettingCui extends ConfigurationPart {
-        public String title = "§6✦ §e§lGuest Setting of {0} §6✦";
+    public static class EnvSettingCui extends ConfigurationPart {
+        public String title = "§6✦ §2§lEnvironment of {0} §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
@@ -140,18 +141,18 @@ public class GuestSetting extends AbstractUI {
                 )
         );
 
-        public String flagItemName = "§6🚪 §e{0}";
-        public String flagItemStateTrue = "§a§l✓ ALLOWED";
-        public String flagItemStateFalse = "§c§l✗ DENIED";
+        public String flagItemName = "§6⚙️ §e{0}";
+        public String flagItemStateTrue = "§a§l✓ ENABLED";
+        public String flagItemStateFalse = "§c§l✗ DISABLED";
         public List<String> flagItemLore = List.of(
-                "§7Guest Permission: {0}",
+                "§7Status: {0}",
                 "",
                 "§7Description:",
                 "§f{1}",
                 "§f{2}",
                 "",
-                "§e▶ Click to toggle for guests",
-                "§8Affects non-member visitors"
+                "§e▶ Click to toggle this setting",
+                "§8Changes take effect immediately"
         );
     }
 
@@ -161,11 +162,11 @@ public class GuestSetting extends AbstractUI {
         assertDominionAdmin(player, dominion);
 
         ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-        view.setTitle(formatString(ChestUserInterface.guestSettingCui.title, dominion.getName()));
-        view.applyListConfiguration(ChestUserInterface.guestSettingCui.listConfiguration, toIntegrity(args[1]));
+        view.setTitle(formatString(ChestUserInterface.envSettingCui.title, dominion.getName()));
+        view.applyListConfiguration(ChestUserInterface.envSettingCui.listConfiguration, toIntegrity(args[1]));
 
-        view.setButton(ChestUserInterface.guestSettingCui.backButton.getSymbol(),
-                new ChestButton(ChestUserInterface.guestSettingCui.backButton) {
+        view.setButton(ChestUserInterface.envSettingCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.envSettingCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
                         DominionManage.show(player, dominion.getName(), "1");
@@ -173,16 +174,15 @@ public class GuestSetting extends AbstractUI {
                 }
         );
 
-        for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
-            PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
-            if (flag.equals(Flags.ADMIN)) continue; // Skip admin flag this only for group or member
+        for (int i = 0; i < Flags.getAllEnvFlagsEnable().size(); i++) {
+            EnvFlag flag = Flags.getAllEnvFlagsEnable().get(i);
             Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
-            String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
-            String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
+            String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
             List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
-            List<String> flagLore = formatStringList(ChestUserInterface.guestSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
+            List<String> flagLore = formatStringList(ChestUserInterface.envSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
             ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
-                    ChestUserInterface.guestSettingCui.listConfiguration.itemSymbol.charAt(0),
+                    ChestUserInterface.envSettingCui.listConfiguration.itemSymbol.charAt(0),
                     flag.getMaterial(),
                     flagName,
                     flagLore
@@ -190,7 +190,7 @@ public class GuestSetting extends AbstractUI {
             view.addItem(new ChestButton(btnConfig) {
                 @Override
                 public void onClick(ClickType type) {
-                    DominionFlagCommand.setGuest(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getGuestFlagValue(flag)), page.toString());
+                    DominionFlagCommand.setEnv(player, dominion.getName(), flag.getFlagName(), String.valueOf(!dominion.getEnvFlagValue(flag)), page.toString());
                 }
             });
         }
@@ -198,28 +198,28 @@ public class GuestSetting extends AbstractUI {
         view.open();
     }
 
-
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ CUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ Console ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
     @Override
     protected void showConsole(CommandSender sender, String... args) throws Exception {
-        Notification.info(sender, ChestUserInterface.guestSettingCui.title, args[0]);
+        Notification.info(sender, ChestUserInterface.envSettingCui.title, args[0]);
 
-        Notification.info(sender, DominionFlagCommand.SetGuestFlag.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, DominionFlagCommand.SetGuestFlag.getDescription());
+        Notification.info(sender, DominionFlagCommand.SetEnvFlag.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, DominionFlagCommand.SetEnvFlag.getDescription());
 
         DominionDTO dominion = toDominionDTO(args[0]);
         int page = toIntegrity(args[2], 1);
-        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllEnvFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
-            PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
-            String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
-            String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
+            EnvFlag flag = Flags.getAllEnvFlagsEnable().get(i);
+            String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
             String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
             Notification.info(sender, item);
         }
 
         Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
     }
+
 }

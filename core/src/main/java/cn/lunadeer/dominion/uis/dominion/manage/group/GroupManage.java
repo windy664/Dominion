@@ -150,7 +150,7 @@ public class GroupManage extends AbstractUI {
                 new ChestButton(ChestUserInterface.groupManageCUI.groupFlagsButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        GroupSetting.show(player, args[0], args[1], "1");
+                        GroupFlags.show(player, args[0], args[1], "1");
                     }
                 }
         );

@@ -33,10 +33,10 @@ import static cn.lunadeer.dominion.Dominion.defaultPermission;
 import static cn.lunadeer.dominion.misc.Converts.toIntegrity;
 import static cn.lunadeer.dominion.utils.Misc.*;
 
-public class TemplateSetting extends AbstractUI {
+public class TemplateFlags extends AbstractUI {
 
     public static void show(CommandSender sender, String templateName, String pageStr) {
-        new TemplateSetting().displayByPreference(sender, templateName, pageStr);
+        new TemplateFlags().displayByPreference(sender, templateName, pageStr);
     }
 
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓

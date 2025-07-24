@@ -14,8 +14,8 @@ import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
 import cn.lunadeer.dominion.uis.dominion.copy.CopyMenu;
-import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.EnvFlags;
+import cn.lunadeer.dominion.uis.dominion.manage.GuestFlags;
 import cn.lunadeer.dominion.uis.dominion.manage.Info;
 import cn.lunadeer.dominion.uis.dominion.manage.SetSize;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
@@ -56,7 +56,7 @@ public class DominionManage extends AbstractUI {
     public static SecondaryCommand manage = new SecondaryCommand("manage", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.dominionManage) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0), getArgumentValue(1));
@@ -91,10 +91,10 @@ public class DominionManage extends AbstractUI {
                 .append(Info.button(player, dominion.getName()).build())
                 .append(TextUserInterface.sizeInfoTuiText.description);
         Line env_info = Line.create()
-                .append(EnvSetting.button(player, dominion.getName()).build())
+                .append(EnvFlags.button(player, dominion.getName()).build())
                 .append(TextUserInterface.envSettingTuiText.description);
         Line flag_info = Line.create()
-                .append(GuestSetting.button(player, dominion.getName()).build())
+                .append(GuestFlags.button(player, dominion.getName()).build())
                 .append(TextUserInterface.guestSettingTuiText.description);
         Line member_list = Line.create()
                 .append(MemberList.button(player, dominion.getName()).build())
@@ -377,14 +377,14 @@ public class DominionManage extends AbstractUI {
         view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.envSettingButton) {
             @Override
             public void onClick(ClickType type) {
-                EnvSetting.show(player, dominion.getName(), "1");
+                EnvFlags.show(player, dominion.getName(), "1");
             }
         });
 
         view.addItem(new ChestButton(ChestUserInterface.dominionManageCui.guestSettingButton) {
             @Override
             public void onClick(ClickType type) {
-                GuestSetting.show(player, dominion.getName(), "1");
+                GuestFlags.show(player, dominion.getName(), "1");
             }
         });
 
@@ -468,10 +468,10 @@ public class DominionManage extends AbstractUI {
 
         Notification.info(sender, ChestUserInterface.dominionManageCui.title, dominion.getName());
 
-        Notification.info(sender, EnvSetting.flags.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, EnvSetting.flags.getDescription());
-        Notification.info(sender, GuestSetting.flags.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, GuestSetting.flags.getDescription());
+        Notification.info(sender, EnvFlags.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, EnvFlags.flags.getDescription());
+        Notification.info(sender, GuestFlags.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, GuestFlags.flags.getDescription());
         Notification.info(sender, MemberList.list.getUsage());
         Notification.info(sender, Language.consoleText.descPrefix, MemberList.list.getDescription());
         Notification.info(sender, GroupList.list.getUsage());

@@ -54,7 +54,7 @@ public class GroupList extends AbstractUI {
     public static SecondaryCommand list = new SecondaryCommand("group_list", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.groupList) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0), getArgumentValue(1));
@@ -114,7 +114,7 @@ public class GroupList extends AbstractUI {
                     GroupCommand.deleteGroup(player, dominionName, group.getNamePlain(), pageStr);
                 }
             }.needPermission(defaultPermission).red().setHoverText(TextUserInterface.groupListTuiText.deleteDescription);
-            Button setting = GroupSetting.button(player, dominionName, group.getNamePlain());
+            Button setting = GroupFlags.button(player, dominionName, group.getNamePlain());
             Button addMember = SelectMember.button(player, dominionName, group.getNamePlain(), pageStr);
             line.append(deleteGroup.build()).append(setting.build()).append(group.getNameColoredComponent()).append(addMember.build());
             view.add(line);
@@ -250,8 +250,8 @@ public class GroupList extends AbstractUI {
         Notification.info(sender, Language.consoleText.descPrefix, GroupCommand.addMember.getDescription());
         Notification.info(sender, GroupCommand.removeMember.getUsage());
         Notification.info(sender, Language.consoleText.descPrefix, GroupCommand.removeMember.getDescription());
-        Notification.info(sender, GroupSetting.flags.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, GroupSetting.flags.getDescription());
+        Notification.info(sender, GroupFlags.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, GroupFlags.flags.getDescription());
         // items
         DominionDTO dominion = toDominionDTO(args[0]);
         List<GroupDOO> groups = GroupDOO.selectByDominionId(dominion.getId());

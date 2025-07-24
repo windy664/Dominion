@@ -4,7 +4,7 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.api.dtos.GroupDTO;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.events.group.GroupRenamedEvent;
-import cn.lunadeer.dominion.uis.dominion.manage.group.GroupSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.group.GroupFlags;
 import cn.lunadeer.dominion.utils.ColorParser;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.stui.components.buttons.FunctionalButton;
@@ -29,7 +29,7 @@ public class RenameGroupInputter {
                 DominionDTO dominion = toDominionDTO(dominionName);
                 GroupDTO group = toGroupDTO(dominion, oldGroupName);
                 new GroupRenamedEvent(sender, dominion, group, input).call();
-                GroupSetting.show(sender, dominionName, ColorParser.getPlainText(input), "1");
+                GroupFlags.show(sender, dominionName, ColorParser.getPlainText(input), "1");
             }
         };
     }

@@ -46,6 +46,7 @@ public class Language extends ConfigurationFile {
 
     public static Dominion.DominionText dominionText = new Dominion.DominionText();
     public static AbstractUI.ConsoleText consoleText = new AbstractUI.ConsoleText();
+    public static AbstractUI.UiCommandsDescription uiCommandsDescription = new AbstractUI.UiCommandsDescription();
 
     public static MultiServerManager.MultiServerManagerText multiServerManagerText = new MultiServerManager.MultiServerManagerText();
 

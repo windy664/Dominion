@@ -550,3 +550,19 @@ member-command-text:
   add-member-description: Add a player as member to a dominion.
   set-member-privilege-description: Set privilege flag for a member in a dominion.
   remove-member-description: Remove a member from a dominion.
+console-text:
+  in-game-only: This ui is not available in console mode. Please use it in-game.
+  page-info: §7 Page {0}/{1} - Total {2}
+  desc-prefix: §7      - §f{0}
+ui-commands-description:
+  main-menu: Open the Dominion main menu.
+  list-all: List all dominions of this server.
+  migrate-list: List all residences migrated to Dominion.
+  dominion-list: List all dominions you can manage.
+  dominion-manage: Manage menu of a dominion.
+  group-list: List groups of a dominion.
+  group-flags: Manage flags of a group.
+  member-list: List members of a dominion.
+  member-flags: Manage flags of a member.
+  environment-flags: Manage environment flags of a dominion.
+  guest-flags: Manage guest privilege flags of a dominion.

@@ -46,7 +46,7 @@ public class MainMenu extends AbstractUI {
 
     public static SecondaryCommand menu = new SecondaryCommand("menu", List.of(
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.mainMenu) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {

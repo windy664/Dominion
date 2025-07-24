@@ -40,7 +40,7 @@ public class AllDominion extends AbstractUI {
 
     public static SecondaryCommand listAll = new SecondaryCommand("list_all", List.of(
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.listAll) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0));

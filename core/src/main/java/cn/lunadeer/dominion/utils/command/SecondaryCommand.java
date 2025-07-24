@@ -40,14 +40,34 @@ public abstract class SecondaryCommand {
         }
     }
 
+    /**
+     * Constructs a SecondaryCommand with the specified command and arguments.
+     * The description will be set to an empty string.
+     *
+     * @param command   The secondary command name.
+     * @param arguments The list of arguments for the command.
+     */
     public SecondaryCommand(String command, List<Argument> arguments) {
         this(command, arguments, "");
     }
 
+    /**
+     * Constructs a SecondaryCommand with the specified command and description.
+     * The arguments list will be empty.
+     *
+     * @param command     The secondary command name.
+     * @param description The description of the command.
+     */
     public SecondaryCommand(String command, String description) {
         this(command, new ArrayList<>(), description);
     }
 
+    /**
+     * Constructs a SecondaryCommand with the specified command.
+     * The arguments list and description will be empty.
+     *
+     * @param command The secondary command name.
+     */
     public SecondaryCommand(String command) {
         this(command, new ArrayList<>(), "");
     }
@@ -194,7 +214,23 @@ public abstract class SecondaryCommand {
      */
     public abstract void executeHandler(CommandSender sender);
 
+    /**
+     * Gets the description of this secondary command.
+     *
+     * @return the description string
+     */
     public String getDescription() {
         return description;
+    }
+
+    /**
+     * Sets the description for this secondary command.
+     *
+     * @param description the new description string
+     * @return the current instance of SecondaryCommand
+     */
+    public SecondaryCommand setDescription(String description) {
+        this.description = description;
+        return this;
     }
 }

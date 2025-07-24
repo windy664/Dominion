@@ -13,8 +13,8 @@ import cn.lunadeer.dominion.events.group.GroupSetFlagEvent;
 import cn.lunadeer.dominion.events.member.MemberAddedEvent;
 import cn.lunadeer.dominion.events.member.MemberSetFlagEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
-import cn.lunadeer.dominion.uis.dominion.manage.EnvSetting;
-import cn.lunadeer.dominion.uis.dominion.manage.GuestSetting;
+import cn.lunadeer.dominion.uis.dominion.manage.EnvFlags;
+import cn.lunadeer.dominion.uis.dominion.manage.GuestFlags;
 import cn.lunadeer.dominion.uis.dominion.manage.group.GroupList;
 import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
 import cn.lunadeer.dominion.utils.Notification;
@@ -49,7 +49,7 @@ public class CopyCommand {
                 toDominion.setEnvFlagValue(flag, fromDominion.getEnvFlagValue(flag));
             }
             Notification.info(sender, Language.copyCommandText.copyEnvSuccess, fromDominion.getName(), toDominion.getName());
-            EnvSetting.show(sender, to, "1");
+            EnvFlags.show(sender, to, "1");
         } catch (Exception e) {
             Notification.error(sender, e);
         }
@@ -74,7 +74,7 @@ public class CopyCommand {
                 toDominion.setGuestFlagValue(flag, fromDominion.getGuestFlagValue(flag));
             }
             Notification.info(sender, Language.copyCommandText.copyGuestSuccess, fromDominion.getName(), toDominion.getName());
-            GuestSetting.show(sender, to, "1");
+            GuestFlags.show(sender, to, "1");
         } catch (Exception e) {
             Notification.error(sender, e);
         }

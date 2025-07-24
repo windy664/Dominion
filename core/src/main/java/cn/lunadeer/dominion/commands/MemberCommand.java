@@ -9,8 +9,8 @@ import cn.lunadeer.dominion.events.member.MemberAddedEvent;
 import cn.lunadeer.dominion.events.member.MemberRemovedEvent;
 import cn.lunadeer.dominion.events.member.MemberSetFlagEvent;
 import cn.lunadeer.dominion.misc.CommandArguments;
+import cn.lunadeer.dominion.uis.dominion.manage.member.MemberFlags;
 import cn.lunadeer.dominion.uis.dominion.manage.member.MemberList;
-import cn.lunadeer.dominion.uis.dominion.manage.member.MemberSetting;
 import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.command.Argument;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
@@ -101,7 +101,7 @@ public class MemberCommand {
             DominionDTO dominion = toDominionDTO(dominionName);
             MemberDTO member = toMemberDTO(dominion, playerName);
             new MemberSetFlagEvent(sender, dominion, member, flag, value).call();
-            MemberSetting.show(sender, dominionName, playerName, pageStr);
+            MemberFlags.show(sender, dominionName, playerName, pageStr);
         } catch (Exception e) {
             Notification.error(sender, e);
         }

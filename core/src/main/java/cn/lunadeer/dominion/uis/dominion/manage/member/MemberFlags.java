@@ -1,14 +1,13 @@
-package cn.lunadeer.dominion.uis.dominion.manage.group;
+package cn.lunadeer.dominion.uis.dominion.manage.member;
 
 import cn.lunadeer.dominion.api.dtos.DominionDTO;
-import cn.lunadeer.dominion.api.dtos.GroupDTO;
+import cn.lunadeer.dominion.api.dtos.MemberDTO;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.api.dtos.flag.PriFlag;
-import cn.lunadeer.dominion.commands.GroupCommand;
+import cn.lunadeer.dominion.commands.MemberCommand;
 import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
-import cn.lunadeer.dominion.inputters.RenameGroupInputter;
 import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.AbstractUI;
 import cn.lunadeer.dominion.uis.MainMenu;
@@ -36,21 +35,21 @@ import org.bukkit.event.inventory.ClickType;
 import java.util.List;
 
 import static cn.lunadeer.dominion.Dominion.defaultPermission;
-import static cn.lunadeer.dominion.misc.Asserts.assertDominionAdmin;
 import static cn.lunadeer.dominion.misc.Converts.*;
 import static cn.lunadeer.dominion.utils.Misc.*;
 
-public class GroupSetting extends AbstractUI {
 
-    public static void show(CommandSender sender, String dominionName, String groupName, String pageStr) {
-        new GroupSetting().displayByPreference(sender, dominionName, groupName, pageStr);
+public class MemberFlags extends AbstractUI {
+
+    public static void show(CommandSender sender, String dominionName, String playerName, String pageStr) {
+        new MemberFlags().displayByPreference(sender, dominionName, playerName, pageStr);
     }
 
-    public static SecondaryCommand flags = new SecondaryCommand("group_flags", List.of(
+    public static SecondaryCommand flags = new SecondaryCommand("member_flags", List.of(
             new CommandArguments.RequiredDominionArgument(),
-            new CommandArguments.RequiredGroupArgument(0),
+            new CommandArguments.RequiredPlayerArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.memberFlags) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0), getArgumentValue(1), getArgumentValue(2));
@@ -59,82 +58,84 @@ public class GroupSetting extends AbstractUI {
 
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ TUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-    public static class GroupSettingTuiText extends ConfigurationPart {
-        public String title = "Group {0} Settings";
-        public String description = "Manage the settings of group {0}.";
+    public static class MemberSettingTuiText extends ConfigurationPart {
+        public String title = "{0} Member Setting";
+        public String description = "Set member's privilege of dominion.";
         public String button = "SETTING";
     }
 
-    public static ListViewButton button(CommandSender sender, String dominionName, String groupName) {
-        return (ListViewButton) new ListViewButton(TextUserInterface.groupSettingTuiText.button) {
+    public static ListViewButton button(CommandSender sender, String dominionName, String playerName) {
+        return (ListViewButton) new ListViewButton(TextUserInterface.memberSettingTuiText.button) {
             @Override
-            public void function(String page) {
-                show(sender, dominionName, groupName, page);
+            public void function(String pageStr) {
+                show(sender, dominionName, playerName, pageStr);
             }
-        }.needPermission(defaultPermission).setHoverText(TextUserInterface.groupSettingTuiText.description);
+        }.needPermission(defaultPermission).setHoverText(TextUserInterface.memberSettingTuiText.description);
     }
 
     @Override
-    protected void showTUI(Player player, String... args) {
-        DominionDTO dominion = toDominionDTO(args[0]);
-        assertDominionAdmin(player, dominion);
-        GroupDTO group = toGroupDTO(dominion, args[1]);
-        int page = toIntegrity(args[2], 1);
-
-        ListView view = ListView.create(10, button(player, dominion.getName(), group.getNamePlain()));
-        view.title(formatString(TextUserInterface.groupSettingTuiText.title, group.getNameColoredBukkit()));
+    protected void showTUI(Player player, String... args) throws Exception {
+        String dominionName = args[0];
+        String playerName = args[1];
+        String pageStr = args.length > 2 ? args[2] : "1";
+        DominionDTO dominion = toDominionDTO(dominionName);
+        MemberDTO member = toMemberDTO(dominion, playerName);
+        int page = toIntegrity(pageStr);
+        ListView view = ListView.create(10, button(player, dominionName, playerName));
+        view.title(formatString(TextUserInterface.memberSettingTuiText.title, playerName));
         view.navigator(
                 Line.create()
                         .append(MainMenu.button(player).build())
                         .append(DominionList.button(player).build())
-                        .append(DominionManage.button(player, dominion.getName()).build())
-                        .append(GroupList.button(player, dominion.getName()).build())
-                        .append(TextUserInterface.groupSettingTuiText.button)
+                        .append(DominionManage.button(player, dominionName).build())
+                        .append(MemberList.button(player, dominionName).build())
+                        .append(TextUserInterface.memberSettingTuiText.button)
         );
-        view.add(Line.create().append(RenameGroupInputter.createTuiButtonOn(player, dominion.getName(), group.getNamePlain()).build()));
-
-        if (group.getFlagValue(Flags.ADMIN)) {
-            view.add(createOption(player, Flags.ADMIN, true, dominion.getName(), group.getNamePlain(), args[2]));
-            view.add(createOption(player, Flags.GLOW, group.getFlagValue(Flags.GLOW), dominion.getName(), group.getNamePlain(), args[2]));
+        view.add(Line.create().append(SelectTemplate.button(player, dominionName, playerName).build()));
+        if (member.getFlagValue(Flags.ADMIN)) {
+            view.add(createOption(player, Flags.ADMIN, true, playerName, dominion.getName(), page));
+            view.add(createOption(player, Flags.GLOW, member.getFlagValue(Flags.GLOW), playerName, dominion.getName(), page));
         } else {
             for (PriFlag flag : Flags.getAllPriFlagsEnable()) {
-                view.add(createOption(player, flag, group.getFlagValue(flag), dominion.getName(), group.getNamePlain(), args[2]));
+                view.add(createOption(player, flag, member.getFlagValue(flag), playerName, dominion.getName(), page));
             }
         }
         view.showOn(player, page);
     }
 
-    private static Line createOption(Player player, PriFlag flag, boolean value, String DominionName, String groupName, String pageStr) {
+    private static Line createOption(Player player, PriFlag flag, boolean value, String player_name, String dominion_name, int page) {
         if (value) {
             return Line.create()
                     .append(new FunctionalButton("☑") {
                         @Override
                         public void function() {
-                            GroupCommand.setGroupFlag(player, DominionName, groupName, flag.getFlagName(), "false", pageStr);
+                            MemberCommand.setMemberPrivilege(player, dominion_name, player_name, flag.getFlagName(), "false", String.valueOf(page));
                         }
                     }.needPermission(defaultPermission).green().build())
-                    .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
+                    .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))
+                    );
         } else {
             return Line.create()
                     .append(new FunctionalButton("☐") {
                         @Override
                         public void function() {
-                            GroupCommand.setGroupFlag(player, DominionName, groupName, flag.getFlagName(), "true", pageStr);
+                            MemberCommand.setMemberPrivilege(player, dominion_name, player_name, flag.getFlagName(), "true", String.valueOf(page));
                         }
                     }.needPermission(defaultPermission).red().build())
-                    .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription())));
+                    .append(Component.text(flag.getDisplayName()).hoverEvent(Component.text(flag.getDescription()))
+                    );
         }
     }
 
     // ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ TUI ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
     // ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ CUI ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
 
-    public static class GroupSettingCui extends ConfigurationPart {
-        public String title = "§6✦ §9§lGroup {0} Settings §6✦";
+    public static class MemberSettingCui extends ConfigurationPart {
+        public String title = "§6✦ §f§lMember {0} Settings §6✦";
         public ListViewConfiguration listConfiguration = new ListViewConfiguration(
                 'i',
                 List.of(
-                        "<########",
+                        "<######T#",
                         "#iiiiiii#",
                         "#iiiiiii#",
                         "#iiiiiii#",
@@ -147,7 +148,18 @@ public class GroupSetting extends AbstractUI {
                 "Back",
                 List.of(
                         "Go back to the",
-                        "guest manage."
+                        "member list."
+                )
+        );
+
+        public ButtonConfiguration templateButton = ButtonConfiguration.createMaterial(
+                'T', Material.PAPER,
+                "§e✏ §6Select Template",
+                List.of(
+                        "§7Select a template to apply",
+                        "§7to this member's privileges.",
+                        "",
+                        "§6▶ Click to select template"
                 )
         );
 
@@ -164,19 +176,27 @@ public class GroupSetting extends AbstractUI {
     }
 
     @Override
-    protected void showCUI(Player player, String... args) {
+    protected void showCUI(Player player, String... args) throws Exception {
         DominionDTO dominion = toDominionDTO(args[0]);
-        assertDominionAdmin(player, dominion);
-        GroupDTO group = toGroupDTO(dominion, args[1]);
+        MemberDTO member = toMemberDTO(dominion, args[1]);
         ChestListView view = ChestUserInterfaceManager.getInstance().getListViewOf(player);
-        view.setTitle(formatString(ChestUserInterface.groupSettingCui.title, group.getNameColoredBukkit()));
-        view.applyListConfiguration(ChestUserInterface.groupSettingCui.listConfiguration, toIntegrity(args[2]));
+        view.setTitle(formatString(ChestUserInterface.memberSettingCui.title, args[1]));
+        view.applyListConfiguration(ChestUserInterface.memberSettingCui.listConfiguration, toIntegrity(args[2]));
 
-        view.setButton(ChestUserInterface.groupSettingCui.backButton.getSymbol(),
-                new ChestButton(ChestUserInterface.groupSettingCui.backButton) {
+        view.setButton(ChestUserInterface.memberSettingCui.backButton.getSymbol(),
+                new ChestButton(ChestUserInterface.memberSettingCui.backButton) {
                     @Override
                     public void onClick(ClickType type) {
-                        GroupManage.show(player, dominion.getName(), group.getNamePlain(), "1");
+                        MemberList.show(player, dominion.getName(), "1");
+                    }
+                }
+        );
+
+        view.setButton(ChestUserInterface.memberSettingCui.templateButton.getSymbol(),
+                new ChestButton(ChestUserInterface.memberSettingCui.templateButton) {
+                    @Override
+                    public void onClick(ClickType type) {
+                        SelectTemplate.show(player, dominion.getName(), args[1], "1");
                     }
                 }
         );
@@ -184,12 +204,12 @@ public class GroupSetting extends AbstractUI {
         for (int i = 0; i < Flags.getAllPriFlagsEnable().size(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             Integer page = (int) Math.ceil((double) (i + 1) / view.getPageSize());
-            String flagState = group.getFlagValue(flag) ? ChestUserInterface.groupSettingCui.flagItemStateTrue : ChestUserInterface.groupSettingCui.flagItemStateFalse;
-            String flagName = formatString(ChestUserInterface.groupSettingCui.flagItemName, flag.getDisplayName());
+            String flagState = member.getFlagValue(flag) ? ChestUserInterface.memberSettingCui.flagItemStateTrue : ChestUserInterface.memberSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.memberSettingCui.flagItemName, flag.getDisplayName());
             List<String> descriptions = foldLore2Line(flag.getDescription(), 30);
-            List<String> flagLore = formatStringList(ChestUserInterface.groupSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
+            List<String> flagLore = formatStringList(ChestUserInterface.memberSettingCui.flagItemLore, flagState, descriptions.get(0), descriptions.get(1));
             ButtonConfiguration btnConfig = ButtonConfiguration.createMaterial(
-                    ChestUserInterface.groupSettingCui.listConfiguration.itemSymbol.charAt(0),
+                    ChestUserInterface.memberSettingCui.listConfiguration.itemSymbol.charAt(0),
                     flag.getMaterial(),
                     flagName,
                     flagLore
@@ -197,7 +217,8 @@ public class GroupSetting extends AbstractUI {
             view.addItem(new ChestButton(btnConfig) {
                 @Override
                 public void onClick(ClickType type) {
-                    GroupCommand.setGroupFlag(player, dominion.getName(), group.getNamePlain(), flag.getFlagName(), String.valueOf(!group.getFlagValue(flag)), String.valueOf(page));
+                    boolean newValue = !member.getFlagValue(flag);
+                    MemberCommand.setMemberPrivilege(player, dominion.getName(), args[1], flag.getFlagName(), String.valueOf(newValue), String.valueOf(page));
                 }
             });
         }
@@ -210,19 +231,19 @@ public class GroupSetting extends AbstractUI {
 
     @Override
     protected void showConsole(CommandSender sender, String... args) throws Exception {
-        Notification.info(sender, ChestUserInterface.groupSettingCui.title);
+        Notification.info(sender, ChestUserInterface.memberSettingCui.title);
         // command
-        Notification.info(sender, GroupCommand.setGroupFlag.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, GroupCommand.setGroupFlag.getDescription());
+        Notification.info(sender, MemberCommand.setMemberPrivilege.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.setMemberPrivilege.getDescription());
         // items
         DominionDTO dominion = toDominionDTO(args[0]);
-        GroupDTO group = toGroupDTO(dominion, args[1]);
+        MemberDTO member = toMemberDTO(dominion, args[1]);
         int page = toIntegrity(args[2], 1);
         Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
-            String flagState = group.getFlagValue(flag) ? ChestUserInterface.groupSettingCui.flagItemStateTrue : ChestUserInterface.groupSettingCui.flagItemStateFalse;
-            String flagName = formatString(ChestUserInterface.groupSettingCui.flagItemName, flag.getDisplayName());
+            String flagState = member.getFlagValue(flag) ? ChestUserInterface.memberSettingCui.flagItemStateTrue : ChestUserInterface.memberSettingCui.flagItemStateFalse;
+            String flagName = formatString(ChestUserInterface.memberSettingCui.flagItemName, flag.getDisplayName());
             String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
             Notification.info(sender, item);
         }

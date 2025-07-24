@@ -550,3 +550,19 @@ member-command-text:
   add-member-description: 将玩家添加为领地成员。
   set-member-privilege-description: 设置领地成员的权限配置。
   remove-member-description: 从领地中移除成员。
+console-text:
+  in-game-only: 此UI仅限游戏内使用。
+  page-info: §7 页码 {0}/{1} - 共有 {2} 条
+  desc-prefix: §7      - §f{0}
+ui-commands-description:
+  main-menu: 打开领地主菜单。
+  list-all: 列出本服务器的所有领地。
+  migrate-list: 列出所有已迁移到 Dominion 的 Residence 领地。
+  dominion-list: 列出你可管理的所有领地。
+  dominion-manage: 管理某个领地的菜单。
+  group-list: 列出领地的权限组。
+  group-flags: 管理权限组的权限。
+  member-list: 列出领地成员。
+  member-flags: 管理成员的权限。
+  environment-flags: 管理领地的环境权限。
+  guest-flags: 管理领地的访客权限。

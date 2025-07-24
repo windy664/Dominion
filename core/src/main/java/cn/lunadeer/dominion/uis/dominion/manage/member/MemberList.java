@@ -59,7 +59,7 @@ public class MemberList extends AbstractUI {
     public static SecondaryCommand list = new SecondaryCommand("member_list", List.of(
             new CommandArguments.RequiredDominionArgument(),
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.memberList) {
         @Override
         public void executeHandler(CommandSender sender) {
             show(sender, getArgumentValue(0), getArgumentValue(1));
@@ -131,7 +131,7 @@ public class MemberList extends AbstractUI {
                 }
             }
 
-            Button prev = MemberSetting.button(player, dominion.getName(), p_player.getLastKnownName()).green();
+            Button prev = MemberFlags.button(player, dominion.getName(), p_player.getLastKnownName()).green();
             Button remove = new FunctionalButton(TextUserInterface.memberListTuiText.remove) {
                 @Override
                 public void function() {
@@ -275,7 +275,7 @@ public class MemberList extends AbstractUI {
                 @Override
                 public void onClick(ClickType type) {
                     if (m.getGroupId() == -1) {
-                        MemberSetting.show(player, dominion.getName(), m.getPlayer().getLastKnownName(), "1");
+                        MemberFlags.show(player, dominion.getName(), m.getPlayer().getLastKnownName(), "1");
                     }
                 }
             }.setLoreArgs(status));
@@ -295,8 +295,8 @@ public class MemberList extends AbstractUI {
         Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.addMember.getDescription());
         Notification.info(sender, MemberCommand.removeMember.getUsage());
         Notification.info(sender, Language.consoleText.descPrefix, MemberCommand.removeMember.getDescription());
-        Notification.info(sender, MemberSetting.flags.getUsage());
-        Notification.info(sender, Language.consoleText.descPrefix, MemberSetting.flags.getDescription());
+        Notification.info(sender, MemberFlags.flags.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, MemberFlags.flags.getDescription());
         // item
         DominionDTO dominion = toDominionDTO(args[0]);
         int page = toIntegrity(args[1], 1);

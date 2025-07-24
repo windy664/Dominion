@@ -4,6 +4,7 @@ import cn.lunadeer.dominion.api.dtos.DominionDTO;
 import cn.lunadeer.dominion.cache.CacheManager;
 import cn.lunadeer.dominion.cache.DominionNode;
 import cn.lunadeer.dominion.commands.DominionOperateCommand;
+import cn.lunadeer.dominion.configuration.Language;
 import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
 import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.misc.CommandArguments;
@@ -45,7 +46,7 @@ public class DominionList extends AbstractUI {
 
     public static SecondaryCommand list = new SecondaryCommand("list", List.of(
             new CommandArguments.OptionalPageArgument()
-    )) {
+    ), Language.uiCommandsDescription.dominionList) {
         @Override
         public void executeHandler(CommandSender sender) {
             try {

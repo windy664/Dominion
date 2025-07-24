@@ -550,3 +550,19 @@ member-command-text:
   add-member-description: プレイヤーをドミニオンのメンバーとして追加します。
   set-member-privilege-description: ドミニオン内のメンバーに特権フラグを設定します。
   remove-member-description: ドミニオンからメンバーを削除します。
+console-text:
+  in-game-only: このUIはコンソールモードでは利用できません。ゲーム内で使用してください。
+  page-info: §7 ページ {0}/{1} - 合計 {2}
+  desc-prefix: §7      - §f{0}
+ui-commands-description:
+  main-menu: ドミニオンのメインメニューを開きます。
+  list-all: このサーバーのすべてのドミニオンを一覧表示します。
+  migrate-list: ドミニオンに移行されたすべてのレジデンスを一覧表示します。
+  dominion-list: 管理できるすべてのドミニオンを一覧表示します。
+  dominion-manage: ドミニオンの管理メニュー。
+  group-list: ドミニオンのグループを一覧表示します。
+  group-flags: グループのフラグを管理します。
+  member-list: ドミニオンのメンバーを一覧表示します。
+  member-flags: メンバーのフラグを管理します。
+  environment-flags: ドミニオンの環境フラグを管理します。
+  guest-flags: ドミニオンのゲスト特権フラグを管理します。
