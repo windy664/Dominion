@@ -218,13 +218,13 @@ public class GroupFlags extends AbstractUI {
         DominionDTO dominion = toDominionDTO(args[0]);
         GroupDTO group = toGroupDTO(dominion, args[1]);
         int page = toIntegrity(args[2], 1);
-        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 8, Flags.getAllPriFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             String flagState = group.getFlagValue(flag) ? ChestUserInterface.groupSettingCui.flagItemStateTrue : ChestUserInterface.groupSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.groupSettingCui.flagItemName, flag.getDisplayName());
-            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
-            Notification.info(sender, item);
+            Notification.info(sender, "§6▶ " + flagName);
+            Notification.info(sender, "§6  " + "\t" + flagState + "\t&7" + flag.getDescription());
         }
         // page info
         Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());

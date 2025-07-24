@@ -664,7 +664,7 @@ dominion-copy-cui:
     - ''
     - §a▶ 点击选择
 env-setting-cui:
-  title: §6✦ §2§l{0}的环境 §6✦
+  title: §6✦ §2§l{0} 的环境 §6✦
   list-configuration:
     item-symbol: i
     layout:
@@ -706,7 +706,7 @@ env-setting-cui:
     - §e▶ 点击切换此设置
     - §8更改会立即生效
 guest-setting-cui:
-  title: §6✦ §e§l{0}的访客设置 §6✦
+  title: §6✦ §e§l{0} 的访客设置 §6✦
   list-configuration:
     item-symbol: i
     layout:

@@ -209,17 +209,17 @@ public class EnvFlags extends AbstractUI {
         Notification.info(sender, Language.consoleText.descPrefix, DominionFlagCommand.SetEnvFlag.getDescription());
 
         DominionDTO dominion = toDominionDTO(args[0]);
-        int page = toIntegrity(args[2], 1);
-        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllEnvFlagsEnable().size());
+        int page = toIntegrity(args[1], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 8, Flags.getAllEnvFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
             EnvFlag flag = Flags.getAllEnvFlagsEnable().get(i);
             String flagState = dominion.getEnvFlagValue(flag) ? ChestUserInterface.envSettingCui.flagItemStateTrue : ChestUserInterface.envSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.envSettingCui.flagItemName, flag.getDisplayName());
-            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
-            Notification.info(sender, item);
+            Notification.info(sender, "§6▶ " + flagName);
+            Notification.info(sender, "§6  " + "\t" + flagState + "\t&7" + flag.getDescription());
         }
 
-        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
+        Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllEnvFlagsEnable().size());
     }
 
 }

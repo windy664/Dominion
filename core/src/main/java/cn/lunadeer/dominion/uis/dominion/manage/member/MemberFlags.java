@@ -239,13 +239,13 @@ public class MemberFlags extends AbstractUI {
         DominionDTO dominion = toDominionDTO(args[0]);
         MemberDTO member = toMemberDTO(dominion, args[1]);
         int page = toIntegrity(args[2], 1);
-        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 8, Flags.getAllPriFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             String flagState = member.getFlagValue(flag) ? ChestUserInterface.memberSettingCui.flagItemStateTrue : ChestUserInterface.memberSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.memberSettingCui.flagItemName, flag.getDisplayName());
-            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
-            Notification.info(sender, item);
+            Notification.info(sender, "§6▶ " + flagName);
+            Notification.info(sender, "§6  " + "\t" + flagState + "\t&7" + flag.getDescription());
         }
         // page info
         Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());

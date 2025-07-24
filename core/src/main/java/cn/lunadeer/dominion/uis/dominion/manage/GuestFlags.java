@@ -210,14 +210,14 @@ public class GuestFlags extends AbstractUI {
         Notification.info(sender, Language.consoleText.descPrefix, DominionFlagCommand.SetGuestFlag.getDescription());
 
         DominionDTO dominion = toDominionDTO(args[0]);
-        int page = toIntegrity(args[2], 1);
-        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 15, Flags.getAllPriFlagsEnable().size());
+        int page = toIntegrity(args[1], 1);
+        Triple<Integer, Integer, Integer> pageInfo = pageUtil(page, 8, Flags.getAllPriFlagsEnable().size());
         for (int i = pageInfo.getLeft(); i < pageInfo.getMiddle(); i++) {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
-            String item = "§6▶ " + flagName + "\t" + flagState + "\t" + flag.getDescription();
-            Notification.info(sender, item);
+            Notification.info(sender, "§6▶ " + flagName);
+            Notification.info(sender, "§6  " + "\t" + flagState + "\t&7" + flag.getDescription());
         }
 
         Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
