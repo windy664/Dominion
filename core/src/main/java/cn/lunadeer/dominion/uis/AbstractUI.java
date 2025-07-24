@@ -21,7 +21,7 @@ public abstract class AbstractUI {
     public static class UiCommandsDescription extends ConfigurationPart {
         public String mainMenu = "Open the Dominion main menu.";
         public String listAll = "List all dominions of this server.";
-        public String migrateList = "List all residences migrated to Dominion.";
+        public String migrateList = "List all residences can migrate to Dominion.";
         public String dominionList = "List all dominions you can manage.";
         public String dominionManage = "Manage menu of a dominion.";
         public String groupList = "List groups of a dominion.";

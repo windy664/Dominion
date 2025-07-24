@@ -559,7 +559,7 @@ console-text:
 ui-commands-description:
   main-menu: 打开领地主菜单。
   list-all: 列出本服务器的所有领地。
-  migrate-list: 列出所有已迁移到 Dominion 的 Residence 领地。
+  migrate-list: 列出所有可以从 Residence 迁移到 Dominion 领地。
   dominion-list: 列出你可管理的所有领地。
   dominion-manage: 管理某个领地的菜单。
   group-list: 列出领地的权限组。

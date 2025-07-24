@@ -559,7 +559,7 @@ console-text:
 ui-commands-description:
   main-menu: ドミニオンのメインメニューを開きます。
   list-all: このサーバーのすべてのドミニオンを一覧表示します。
-  migrate-list: ドミニオンに移行されたすべてのレジデンスを一覧表示します。
+  migrate-list: 移行可能なレジデンスをすべて一覧表示します。
   dominion-list: 管理できるすべてのドミニオンを一覧表示します。
   dominion-manage: ドミニオンの管理メニュー。
   group-list: ドミニオンのグループを一覧表示します。

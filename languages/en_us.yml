@@ -559,7 +559,7 @@ console-text:
 ui-commands-description:
   main-menu: Open the Dominion main menu.
   list-all: List all dominions of this server.
-  migrate-list: List all residences migrated to Dominion.
+  migrate-list: List all residences can migrate to Dominion.
   dominion-list: List all dominions you can manage.
   dominion-manage: Manage menu of a dominion.
   group-list: List groups of a dominion.
