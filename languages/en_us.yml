@@ -191,6 +191,8 @@ administrator-command-text:
   reload-description: Reload cache, configuration, or both.
   export-description: Export data (MCA list or database).
   import-description: Import database data.
+  update-language-description: Regenerate language files from plugin internal language files.
+  update-language-confirm: This will overwrite your current language files, please confirm by adding 'confirm' at the end of the command.
 migration-command-text:
   create-player-failed: Failed to create player cache for {0}.
   migrate-success: Migrated residence {0} to dominion successfully.

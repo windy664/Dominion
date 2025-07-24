@@ -38,6 +38,8 @@ public class AdministratorCommand {
         public String reloadDescription = "Reload cache, configuration, or both.";
         public String exportDescription = "Export data (MCA list or database).";
         public String importDescription = "Import database data.";
+        public String updateLanguageDescription = "Regenerate language files from plugin internal language files.";
+        public String updateLanguageConfirm = "This will overwrite your current language files, please confirm by adding 'confirm' at the end of the command.";
 
         public String reloadingDominionCache = "Reloading dominion cache...";
         public String reloadedDominionCache = "Reload dominion cache success!";
@@ -230,5 +232,23 @@ public class AdministratorCommand {
     private static int convertWorld2Mca(int world) {
         return world < 0 ? world / 512 - 1 : world / 512;
     }
+
+    public static SecondaryCommand updateLanguage = new SecondaryCommand("update_language", List.of(
+            new Option(List.of("confirm"), "")
+    ), Language.administratorCommandText.updateLanguageDescription) {
+        @Override
+        public void executeHandler(CommandSender sender) {
+            if (!getArgumentValue(0).equals("confirm")) {
+                Notification.warn(sender, Language.administratorCommandText.updateLanguageConfirm);
+                return;
+            }
+            try {
+                Language.updateLanguageFiles(Dominion.instance, Configuration.language, true);
+                Language.loadLanguageFiles(sender, Dominion.instance, Configuration.language);
+            } catch (Exception e) {
+                Notification.error(sender, "Failed to update language files: {0}", e.getMessage());
+            }
+        }
+    }.needPermission(adminPermission).register();
 
 }

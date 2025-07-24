@@ -191,6 +191,8 @@ administrator-command-text:
   reload-description: キャッシュ、設定、またはその両方を再読み込みします。
   export-description: データをエクスポートします (MCA リストまたはデータベース)。
   import-description: データベースデータをインポートします。
+  update-language-description: プラグインの内部言語ファイルから言語ファイルを再生成します。
+  update-language-confirm: この操作は現在の言語ファイルを上書きします。コマンドの最後に 'confirm' を追加して確認してください。
 migration-command-text:
   create-player-failed: プレイヤーキャッシュの作成に失敗しました {0}。
   migrate-success: レジデンス {0} をドミニオンに正常に移行しました。

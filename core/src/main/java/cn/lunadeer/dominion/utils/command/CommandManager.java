@@ -29,9 +29,18 @@ import java.util.function.Consumer;
  */
 public class CommandManager implements TabExecutor, Listener {
 
+    private static CommandManager instance;
     private static String rootCommand;
     private final JavaPlugin plugin;
     private Consumer<CommandSender> rootCommandConsumer = null;
+    public SecondaryCommand helpCommand;
+
+    public static CommandManager getInstance() {
+        if (instance == null) {
+            throw new IllegalStateException("CommandManager is not initialized.");
+        }
+        return instance;
+    }
 
     /**
      * Constructs a CommandManager with the specified root command.
@@ -43,13 +52,19 @@ public class CommandManager implements TabExecutor, Listener {
     }
 
     public CommandManager(JavaPlugin plugin, String rootCommand, Consumer<CommandSender> rootCommandConsumer) {
+        if (instance != null) {
+            throw new IllegalStateException("CommandManager is already initialized.");
+        }
+        instance = this;
         CommandManager.rootCommand = "/" + rootCommand;
         Objects.requireNonNull(Bukkit.getPluginCommand(rootCommand)).setExecutor(this);
         Bukkit.getPluginManager().registerEvents(this, plugin);
         this.plugin = plugin;
         this.rootCommandConsumer = rootCommandConsumer;
 
-        new SecondaryCommand("help", List.of(new Argument("page", "1"))) {
+        helpCommand = new SecondaryCommand("help", List.of(
+                new Argument("page", "1")
+        ), "Displays help information for commands.") {
             @Override
             public void executeHandler(CommandSender sender) {
                 printHelp(sender, getArguments().get(0).getValue());

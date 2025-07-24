@@ -4,6 +4,8 @@ import cn.lunadeer.dominion.Dominion;
 import cn.lunadeer.dominion.api.dtos.flag.Flag;
 import cn.lunadeer.dominion.api.dtos.flag.Flags;
 import cn.lunadeer.dominion.commands.*;
+import cn.lunadeer.dominion.configuration.uis.ChestUserInterface;
+import cn.lunadeer.dominion.configuration.uis.TextUserInterface;
 import cn.lunadeer.dominion.handler.DominionEventHandler;
 import cn.lunadeer.dominion.handler.GroupEventHandler;
 import cn.lunadeer.dominion.handler.MemberEventHandler;
@@ -16,13 +18,19 @@ import cn.lunadeer.dominion.misc.Asserts;
 import cn.lunadeer.dominion.misc.Converts;
 import cn.lunadeer.dominion.misc.Others;
 import cn.lunadeer.dominion.uis.AbstractUI;
+import cn.lunadeer.dominion.utils.Notification;
 import cn.lunadeer.dominion.utils.VaultConnect.VaultConnect;
+import cn.lunadeer.dominion.utils.XLogger;
 import cn.lunadeer.dominion.utils.command.InvalidArgumentException;
 import cn.lunadeer.dominion.utils.command.NoPermissionException;
 import cn.lunadeer.dominion.utils.configuration.*;
 import cn.lunadeer.dominion.utils.stui.inputter.InputterRunner;
 import cn.lunadeer.dominion.utils.webMap.BlueMapConnect;
 import cn.lunadeer.dominion.utils.webMap.DynmapConnect;
+import org.bukkit.command.CommandSender;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.io.File;
 
 @Headers({
         "Language file for Dominion plugin",
@@ -42,6 +50,58 @@ public class Language extends ConfigurationFile {
         en_us,
         zh_cn,
         jp_jp,
+    }
+
+    public static void loadLanguageFiles(CommandSender sender, JavaPlugin plugin, String code) {
+        try {
+            // save default language files to the languages folder
+            File languagesFolder = new File(Dominion.instance.getDataFolder(), "languages");
+            File cuiFolder = new File(languagesFolder, "cui");
+            File tuiFolder = new File(languagesFolder, "tui");
+            for (LanguageCode languageCode : LanguageCode.values()) {
+                updateLanguageFiles(plugin, languageCode.name(), false);
+            }
+            Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadingLanguage, code);
+            ConfigurationManager.load(Language.class, new File(languagesFolder, code + ".yml"));
+            ConfigurationManager.load(ChestUserInterface.class, new File(cuiFolder, code + ".yml"));
+            ConfigurationManager.load(TextUserInterface.class, new File(tuiFolder, code + ".yml"));
+            Notification.info(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageSuccess, code);
+        } catch (Exception e) {
+            Notification.error(sender != null ? sender : Dominion.instance.getServer().getConsoleSender(), Language.configurationText.loadLanguageFail, code, e.getMessage());
+        }
+    }
+
+    public static void updateLanguageFiles(JavaPlugin plugin, String code, boolean overwrite) {
+        File languagesFolder = new File(plugin.getDataFolder(), "languages");
+        if (!languagesFolder.exists()) {
+            languagesFolder.mkdir();
+        }
+        File cuiFolder = new File(languagesFolder, "cui");
+        if (!cuiFolder.exists()) {
+            cuiFolder.mkdir();
+        }
+        File tuiFolder = new File(languagesFolder, "tui");
+        if (!tuiFolder.exists()) {
+            tuiFolder.mkdir();
+        }
+        if (!new File(languagesFolder, code + ".yml").exists()) try {
+            Dominion.instance.saveResource("languages/" + code + ".yml", overwrite);
+        } catch (Exception e) {
+            XLogger.warn("Failed to save language file for {0}, This language may not in official repo : {1}.", code, e.getMessage());
+            XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
+        }
+        if (!new File(cuiFolder, code + ".yml").exists()) try {
+            Dominion.instance.saveResource("languages/cui/" + code + ".yml", overwrite);
+        } catch (Exception e) {
+            XLogger.warn("Failed to save CUI language file for {0}, This language may not in official repo : {1}.", code, e.getMessage());
+            XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
+        }
+        if (!new File(tuiFolder, code + ".yml").exists()) try {
+            Dominion.instance.saveResource("languages/tui/" + code + ".yml", overwrite);
+        } catch (Exception e) {
+            XLogger.warn("Failed to save TUI language file for {0}, This language may not in official repo : {1}.", code, e.getMessage());
+            XLogger.warn("See https://dominion.lunadeer.cn/en/notes/doc/owner/config-ref/languages , If you want to help us to add this language.");
+        }
     }
 
     public static Dominion.DominionText dominionText = new Dominion.DominionText();

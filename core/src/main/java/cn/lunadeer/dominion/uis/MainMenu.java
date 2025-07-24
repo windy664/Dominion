@@ -12,6 +12,7 @@ import cn.lunadeer.dominion.misc.CommandArguments;
 import cn.lunadeer.dominion.uis.dominion.DominionList;
 import cn.lunadeer.dominion.uis.template.TemplateList;
 import cn.lunadeer.dominion.utils.Notification;
+import cn.lunadeer.dominion.utils.command.CommandManager;
 import cn.lunadeer.dominion.utils.command.SecondaryCommand;
 import cn.lunadeer.dominion.utils.configuration.ConfigurationPart;
 import cn.lunadeer.dominion.utils.scui.ChestButton;
@@ -378,5 +379,9 @@ public class MainMenu extends AbstractUI {
         Notification.info(sender, Language.consoleText.descPrefix, MigrateList.migrateList.getDescription());
         Notification.info(sender, AdministratorCommand.reloadCache.getUsage());
         Notification.info(sender, Language.consoleText.descPrefix, AdministratorCommand.reloadCache.getDescription());
+        Notification.info(sender, AdministratorCommand.updateLanguage.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, AdministratorCommand.updateLanguage.getDescription());
+        Notification.info(sender, CommandManager.getInstance().helpCommand.getUsage());
+        Notification.info(sender, Language.consoleText.descPrefix, CommandManager.getInstance().helpCommand.getDescription());
     }
 }

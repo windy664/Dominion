@@ -154,6 +154,8 @@ administrator-command-text:
   reload-description: 重载缓存或配置文件。
   export-description: 导出含有领地的存档列表或数据库备份。
   import-description: 导入数据库备份文件。
+  update-language-description: 从插件内置语言文件重新生成语言文件。
+  update-language-confirm: 这将覆盖你当前的语言文件，请在指令末尾加上 confirm 以确认操作。
 migration-command-text:
   create-player-failed: 创建玩家记录 {0} 失败
   migrate-success: 成功从 Residence 迁移领地 {0} 到 Dominion
