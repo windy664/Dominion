@@ -185,6 +185,9 @@ public class Misc {
      * @return a Triple of (start index, end index, total pages)
      */
     public static Triple<Integer, Integer, Integer> pageUtil(int page, int pageSize, int totalItem) {
+        if (totalItem <= 0) {
+            return Triple.of(0, 0, 1);
+        }
         if (page < 1) {
             page = 1;
         }

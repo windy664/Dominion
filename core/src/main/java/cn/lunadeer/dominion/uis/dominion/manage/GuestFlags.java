@@ -216,8 +216,8 @@ public class GuestFlags extends AbstractUI {
             PriFlag flag = Flags.getAllPriFlagsEnable().get(i);
             String flagState = dominion.getGuestFlagValue(flag) ? ChestUserInterface.guestSettingCui.flagItemStateTrue : ChestUserInterface.guestSettingCui.flagItemStateFalse;
             String flagName = formatString(ChestUserInterface.guestSettingCui.flagItemName, flag.getDisplayName());
-            Notification.info(sender, "§6▶ " + flagName);
-            Notification.info(sender, "§6  " + "\t" + flagState + "\t&7" + flag.getDescription());
+            Notification.info(sender, "§6▶ {0} §7(§b{1}§7)", flagName, flag.getFlagName());
+            Notification.info(sender, "§6  \t{0}\t&7{1}", flagState, flag.getDescription());
         }
 
         Notification.info(sender, Language.consoleText.pageInfo, page, pageInfo.getRight(), Flags.getAllPriFlagsEnable().size());
