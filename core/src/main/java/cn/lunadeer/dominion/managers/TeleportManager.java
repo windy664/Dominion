@@ -144,7 +144,7 @@ public class TeleportManager implements Listener {
             Notification.info(player, Language.teleportManagerText.delay, delaySec);
         }
         // teleport
-        CancellableTask task = Scheduler.runTaskLaterAsync(() -> {
+        CancellableTask task = Scheduler.runTaskLater(() -> {
             if (dominion.getServerId() == Configuration.multiServer.serverId) {
                 doTeleportSafely(player, dominion.getTpLocation());
             } else {
@@ -162,7 +162,7 @@ public class TeleportManager implements Listener {
                 }
             }
         }, delaySec * 20L);
-        Scheduler.runTaskLaterAsync(() -> {
+        Scheduler.runTaskLater(() -> {
             teleportDelayTasks.remove(player.getUniqueId());    // remove task from map for cleanup
         }, delaySec * 20L + 1);
         teleportDelayTasks.put(player.getUniqueId(), task);
@@ -172,8 +172,7 @@ public class TeleportManager implements Listener {
      * Teleports a player to a specified location safely.
      * <p>
      * This method ensures that the player is teleported to a safe location. If the player has passengers,
-     * they are removed before teleportation. The method handles both synchronous and asynchronous teleportation
-     * based on the server type (Paper or non-Paper).
+     * they are removed before teleportation. The method now uses only synchronous teleportation.
      *
      * @param player   The player to be teleported.
      * @param location The target location to which the player will be teleported.
@@ -182,14 +181,15 @@ public class TeleportManager implements Listener {
         if (!player.getPassengers().isEmpty()) {
             player.getPassengers().forEach(player::removePassenger);
         }
+        Location loc = findNearestSafeLocation(location);
+
         if (!isPaper()) {
-            Location loc = findNearestSafeLocation(location);
+            // 非Paper直接同步传送
             Bukkit.getScheduler().runTask(Dominion.instance, () -> player.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN));
         } else {
-            location.getWorld().getChunkAtAsyncUrgently(location).thenAccept((chunk) -> {
-                Location loc = findNearestSafeLocation(location);
-                player.teleportAsync(loc, PlayerTeleportEvent.TeleportCause.PLUGIN);
-            });
+            // Paper直接加载区块并同步传送
+            location.getWorld().getChunkAt(location); // 同步加载区块
+            Bukkit.getScheduler().runTask(Dominion.instance, () -> player.teleport(loc, PlayerTeleportEvent.TeleportCause.PLUGIN));
         }
     }
 
