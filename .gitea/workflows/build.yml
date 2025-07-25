@@ -1,9 +1,8 @@
 name: Java CI-CD with Gradle
 
 on:
-  push:
-    tags:
-      - '*'
+  push:                      # 任何 push，都触发
+  workflow_dispatch:         # 支持手动触发
 
 jobs:
   build:
