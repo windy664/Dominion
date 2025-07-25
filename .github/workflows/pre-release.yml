@@ -32,11 +32,8 @@ jobs:
           TAG="${GITHUB_REF##*/}"
           echo "TAG=$TAG" >> $GITHUB_ENV
           echo "done!"
-      - name: "GitHub Release"
-        uses: "marvinpinto/action-automatic-releases@latest"
+      - name: "Upload Jar"
+        uses: actions/upload-artifact@v4
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ env.TAG }}"
-          prerelease: true
-          files: |
-            staging/*.jar
+          name: built-jars
+          path: staging/*.jar
