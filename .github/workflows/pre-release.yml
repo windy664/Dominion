@@ -3,7 +3,7 @@ name: Build Pre-Release
 on:
   push:
     tags:
-      - '*alpha*'
+      - '*'
 
 jobs:
   build:
