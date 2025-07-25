@@ -1,13 +1,11 @@
 name: Build Pre-Release
 
 on:
-  push:
-    tags:
-      - '*'
+  push:                      # 任何 push，都触发
+  workflow_dispatch:         # 支持手动触发
 
 jobs:
   build:
-    #	配置权限
     permissions: write-all
     runs-on: ubuntu-latest
     steps:
@@ -31,13 +29,14 @@ jobs:
           mv build/libs/*.jar staging/
       - name: "Build & test"
         run: |
-          TAG=$(echo $GITHUB_REF | sed 's/refs\/tags\///')
+          TAG="${GITHUB_REF##*/}"
+          echo "TAG=$TAG" >> $GITHUB_ENV
           echo "done!"
       - name: "GitHub Release"
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "${{ steps.build.outputs.TAG }}"
+          automatic_release_tag: "${{ env.TAG }}"
           prerelease: true
           files: |
             staging/*.jar
