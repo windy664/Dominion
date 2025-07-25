@@ -50,6 +50,7 @@ public class Language extends ConfigurationFile {
         en_us,
         zh_cn,
         jp_jp,
+        zh_tw,
     }
 
     public static void loadLanguageFiles(CommandSender sender, JavaPlugin plugin, String code) {

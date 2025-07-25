@@ -1,0 +1,1287 @@
+main-menu-cui:
+  title: §b✦ §6§l領地主選單 §b✦
+  admin-layout:
+  - '#########'
+  - '##A#B#C##'
+  - '##D#E#F##'
+  - '#########'
+  - '####S####'
+  user-layout:
+  - '#########'
+  - '##A#B#C##'
+  - '###D#E###'
+  - '#########'
+  - '####S####'
+  status-disabled-lore:
+  - §c✘ §4此功能目前已停用
+  - §7請稍後再試或聯絡
+  - §7§o伺服器管理員 §r以獲取更多資訊
+  - ''
+  - '§8§l狀態: §c✘ 已被操作員停用'
+  create-button:
+    symbol: A
+    name: §6✨ §e建立領地 §6✨
+    lore:
+    - §7於你目前位置建立
+    - §7新的領地，開啟你的帝國
+    - ''
+    - §e▶ 點擊開始建立
+    - ''
+    - '§8提示: 確保你位於欲聲明'
+    - §8的區域內!
+    material: NETHER_STAR
+  list-button:
+    symbol: B
+    name: §b📋 §f管理我的領地
+    lore:
+    - §7檢視並管理所有你有權限
+    - §7存取的領地
+    - ''
+    - §b▶ 點擊檢視列表
+    - ''
+    - '§8包含: 你的領地 及'
+    - §8你管理的領地!
+    material: BOOKSHELF
+  title-button:
+    symbol: C
+    name: §6👑 §e群組稱號
+    lore:
+    - §7瀏覽並佩戴你所屬群組
+    - §7的稱號
+    - ''
+    - §e▶ 點擊瀏覽稱號
+    - ''
+    - §8展現你的身分與
+    - §8群組身分!
+    material: NAME_TAG
+  template-button:
+    symbol: D
+    name: §a📝 §f範本管理
+    lore:
+    - §7建立並管理權限範本
+    - §7以快速設定
+    - ''
+    - §a▶ 點擊管理範本
+    - ''
+    - §8為新領地節省設定時間!
+    material: WRITABLE_BOOK
+  migrate-button:
+    symbol: E
+    name: §d🔄 §f從 Residence 遷移
+    lore:
+    - §7將現有 Residence 領地
+    - §7轉換為 Dominion 格式
+    - ''
+    - §d▶ 點擊開始遷移
+    - ''
+    - §c⚠ 請先備份！
+    - §8此操作無法還原
+    material: ENDER_PEARL
+  all-button:
+    symbol: F
+    name: §c💎 §f所有伺服器領地
+    lore:
+    - §7§l僅限管理員可見§r
+    - §7檢視整個伺服器的
+    - §7所有領地
+    - ''
+    - §c▶ 點擊檢視所有領地
+    - ''
+    - §8適用於伺服器管理
+    - §8與審核用途
+    material: DIAMOND
+  switch-tui-button:
+    symbol: S
+    name: §e§l切換到 TUI
+    lore:
+    - §7切換至文字介面 TUI
+    - §7以獲得不同的使用體驗
+    - ''
+    - §e▶ 點擊切換到 TUI
+    - ''
+    - §8若你偏好文字介面
+    - §8請使用此選項！
+    material: COMPASS
+all-dominion-cui:
+  title: §6✦ §c§l所有領地 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  dominion-item-button:
+    symbol: i
+    name: §6🏰 §e{0}
+    lore:
+    - '§7擁有者: §b{0}'
+    - ''
+    - '§a▶ 左鍵點擊: 管理'
+    - §8  檢視設定、成員與權限
+    - '§b▶ 右鍵點擊: 傳送'
+    - ''
+    - '§7狀態: §a啟用中'
+    - §8已授予管理員權限
+    material: FILLED_MAP
+  back-button:
+    symbol: '<'
+    name: §c« 返回主選單
+    lore:
+    - §7返回主選單
+    - §8以存取其他功能
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+title-list-cui:
+  title: §6✦ §d§l群組稱號列表 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+title-item-button:
+  symbol: i
+  name: §6✦ §f{0} §6✦
+  lore:
+  - '§7來自領地：§b{0}'
+  - ''
+  - §e▶ 點擊以配戴此稱號
+  - §8  向所有人展示！
+  - ''
+  - '§7狀態：§c未啟用'
+  material: NAME_TAG
+active-title-item-button:
+  symbol: i
+  name: §6★ §e{0} §6★ §a(已啟用)
+  lore:
+  - '§7來自領地：§b{0}'
+  - ''
+  - §a✓ 這是你目前的稱號
+  - §8  所有人都能看到！
+  - ''
+  - §c▶ 點擊以移除此稱號
+  - ''
+  - '§7狀態：§a已啟用'
+  material: GOLDEN_HELMET
+back-button:
+  symbol: <
+  name: §c« 返回主選單
+  lore:
+  - §7返回主選單
+  - §8以存取其他功能
+  - ''
+  - §e▶ 點擊返回
+  material: RED_STAINED_GLASS_PANE
+migrate-list-cui:
+  title: §6⚡ §c§l從 Residence 遷移 §6⚡
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<######A#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  residence-item-button:
+    symbol: i
+    name: §6📋 §f{0}
+    lore:
+    - §e▶ 點擊以遷移此 Residence
+    - §8  以及其所有子領地
+    material: PAPER
+  back-button:
+    symbol: <
+    name: §c« 返回主選單
+    lore:
+    - §7返回主選單
+    - §8以存取其他功能
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  migrate-all-button:
+    symbol: A
+    name: §6⚡ §c§l全部遷移
+    lore:
+    - §e▶ 點擊以遷移所有 Residence
+    - §8  以及其所有子領地
+    - ''
+    - §c⚠ 這可能需要一些時間
+    - §c⚠ 請耐心等候並勿中斷過程
+    material: DIAMOND
+template-list-cui:
+  title: §6✦ §d§l範本管理 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  template-item-button:
+    symbol: i
+    name: §6✦ §f{0} §6✦
+    lore:
+    - §7快速管理權限與存取
+    - §8的範本
+    - ''
+    - §e▶ 點擊以編輯範本
+    material: PAPER
+  create-template-button:
+    symbol: i
+    name: §a+ 建立新範本
+    lore:
+    - §7建立新的權限範本
+    - §8以快速設定成員權限
+    - ''
+    - §e▶ 點擊以建立範本
+    - ''
+    - '§7動作：§a建立範本'
+    material: LIME_DYE
+  back-button:
+    symbol: <
+    name: §c« 返回主選單
+    lore:
+    - §7返回主選單
+    - §8以存取其他功能
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+template-setting-cui:
+  title: '§6✦ §3§l範本：{0} §6✦'
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<#####RD#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回範本列表
+    lore:
+    - §7返回範本列表
+    - §8選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+rename-button:
+  symbol: R
+  name: §e重新命名範本
+  lore:
+  - §7重新命名此範本
+  - ''
+  - §e▶ 點擊以重新命名此範本
+  material: NAME_TAG
+delete-button:
+  symbol: D
+  name: §c刪除範本
+  lore:
+  - §7刪除此範本
+  - §7此操作無法還原
+  - ''
+  - §e▶ 點擊以刪除此範本
+  material: RED_DYE
+flag-item-name: §6⚙️ §e{0}
+flag-item-state-true: §a§l✓ 已啟用
+flag-item-state-false: §c§l✗ 已停用
+flag-item-lore:
+- '§7狀態：{0}'
+- ''
+- '§7說明：'
+- §f{1}
+- §f{2}
+- ''
+- §e▶ 點擊切換此設定
+- §8將於下次套用範本時生效
+dominion-list-cui:
+  title: §6✦ §b§l領地列表 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  own-dominion-button:
+    symbol: i
+    name: §2👑 §a{0}
+    lore:
+    - §7這是§a你的領地§7
+    - §8你在此擁有完全控制權！
+    - ''
+    - '§a▶ 左鍵點擊：管理'
+    - §8  設定、成員與權限
+    - '§b▶ 右鍵點擊：傳送'
+    - ''
+    - '§7狀態：§2擁有者'
+    material: GRASS_BLOCK
+  admin-dominion-button:
+    symbol: i
+    name: §9⚡ §b{0}
+    lore:
+    - '§7擁有者：§e{0}'
+    - §8你在此擁有管理員權限
+    - ''
+    - '§b▶ 左鍵點擊：管理'
+    - §8  協助擁有者管理此領地
+    - '§b▶ 右鍵點擊：傳送'
+    - ''
+    - '§7狀態：§9管理員'
+    material: DIRT_PATH
+  back-button:
+    symbol: <
+    name: §c« 返回主選單
+    lore:
+    - §7返回主選單
+    - §8以存取其他功能
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+dominion-manage-cui:
+  title: §6✦ §a§l管理 {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<###I####'
+    - '#i#i#i#i#'
+    - '#i#i#i#i#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回領地列表
+    lore:
+    - §7返回你的領地列表
+    - §8以管理其他領地
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  dominion-info-button:
+    symbol: I
+    name: §6📊 §e§l領地概覽
+    lore:
+    - ''
+    - §f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - '§b▪ §7尺寸：     §f{0}'
+    - '§b▪ §7高度：   §f{1}'
+    - '§b▪ §7面積：   §f{2} §7方塊²'
+    - '§b▪ §7體積：   §f{3} §7方塊³'
+    - '§b▪ §7位置： §f{4}'
+    - §f━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+    - ''
+    - §a▶ §2點擊 §7– 調整領地大小
+    - ''
+    - §8💡 管理你的領地尺寸
+    material: GRASS_BLOCK
+  env-setting-button:
+    symbol: i
+    name: §2🌍 §a環境設定
+    lore:
+    - §7設定此領地的環境規則
+    - ''
+    - §a▶ 點擊以設定
+    - ''
+    - §8天氣、時間、生物生成…
+    material: COMPASS
+  guest-setting-button:
+    symbol: i
+    name: §e🚪 §6通用權限
+    lore:
+    - §7設定非成員通用的權限
+    - ''
+    - §6▶ 點擊以設定
+    - ''
+    - §8建造、互動、使用物品…
+    material: OAK_DOOR
+  member-list-button:
+    symbol: i
+    name: §b👥 §3成員管理
+    lore:
+    - §7檢視並管理領地
+    - §7成員及其角色
+    - ''
+    - §3▶ 點擊管理成員
+    - ''
+    - §8新增、移除、設定權限…
+    material: PLAYER_HEAD
+group-list-button:
+  symbol: i
+  name: §d📦 §5群組管理
+  lore:
+  - §7建立並管理具有自訂權限的
+  - §7成員群組
+  - ''
+  - §5▶ 點擊管理群組
+  - ''
+  - §8建立階級、設定稱號…
+  material: CHEST
+set-tp-button:
+  symbol: i
+  name: §9🎯 §b設定傳送點
+  lore:
+  - §7將你目前位置
+  - §7設定為領地傳送點
+  - ''
+  - §b▶ 點擊設定位置
+  - ''
+  - §8成員可於此傳送！
+  material: ENDER_PEARL
+rename-button:
+  symbol: i
+  name: §e✏️ §6重新命名領地
+  lore:
+  - §7更改此領地的名稱
+  - ''
+  - §6▶ 點擊重新命名
+  - ''
+  - §8選個好記的名稱！
+  material: NAME_TAG
+enter-message-button:
+  symbol: i
+  name: §a📝 §2進入訊息
+  lore:
+  - §7編輯玩家進入時顯示的
+  - §7歡迎訊息
+  - ''
+  - §2▶ 點擊編輯訊息
+  - ''
+  - §8迎接你的通用！
+  material: WRITABLE_BOOK
+leave-message-button:
+  symbol: i
+  name: §c📄 §4離開訊息
+  lore:
+  - §7編輯玩家離開時顯示的
+  - §7告別訊息
+  - ''
+  - §4▶ 點擊編輯訊息
+  - ''
+  - §8以風格道別！
+  material: BOOK
+set-map-color-button:
+  symbol: i
+  name: §6🎨 §e地圖顏色
+  lore:
+  - §7設定此領地在地圖上的
+  - §7顯示顏色
+  - ''
+  - §e▶ 點擊選擇顏色
+  - ''
+  - §8讓它更突出！
+  material: PAINTING
+copy-menu-button:
+  symbol: i
+  name: §b📋 §3複製設定
+  lore:
+  - §7將權限與設定
+  - §7複製到其他領地
+  - ''
+  - §3▶ 點擊進入複製選單
+  - ''
+  - §8用範本節省時間！
+  material: GLASS
+delete-button:
+  symbol: i
+  name: §c💀 §4刪除領地
+  lore:
+  - §c§l危險區
+  - §7永久刪除此領地
+  - §7及其所有資料
+  - ''
+  - §4▶ 點擊刪除
+  - ''
+  - §c⚠ 此操作無法還原！
+  material: RED_DYE
+copy-menu-cui:
+  title: §6✦ §a§l複製設定 §6✦
+  layout:
+  - '<########'
+  - '#E#G#M#P#'
+  - '#########'
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理
+    - §7以存取其他設定
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  env-copy-button:
+    symbol: E
+    name: §2🌍 §a複製環境設定
+    lore:
+    - §7從其他領地複製環境
+    - §7設定
+    - ''
+    - §a▶ 點擊複製環境
+    - ''
+    - §8天氣、時間、生物生成…
+    material: GRASS_BLOCK
+  guest-copy-button:
+    symbol: G
+    name: §e🚪 §6複製通用設定
+    lore:
+    - §7從其他領地複製通用
+    - §7權限設定
+    - ''
+    - §6▶ 點擊複製通用設定
+    - ''
+    - §8建造、互動、使用物品…
+    material: OAK_DOOR
+  member-copy-button:
+    symbol: M
+    name: §b👥 §3複製成員設定
+    lore:
+    - §7從其他領地複製成員
+    - §7權限設定
+    - ''
+    - §3▶ 點擊複製成員設定
+    - ''
+    - §8單一玩家權限…
+    material: PLAYER_HEAD
+  group-copy-button:
+    symbol: P
+    name: §d📦 §5複製群組設定
+    lore:
+    - §7從其他領地複製群組
+    - §7設定
+    - ''
+    - §5▶ 點擊複製群組設定
+    - ''
+    - §8權限群組與角色…
+    material: CHEST
+dominion-copy-cui:
+  title: §6✦ §a§l選擇要複製的領地 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#p#####n#'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+back-button:
+  symbol: <
+  name: §c« 返回複製選單
+  lore:
+  - §7返回複製選單
+  - §7選擇不同的複製類型
+  - ''
+  - §e▶ 點擊返回
+  material: RED_STAINED_GLASS_PANE
+item-name: §a{0}
+item-lore:
+- §7從此領地複製
+- §7以套用其設定
+- ''
+- §a▶ 點擊以選擇
+env-setting-cui:
+  title: §6✦ §2§l{0} 的環境設定 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: §6⚙️ §e{0}
+  flag-item-state-true: §a§l✓ 已啟用
+  flag-item-state-false: §c§l✗ 已停用
+  flag-item-lore:
+  - '§7狀態：{0}'
+  - ''
+  - '§7說明：'
+  - §f{1}
+  - §f{2}
+  - ''
+  - §e▶ 點擊切換此設定
+  - §8變更將立即生效
+guest-setting-cui:
+  title: §6✦ §e§l{0} 的通用權限 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: §6🚪 §e{0}
+  flag-item-state-true: §a§l✓ 允許
+  flag-item-state-false: §c§l✗ 拒絕
+  flag-item-lore:
+  - '§7通用權限：{0}'
+  - ''
+  - '§7說明：'
+  - §f{1}
+  - §f{2}
+  - ''
+  - §e▶ 點擊為通用切換
+  - §8影響非成員通用
+set-size-cui:
+  title: §6✦ §2§l調整 {0} 尺寸 §6✦
+  layout:
+  - '<##N###U#'
+  - '###n###u#'
+  - '#Ww#eE###'
+  - '###s###d#'
+  - '###S###D#'
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  add-north-button:
+    symbol: N
+    name: §6🧭 §e向北擴張 (Z-)
+    lore:
+    - §7以指定大小向北
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+  add-south-button:
+    symbol: S
+    name: §6🧭 §e向南擴張 (Z+)
+    lore:
+    - §7以指定大小向南
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+  add-west-button:
+    symbol: W
+    name: §6🧭 §e向西擴張 (X-)
+    lore:
+    - §7以指定大小向西
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+  add-east-button:
+    symbol: E
+    name: §6🧭 §e向東擴張 (X+)
+    lore:
+    - §7以指定大小向東
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+  add-up-button:
+    symbol: U
+    name: §6🧭 §e向上擴張 (Y+)
+    lore:
+    - §7以指定大小向上
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+  add-down-button:
+    symbol: D
+    name: §6🧭 §e向下擴張 (Y-)
+    lore:
+    - §7以指定大小向下
+    - §7擴張領地
+    - ''
+    - §a▶ 點擊擴張
+    material: LIME_DYE
+contract-north-button:
+  symbol: n
+  name: §6🧭 §c向北縮小 (Z-)
+  lore:
+  - §7以指定大小自北側縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+contract-south-button:
+  symbol: s
+  name: §6🧭 §c向南縮小 (Z+)
+  lore:
+  - §7以指定大小自南側縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+contract-west-button:
+  symbol: w
+  name: §6🧭 §c向西縮小 (X-)
+  lore:
+  - §7以指定大小自西側縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+contract-east-button:
+  symbol: e
+  name: §6🧭 §c向東縮小 (X+)
+  lore:
+  - §7以指定大小自東側縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+contract-up-button:
+  symbol: u
+  name: §6🧭 §c向上縮小 (Y+)
+  lore:
+  - §7以指定大小自上方縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+contract-down-button:
+  symbol: d
+  name: §6🧭 §c向下縮小 (Y-)
+  lore:
+  - §7以指定大小自下方縮小領地
+  - ''
+  - §c▶ 點擊縮小
+  material: RED_DYE
+group-list-cui:
+  title: §6✦ §5§l{0} 的群組列表 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  new-group-button:
+    symbol: i
+    name: §a➕ §2建立新群組
+    lore:
+    - §7為成員組織建立新的權限群組
+    - ''
+    - §2▶ 點擊建立群組
+    - ''
+    - §8適合階級與角色設定！
+    material: LIME_DYE
+  group-item-button:
+    symbol: i
+    name: §6👑 §e{0}
+    lore:
+    - '§7成員數：§a{1}'
+    - ''
+    - §e▶ 點擊管理此群組
+    - §8  編輯權限、加入成員…
+    - ''
+    - '§7類型：§6權限群組'
+    material: CHEST
+group-manage-cui:
+  title: §6✦ §d§l管理群組 {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<##P#R#D#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回群組列表
+    lore:
+    - §7返回群組列表
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  group-flags-button:
+    symbol: P
+    name: §6📋 §e§l群組權限
+    lore:
+    - §7設定此群組在領地內
+    - §7可做與不可做的操作
+    - ''
+    - §e▶ 點擊編輯權限
+    - §8  設定建造、互動等…
+    - ''
+    - '§7類型：§6權限設定'
+    material: BAMBOO_SIGN
+  rename-group-button:
+    symbol: R
+    name: §b✏ §3§l重新命名群組
+    lore:
+    - §7更改此權限群組的顯示名稱
+    - ''
+    - §3▶ 點擊重新命名群組
+    - §8  選個有創意的名字！
+    - ''
+    - '§7目前：§f{0}'
+    material: NAME_TAG
+  delete-group-button:
+    symbol: D
+    name: §c💥 §4§l刪除群組
+    lore:
+    - §c⚠ §7此操作無法還原！
+    - §7所有成員將自動移至
+    - §7預設群組
+    - ''
+    - §4▶ 點擊刪除群組
+    - ''
+    - §8請三思而後行…
+    material: TNT
+add-member-button:
+  symbol: i
+  name: §a➕ §2§l新增成員
+  lore:
+  - §7從你的領地中選擇一位
+  - §7玩家加入此群組
+  - ''
+  - §2▶ 點擊選擇玩家
+  - §8  賦予他們群組權限！
+  - ''
+  - '§7動作：§a加入群組'
+  material: LIME_DYE
+player-head-item-lore:
+- §7此玩家為此權限群組成員
+- ''
+- §c▶ 點擊將其移出群組
+- §8  他們將回到預設群組
+group-setting-cui:
+  title: §6✦ §9§l群組 {0} 設定 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: 返回
+    lore:
+    - 返回至
+    - 通用管理
+    material: RED_STAINED_GLASS_PANE
+  flag-item-name: '&7權限： &9{0}'
+  flag-item-state-true: '&a&l[已啟用]'
+  flag-item-state-false: '&c&l[已停用]'
+  flag-item-lore:
+  - '&7狀態： {0}'
+  - '&7說明： &f{1}'
+  - '       &f{2}'
+  - ''
+  - '&7點擊切換此權限'
+select-member-cui:
+  title: §6✦ §5§l為群組 {0} 選擇成員 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回群組管理
+    lore:
+    - §7返回群組管理
+    - §7而不選擇任何成員
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  member-item-name: §a➕ §2{0}
+  member-item-lore:
+  - §7將此玩家加入群組
+  - ''
+  - '§7玩家： §e{0}'
+  - ''
+  - §2▶ 點擊加入群組
+  - ''
+  - §8此成員尚未加入任何群組
+member-list-cui:
+  title: §6✦ §3§l{0} 的成員列表 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<########'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回領地管理
+    lore:
+    - §7返回領地管理選單
+    - ''
+    - §e▶ 點擊返回
+    material: RED_STAINED_GLASS_PANE
+  add-player-button:
+    symbol: i
+    name: §a➕ §2新增玩家
+    lore:
+    - §7邀請玩家加入
+    - §7此領地成為成員
+    - ''
+    - §2▶ 點擊選擇玩家
+    - ''
+    - §8賦予進入領地的權限！
+    material: LIME_DYE
+  normal-member: §a普通成員
+  admin-member: §b管理員
+  ban-member: §c封鎖成員
+  player-head-item-lore:
+  - §e▶ 點擊管理權限
+  - §8  為此玩家設定自訂權限
+  - ''
+  - '§7狀態： {0}'
+  player-head-item-lore-disable:
+  - '&c此玩家屬於某群組'
+  - '&c無法單獨管理'
+member-setting-cui:
+  title: §6✦ §f§l成員 {0} 設定 §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - '<######T#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - 'p#######n'
+    preview-button:
+      symbol: p
+      name: '<<<'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁面：{0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: 返回
+    lore:
+    - 返回成員列表。
+    material: RED_STAINED_GLASS_PANE
+  template-button:
+    symbol: T
+    name: §e✏ §6選擇範本
+    lore:
+    - §7選擇一個範本，將其套用至
+    - §7此成員的權限。
+    - ''
+    - §6▶ 點擊以選擇範本
+    material: PAPER
+  flag-item-name: '&7標記: &9{0}'
+  flag-item-state-true: '&a&l[已啟用]'
+  flag-item-state-false: '&c&l[已停用]'
+  flag-item-lore:
+  - '&7狀態: {0}'
+  - '&7說明: &f{1}'
+  - '       &f{2}'
+  - ''
+  - '&7點擊以切換此標記。'
+select-player-cui:
+  title: §6✦ §5§l選擇玩家 - {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - <######s#
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+      - '頁碼: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁碼: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回成員列表
+    lore:
+    - §7返回成員列表，
+    - §7不新增任何玩家。
+    - ''
+    - §e▶ 點擊以返回
+    material: RED_STAINED_GLASS_PANE
+  search-button:
+    symbol: s
+    name: §e🔍 §6搜尋玩家
+    lore:
+    - §7輸入玩家帳號以
+    - §7搜尋特定玩家。
+    - ''
+    - §6▶ 點擊以搜尋
+    - ''
+    - §8可用於尋找離線玩家！
+    material: COMPASS
+  player-button-name: §a➕ §2{0}
+  player-button-lore:
+  - §7將此玩家新增為您領地的
+  - §7成員。
+  - ''
+  - '§7玩家: §e{0}'
+  - ''
+  - §2▶ 點擊以新增成員
+select-template-cui:
+  title: §6✦ §5§l選擇範本 - {0} §6✦
+  list-configuration:
+    item-symbol: i
+    layout:
+    - <########
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - '#iiiiiii#'
+    - p#######n
+    preview-button:
+      symbol: p
+      name: <<<
+      lore:
+      - '頁碼: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMWRiZWIwZmJjNWU2NjAxZmU1MDQ3MDJjYWZmZGFhYzBlOGVhMTllMTFiY2FkZmJlZTBkMThjODlmNDZiYzFmZCJ9fX0=
+    next-button:
+      symbol: n
+      name: '>>>'
+      lore:
+      - '頁碼: {0}/{1}'
+      material: PLAYER_HEAD;B64;eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZWI5Y2VjYzIxZDY3MGMxZmYyNzc4MTc2MjI1ZTI4NTBlMmVlMmY3Y2Y1NDEzYmIxNTY2N2Q5OGRiYjNjZjhiNSJ9fX0=
+  back-button:
+    symbol: <
+    name: §c« 返回成員設定
+    lore:
+    - §7返回成員設定，
+    - §7不套用任何範本。
+    - ''
+    - §e▶ 點擊以返回
+    material: RED_STAINED_GLASS_PANE
+  template-button:
+    symbol: i
+    name: §a⚙ §2{0}
+    lore:
+    - §7將此權限範本
+    - §7套用至成員 {0}。
+    - ''
+    - '§7範本: §e{1}'
+    - ''
+    - §2▶ 點擊以套用範本
+    - ''
+    - §8這將會覆寫成員
+    - §8目前的權限。
+    material: WRITABLE_BOOK
